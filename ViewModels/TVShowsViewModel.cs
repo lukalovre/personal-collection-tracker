@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using Avalonia.Media.Imaging;
-using AvaloniaApplication1.Models;
 using AvaloniaApplication1.Repositories;
 using DynamicData;
 using ReactiveUI;
@@ -19,11 +18,11 @@ public partial class TVShowsViewModel : ViewModelBase
     private readonly IExternal<TVShow> _external;
     private TVShowGridItem _selectedGridItem;
     private List<TVShow> _itemList;
-    private List<Event> _eventList = [];
+
     private TVShow _newItem;
     private Bitmap? _itemImage;
     private Bitmap? _newItemImage;
-    private Event _newEvent;
+
     private bool _useNewDate;
     private TVShow _selectedItem;
     private int _gridCountItems;
@@ -31,8 +30,6 @@ public partial class TVShowsViewModel : ViewModelBase
     private int _addAmount;
     private string _addAmountString;
     private string _inputUrl;
-
-    public EventViewModel EventViewModel { get; }
 
     public int AddAmount
     {
@@ -67,7 +64,6 @@ public partial class TVShowsViewModel : ViewModelBase
         get => _selectedItem;
         set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
     }
-    public ObservableCollection<Event> Events { get; set; }
 
     public ReactiveCommand<Unit, Unit> AddItemClick { get; }
     public ReactiveCommand<Unit, Unit> AddEventClick { get; }
@@ -82,11 +78,6 @@ public partial class TVShowsViewModel : ViewModelBase
         new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
     public TimeSpan NewTime { get; set; } = new TimeSpan();
-    public Event NewEvent
-    {
-        get => _newEvent;
-        set => this.RaiseAndSetIfChanged(ref _newEvent, value);
-    }
 
     public Bitmap? Image
     {
@@ -140,11 +131,7 @@ public partial class TVShowsViewModel : ViewModelBase
         GridItemsBookmarked = [];
         ReloadData();
 
-        Events = [];
-        EventViewModel = new EventViewModel(Events, MusicPlatformTypes);
-
         AddItemClick = ReactiveCommand.Create(AddItemClickAction);
-        AddEventClick = ReactiveCommand.Create(AddEventClickAction);
 
         SelectedGridItem = GridItems.LastOrDefault();
     }
@@ -153,7 +140,6 @@ public partial class TVShowsViewModel : ViewModelBase
     {
         NewItem = _external.GetItem(InputUrl);
         NewImage = FileRepsitory.GetImageTemp<TVShow>();
-        NewEvent = new Event { Amount = NewItem.Runtime, Rating = 1 };
 
         _inputUrl = string.Empty;
     }
@@ -167,41 +153,8 @@ public partial class TVShowsViewModel : ViewModelBase
 
     private void AddItemClickAction()
     {
-        NewEvent.Amount = NewItem.Runtime;
-        NewEvent.DateEnd = UseNewDate ? NewDate + NewTime : DateTime.Now;
-        NewEvent.DateStart =
-            NewEvent.DateEnd.Value.TimeOfDay.Ticks == 0
-                ? NewEvent.DateEnd.Value
-                : NewEvent.DateEnd.Value.AddMinutes(-NewEvent.Amount);
-        NewEvent.People = SelectedPerson?.ID.ToString() ?? null;
-        NewEvent.Chapter = 1;
 
-        _datasource.Add(NewItem, NewEvent);
-
-        ReloadData();
-        ClearNewItemControls();
-    }
-
-    private void AddEventClickAction()
-    {
-        var lastEvent = Events.MaxBy(o => o.DateEnd);
-
-        lastEvent.ID = 0;
-
-        if (!EventViewModel.IsEditDate)
-        {
-            lastEvent.DateEnd = DateTime.Now;
-        }
-
-        lastEvent.DateStart =
-            lastEvent.DateEnd.Value.TimeOfDay.Ticks == 0
-                ? lastEvent.DateEnd.Value
-                : lastEvent.DateEnd.Value.AddMinutes(-_addAmount);
-
-        lastEvent.Platform = EventViewModel.SelectedPlatformType;
-        lastEvent.Amount = _addAmount;
-
-        _datasource.Add(SelectedItem, lastEvent);
+        _datasource.Add(NewItem);
 
         ReloadData();
         ClearNewItemControls();
@@ -221,7 +174,6 @@ public partial class TVShowsViewModel : ViewModelBase
     private void ClearNewItemControls()
     {
         NewItem = default;
-        NewEvent = default;
         NewImage = default;
         SelectedPerson = default;
     }
@@ -230,20 +182,7 @@ public partial class TVShowsViewModel : ViewModelBase
     {
         _itemList = _datasource.GetList<TVShow>();
 
-        return _eventList
-            .OrderByDescending(o => o.DateEnd)
-            .DistinctBy(o => o.ItemID)
-            .OrderBy(o => o.DateEnd)
-            .Select(
-                (o, i) =>
-                    Convert(
-                        i,
-                        o,
-                        _itemList.First(m => m.ID == o.ItemID),
-                        _eventList.Where(e => e.ItemID == o.ItemID)
-                    )
-            )
-            .ToList();
+        return [];
     }
 
     private List<TVShowGridItem> LoadDataBookmarked(int? yearsAgo = null)
@@ -254,48 +193,26 @@ public partial class TVShowsViewModel : ViewModelBase
             ? DateTime.Now.AddYears(-yearsAgo.Value)
             : DateTime.MaxValue;
 
-        return _eventList
-            .OrderByDescending(o => o.DateEnd)
-            .DistinctBy(o => o.ItemID)
-            .OrderBy(o => o.DateEnd)
-            .Where(o => o.DateEnd.HasValue && o.DateEnd.Value <= dateFilter)
-            .Where(o => o.Bookmakred)
-            .Select(
-                (o, i) =>
-                    Convert(
-                        i,
-                        o,
-                        _itemList.First(m => m.ID == o.ItemID),
-                        _eventList.Where(e => e.ItemID == o.ItemID)
-                    )
-            )
-            .ToList();
+        return [];
     }
 
-    private static TVShowGridItem Convert(
-        int index,
-        Event e,
-        TVShow i,
-        IEnumerable<Event> eventList
-    )
+    private static TVShowGridItem Convert(int index, TVShow i)
     {
-        var lastDate = eventList.MaxBy(o => o.DateEnd)?.DateEnd ?? DateTime.MinValue;
-        var daysAgo = (int)(DateTime.Now - lastDate).TotalDays;
 
         return new TVShowGridItem(
             i.ID,
             index + 1,
             i.Title,
-            e.Chapter.Value,
-            eventList.Count(o => o.Chapter == e.Chapter),
-            lastDate,
-            daysAgo
+           0,
+            0,
+            null,
+            0
         );
     }
 
     public void SelectedItemChanged()
     {
-        Events.Clear();
+
         Image = null;
 
         if (SelectedGridItem == null)
@@ -304,11 +221,6 @@ public partial class TVShowsViewModel : ViewModelBase
         }
 
         SelectedItem = _itemList.First(o => o.ID == SelectedGridItem.ID);
-        Events.AddRange(
-            _eventList
-                .Where(o => o.ItemID == SelectedItem.ID && o.DateEnd.HasValue)
-                .OrderBy(o => o.DateEnd)
-        );
 
         var item = _itemList.First(o => o.ID == SelectedItem.ID);
         Image = FileRepsitory.GetImage<TVShow>(item.ID);

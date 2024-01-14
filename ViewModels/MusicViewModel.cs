@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using Avalonia.Media.Imaging;
-using AvaloniaApplication1.Models;
 using AvaloniaApplication1.Repositories;
 using AvaloniaApplication1.ViewModels.GridItems;
 using DynamicData;
@@ -20,12 +19,10 @@ public partial class MusicViewModel : ViewModelBase
     private readonly IExternal<Music> _external;
     private MusicGridItem _selectedItem;
     private List<Music> _itemList;
-    private List<Event> _eventList = [];
     private string _inputUrl;
     private Music _newMusic;
     private Bitmap? _cover;
     private Bitmap? _newMusicCover;
-    private Event _newEvent;
 
     private bool _useNewDate;
     private Music _selectedMusic;
@@ -33,8 +30,6 @@ public partial class MusicViewModel : ViewModelBase
     private int _gridCountMusicTodo1;
     private int _gridCountMusicTodo2;
     private int _gridCountMusicBookmarked;
-
-    public EventViewModel EventViewModel { get; }
 
     public string SearchText { get; set; }
 
@@ -67,7 +62,6 @@ public partial class MusicViewModel : ViewModelBase
         get => _selectedMusic;
         set => this.RaiseAndSetIfChanged(ref _selectedMusic, value);
     }
-    public ObservableCollection<Event> Events { get; set; }
 
     public ReactiveCommand<Unit, Unit> AddClick { get; }
     public ReactiveCommand<Unit, Unit> OpenLink { get; }
@@ -85,11 +79,6 @@ public partial class MusicViewModel : ViewModelBase
         new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
     public TimeSpan NewTime { get; set; } = new TimeSpan();
-    public Event NewEvent
-    {
-        get => _newEvent;
-        set => this.RaiseAndSetIfChanged(ref _newEvent, value);
-    }
 
     public string InputUrl
     {
@@ -150,13 +139,10 @@ public partial class MusicViewModel : ViewModelBase
 
         ArtistMusic = [];
 
-        Events = [];
-        EventViewModel = new EventViewModel(Events, MusicPlatformTypes);
-
         AddClick = ReactiveCommand.Create(AddClickAction);
         OpenLink = ReactiveCommand.Create(OpenLinkAction);
         OpenImage = ReactiveCommand.Create(OpenImageAction);
-        ListenAgain = ReactiveCommand.Create(ListenAgainAction);
+
         Search = ReactiveCommand.Create(SearchAction);
 
         SelectedItem = Music.LastOrDefault();
@@ -167,12 +153,6 @@ public partial class MusicViewModel : ViewModelBase
         NewMusic = _external.GetItem(InputUrl);
 
         NewMusicCover = FileRepsitory.GetImageTemp<Music>();
-        NewEvent = new Event
-        {
-            Amount = NewMusic.Runtime,
-            Rating = 1,
-            Platform = eMusicPlatformType.Streaming.ToString()
-        };
 
         FindMusic(NewMusic);
 
@@ -225,39 +205,8 @@ public partial class MusicViewModel : ViewModelBase
 
     private void AddClickAction()
     {
-        NewEvent.Amount = NewMusic.Runtime;
-        NewEvent.DateEnd = UseNewDate ? NewDate + NewTime : DateTime.Now;
-        NewEvent.DateStart =
-            NewEvent.DateEnd.Value.TimeOfDay.Ticks == 0
-                ? NewEvent.DateEnd.Value
-                : NewEvent.DateEnd.Value.AddMinutes(-NewEvent.Amount);
-        NewEvent.People = SelectedPerson?.ID.ToString() ?? null;
 
-        _datasource.Add(NewMusic, NewEvent);
-
-        ReloadData();
-        ClearNewItemControls();
-    }
-
-    private void ListenAgainAction()
-    {
-        var lastEvent = Events.MaxBy(o => o.DateEnd);
-
-        lastEvent.ID = 0;
-
-        if (!EventViewModel.IsEditDate)
-        {
-            lastEvent.DateEnd = DateTime.Now;
-        }
-
-        lastEvent.DateStart =
-            lastEvent.DateEnd.Value.TimeOfDay.Ticks == 0
-                ? lastEvent.DateEnd.Value
-                : lastEvent.DateEnd.Value.AddMinutes(-SelectedMusic.Runtime);
-
-        lastEvent.Platform = EventViewModel.SelectedPlatformType;
-
-        _datasource.Add(SelectedMusic, lastEvent);
+        _datasource.Add(NewMusic);
 
         ReloadData();
         ClearNewItemControls();
@@ -285,7 +234,7 @@ public partial class MusicViewModel : ViewModelBase
     private void ClearNewItemControls()
     {
         NewMusic = default;
-        NewEvent = default;
+
         NewMusicCover = default;
         InputUrl = default;
         SelectedPerson = default;
@@ -296,21 +245,7 @@ public partial class MusicViewModel : ViewModelBase
     {
         _itemList = _datasource.GetList<Music>();
 
-        return _eventList
-            .OrderByDescending(o => o.DateEnd)
-            .DistinctBy(o => o.ItemID)
-            .OrderBy(o => o.DateEnd)
-            .Where(o => o.DateEnd.HasValue && o.DateEnd.Value >= DateTime.Now.AddHours(-24))
-            .Select(
-                (o, i) =>
-                    Convert(
-                        i,
-                        o,
-                        _itemList.First(m => m.ID == o.ItemID),
-                        _eventList.Where(e => e.ItemID == o.ItemID)
-                    )
-            )
-            .ToList();
+        return [];
     }
 
     private List<MusicGridItem> LoadDataBookmarked(int? yearsAgo = null)
@@ -321,50 +256,17 @@ public partial class MusicViewModel : ViewModelBase
             ? DateTime.Now.AddYears(-yearsAgo.Value)
             : DateTime.MaxValue;
 
-        return _eventList
-            .OrderByDescending(o => o.DateEnd)
-            .DistinctBy(o => o.ItemID)
-            .OrderBy(o => o.DateEnd)
-            .Where(o => o.DateEnd.HasValue && o.DateEnd.Value <= dateFilter)
-            .Where(o => o.Bookmakred)
-            .Select(
-                (o, i) =>
-                    Convert(
-                        i,
-                        o,
-                        _itemList.First(m => m.ID == o.ItemID),
-                        _eventList.Where(e => e.ItemID == o.ItemID)
-                    )
-            )
-            .ToList();
+        return [];
     }
 
     private List<MusicGridItem> LoadArtistData(Music item)
     {
         _itemList = _datasource.GetList<Music>();
 
-        return _eventList
-            .OrderByDescending(o => o.DateEnd)
-            .DistinctBy(o => o.ItemID)
-            .OrderBy(o => o.DateEnd)
-            .Select(
-                (o, i) =>
-                    Convert(
-                        i,
-                        o,
-                        _itemList.First(m => m.ID == o.ItemID),
-                        _eventList.Where(e => e.ItemID == o.ItemID)
-                    )
-            )
-            .Where(
-                o =>
-                    o.Artist.Contains(item.Artist, StringComparison.InvariantCultureIgnoreCase)
-                    || o.Title.Contains(item.Title, StringComparison.InvariantCultureIgnoreCase)
-            )
-            .ToList();
+        return [];
     }
 
-    private static MusicGridItem Convert(int index, Event e, Music i, IEnumerable<Event> eventList)
+    private static MusicGridItem Convert(int index, Music i)
     {
         return new MusicGridItem(
             i.ID,
@@ -373,14 +275,13 @@ public partial class MusicViewModel : ViewModelBase
             i.Title,
             i.Year,
             i.Runtime,
-            e.Bookmakred,
-            eventList.Count()
-        );
+            false,
+            0);
     }
 
     public void SelectedItemChanged()
     {
-        Events.Clear();
+
         Cover = null;
 
         if (SelectedItem == null)
@@ -389,7 +290,6 @@ public partial class MusicViewModel : ViewModelBase
         }
 
         SelectedMusic = _itemList.First(o => o.ID == SelectedItem.ID);
-        Events.AddRange(_eventList.Where(o => o.ItemID == SelectedItem.ID).OrderBy(o => o.DateEnd));
 
         var item = _itemList.First(o => o.ID == SelectedItem.ID);
         Cover = FileRepsitory.GetImage<Music>(item.ID);

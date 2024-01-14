@@ -83,7 +83,7 @@
                                 Width="430"
                                 Height="430" />
                         </Button>
-                        <view:EventView DataContext="{Binding EventViewModel}" />
+
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding AddEventClick}">Add pages</Button>
                             <TextBox Text="{Binding AddAmount}"
@@ -129,25 +129,7 @@
                             <TextBox Text="{Binding NewDate, Mode=TwoWay}"
                                 IsEnabled="{Binding UseNewDate}" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Rating" />
-                            <NumericUpDown Value="{Binding NewEvent.Rating, Mode=TwoWay}"
-                                FormatString="0"
-                                Minimum="1"
-                                Maximum="5" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Season" />
-                            <TextBox Text="{Binding NewEvent.Chapter}"
-                                HorizontalAlignment="Stretch" />
-                        </StackPanel>
-                        <CheckBox IsChecked="{Binding NewEvent.Bookmakred}">★</CheckBox>
-                        <TextBox Watermark="Comment"
-                            Text="{Binding NewEvent.Comment}" />
-                        <ComboBox ItemsSource="{Binding PeopleList}"
-                            SelectedItem="{Binding SelectedPerson}" />
-                        <ComboBox ItemsSource="{Binding MusicPlatformTypes}"
-                            SelectedItem="{Binding NewEvent.Platform}" />
+
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

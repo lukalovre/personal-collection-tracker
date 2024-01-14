@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using Avalonia.Media.Imaging;
-using AvaloniaApplication1.Models;
 using AvaloniaApplication1.Repositories;
 using DynamicData;
 using ReactiveUI;
@@ -19,11 +18,10 @@ public partial class MoviesViewModel : ViewModelBase
     private readonly IExternal<Movie> _external;
     private MovieGridItem _selectedGridItem;
     private List<Movie> _itemList;
-    private List<Event> _eventList = [];
     private Movie _newItem;
     private Bitmap? _itemImage;
     private Bitmap? _newItemImage;
-    private Event _newEvent;
+
     private bool _useNewDate;
     private Movie _selectedItem;
     private int _gridCountItems;
@@ -31,8 +29,6 @@ public partial class MoviesViewModel : ViewModelBase
     private int _addAmount;
     private string _addAmountString;
     private string _inputUrl;
-
-    public EventViewModel EventViewModel { get; }
 
     public int AddAmount
     {
@@ -70,8 +66,6 @@ public partial class MoviesViewModel : ViewModelBase
 
     public string SearchText { get; set; }
 
-    public ObservableCollection<Event> Events { get; set; }
-
     public ReactiveCommand<Unit, Unit> AddItemClick { get; }
     public ReactiveCommand<Unit, Unit> AddEventClick { get; }
     public ReactiveCommand<Unit, Unit> Search { get; }
@@ -86,11 +80,6 @@ public partial class MoviesViewModel : ViewModelBase
         new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
     public TimeSpan NewTime { get; set; } = new TimeSpan();
-    public Event NewEvent
-    {
-        get => _newEvent;
-        set => this.RaiseAndSetIfChanged(ref _newEvent, value);
-    }
 
     public Bitmap? Image
     {
@@ -144,11 +133,8 @@ public partial class MoviesViewModel : ViewModelBase
         GridItemsBookmarked = [];
         ReloadData();
 
-        Events = [];
-        EventViewModel = new EventViewModel(Events, MusicPlatformTypes);
-
         AddItemClick = ReactiveCommand.Create(AddItemClickAction);
-        AddEventClick = ReactiveCommand.Create(AddEventClickAction);
+
         Search = ReactiveCommand.Create(SearchAction);
 
         SelectedGridItem = GridItems.LastOrDefault();
@@ -158,7 +144,6 @@ public partial class MoviesViewModel : ViewModelBase
     {
         NewItem = _external.GetItem(InputUrl);
         NewImage = FileRepsitory.GetImageTemp<Movie>();
-        NewEvent = new Event { Amount = NewItem.Runtime, Rating = 1 };
 
         _inputUrl = string.Empty;
     }
@@ -184,25 +169,7 @@ public partial class MoviesViewModel : ViewModelBase
     {
         _itemList = _datasource.GetList<Movie>();
 
-        return _eventList
-            .OrderByDescending(o => o.DateEnd)
-            .DistinctBy(o => o.ItemID)
-            .OrderBy(o => o.DateEnd)
-            .Select(
-                (o, i) =>
-                    Convert(
-                        i,
-                        o,
-                        _itemList.First(m => m.ID == o.ItemID),
-                        _eventList.Where(e => e.ItemID == o.ItemID)
-                    )
-            )
-             .Where(
-                o =>
-                    o.Director.Contains(searchMovie.Director, StringComparison.InvariantCultureIgnoreCase)
-                    || o.Title.Contains(searchMovie.Title, StringComparison.InvariantCultureIgnoreCase)
-            )
-            .ToList();
+        return [];
     }
 
     private int SetAmount(int value)
@@ -214,42 +181,8 @@ public partial class MoviesViewModel : ViewModelBase
 
     private void AddItemClickAction()
     {
-        NewEvent.Amount = NewItem.Runtime;
-        NewEvent.DateEnd = UseNewDate ? NewDate + NewTime : DateTime.Now;
-        NewEvent.DateStart =
-            NewEvent.DateEnd.Value.TimeOfDay.Ticks == 0
-                ? NewEvent.DateEnd.Value
-                : NewEvent.DateEnd.Value.AddMinutes(-NewEvent.Amount);
-        NewEvent.People = SelectedPerson?.ID.ToString() ?? null;
-        NewEvent.Chapter = 1;
-        NewEvent.Completed = true;
 
-        _datasource.Add(NewItem, NewEvent);
-
-        ReloadData();
-        ClearNewItemControls();
-    }
-
-    private void AddEventClickAction()
-    {
-        var lastEvent = Events.MaxBy(o => o.DateEnd);
-
-        lastEvent.ID = 0;
-
-        lastEvent.DateEnd = !EventViewModel.IsEditDate
-        ? DateTime.Now
-        : EventViewModel.SelectedEvent.DateEnd;
-
-        lastEvent.DateStart =
-            lastEvent.DateEnd.Value.TimeOfDay.Ticks == 0
-                ? lastEvent.DateEnd.Value
-                : lastEvent.DateEnd.Value.AddMinutes(-SelectedItem.Runtime);
-
-        lastEvent.Platform = EventViewModel.SelectedPlatformType;
-        lastEvent.Amount = SelectedItem.Runtime;
-        lastEvent.Completed = true;
-
-        _datasource.Add(SelectedItem, lastEvent);
+        _datasource.Add(NewItem);
 
         ReloadData();
         ClearNewItemControls();
@@ -269,7 +202,7 @@ public partial class MoviesViewModel : ViewModelBase
     private void ClearNewItemControls()
     {
         NewItem = new Movie();
-        NewEvent = new Event();
+
         NewImage = default;
         SelectedPerson = default;
     }
@@ -278,20 +211,7 @@ public partial class MoviesViewModel : ViewModelBase
     {
         _itemList = _datasource.GetList<Movie>();
 
-        return _eventList
-            .OrderByDescending(o => o.DateEnd)
-            .DistinctBy(o => o.ItemID)
-            .OrderBy(o => o.DateEnd)
-            .Select(
-                (o, i) =>
-                    Convert(
-                        i,
-                        o,
-                        _itemList.First(m => m.ID == o.ItemID),
-                        _eventList.Where(e => e.ItemID == o.ItemID)
-                    )
-            )
-            .ToList();
+        return [];
     }
 
     private List<MovieGridItem> LoadDataBookmarked(int? yearsAgo = null)
@@ -302,32 +222,11 @@ public partial class MoviesViewModel : ViewModelBase
             ? DateTime.Now.AddYears(-yearsAgo.Value)
             : DateTime.MaxValue;
 
-        return _eventList
-            .OrderByDescending(o => o.DateEnd)
-            .DistinctBy(o => o.ItemID)
-            .OrderBy(o => o.DateEnd)
-            .Where(o => o.DateEnd.HasValue && o.DateEnd.Value.Year == dateFilter.Year)
-            .Select(
-                (o, i) =>
-                    Convert(
-                        i,
-                        o,
-                        _itemList.First(m => m.ID == o.ItemID),
-                        _eventList.Where(e => e.ItemID == o.ItemID)
-                    )
-            )
-            .ToList();
+        return [];
     }
 
-    private static MovieGridItem Convert(
-        int index,
-        Event e,
-        Movie i,
-        IEnumerable<Event> eventList
-    )
+    private static MovieGridItem Convert(int index, Movie i)
     {
-        var lastDate = eventList.MaxBy(o => o.DateEnd)?.DateEnd ?? DateTime.MinValue;
-        var daysAgo = (int)(DateTime.Now - lastDate).TotalDays;
 
         return new MovieGridItem(
             i.ID,
@@ -335,13 +234,13 @@ public partial class MoviesViewModel : ViewModelBase
             i.Title,
             i.Director,
             i.Year,
-            e.Rating.Value
+            0
         );
     }
 
     public void SelectedItemChanged()
     {
-        Events.Clear();
+
         Image = null;
 
         if (SelectedGridItem == null)
@@ -350,15 +249,6 @@ public partial class MoviesViewModel : ViewModelBase
         }
 
         SelectedItem = _itemList.First(o => o.ID == SelectedGridItem.ID);
-        var events = _eventList
-                .Where(o => o.ItemID == SelectedItem.ID && o.DateEnd.HasValue)
-                .OrderBy(o => o.DateEnd).ToList();
-
-        events = events.Count != 0
-        ? events
-        : _eventList.Where(o => o.ItemID == SelectedItem.ID).ToList();
-
-        Events.AddRange(events);
 
         var item = _itemList.First(o => o.ID == SelectedItem.ID);
         Image = FileRepsitory.GetImage<Movie>(item.ID);

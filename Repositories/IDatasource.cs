@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using AvaloniaApplication1.Models;
 
 namespace Repositories;
 
 public interface IDatasource
 {
-    void Add<T>(T item, Event e)
+    void Add<T>(T item)
         where T : IItem;
 
     List<T> GetList<T>()

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using Avalonia.Media.Imaging;
-using AvaloniaApplication1.Models;
 using AvaloniaApplication1.Repositories;
 using DynamicData;
 using ReactiveUI;
@@ -20,11 +19,10 @@ public partial class ComicsViewModel : ViewModelBase
     private readonly IExternal<Comic> _external;
     private ComicGridItem _selectedGridItem;
     private List<Comic> _itemList;
-    private List<Event> _eventList = [];
+
     private Comic _newItem;
     private Bitmap? _itemImage;
     private Bitmap? _newItemImage;
-    private Event _newEvent;
 
     private bool _useNewDate;
     private Comic _selectedItem;
@@ -33,8 +31,6 @@ public partial class ComicsViewModel : ViewModelBase
     private int _gridCountItemsBookmarked;
     private int _addAmount;
     private string _addAmountString;
-
-    public EventViewModel EventViewModel { get; }
 
     public int AddAmount
     {
@@ -75,8 +71,6 @@ public partial class ComicsViewModel : ViewModelBase
 
     public DateTime NewDateEnd { get; set; }
 
-    public ObservableCollection<Event> Events { get; set; }
-
     public ReactiveCommand<Unit, Unit> AddItemClick { get; }
     public ReactiveCommand<Unit, Unit> AddEventClick { get; }
 
@@ -90,11 +84,6 @@ public partial class ComicsViewModel : ViewModelBase
         new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
     public TimeSpan NewTime { get; set; } = new TimeSpan();
-    public Event NewEvent
-    {
-        get => _newEvent;
-        set => this.RaiseAndSetIfChanged(ref _newEvent, value);
-    }
 
     public Bitmap? Image
     {
@@ -148,23 +137,14 @@ public partial class ComicsViewModel : ViewModelBase
         GridItemsBookmarked = [];
         ReloadData();
 
-        Events = [];
-        EventViewModel = new EventViewModel(Events, MusicPlatformTypes);
-
         AddItemClick = ReactiveCommand.Create(AddItemClickAction);
-        AddEventClick = ReactiveCommand.Create(AddEventClickAction);
 
         SelectedGridItem = GridItems.LastOrDefault();
     }
 
     private int SetAmount(int value)
     {
-        var events = _eventList.Where(o => o.ItemID == SelectedItem.ID);
-        var currentAmount = GetComicPages(events);
-        var newAmount = value - currentAmount;
 
-        _newAmount = newAmount;
-        AddAmountString = $"    Adding {newAmount} pages";
         return value;
     }
 
@@ -173,42 +153,14 @@ public partial class ComicsViewModel : ViewModelBase
         NewItem = _external.GetItem(InputUrl);
 
         NewImage = FileRepsitory.GetImageTemp<Comic>();
-        NewEvent = new Event
-        {
-            Rating = 1
-        };
 
         _inputUrl = string.Empty;
     }
 
     private void AddItemClickAction()
     {
-        NewEvent.DateEnd = UseNewDate ? NewDateEnd : DateTime.Now;
-        NewEvent.DateStart = CalculateDateStart(NewEvent, NewEvent.Amount);
-        NewEvent.People = SelectedPerson?.ID.ToString() ?? null;
 
-        _datasource.Add(NewItem, NewEvent);
-
-        ReloadData();
-        ClearNewItemControls();
-    }
-
-    private void AddEventClickAction()
-    {
-        var lastEvent = Events.MaxBy(o => o.DateEnd);
-
-        lastEvent.ID = 0;
-
-        lastEvent.DateEnd = !EventViewModel.IsEditDate
-        ? DateTime.Now
-        : EventViewModel.SelectedEvent.DateEnd;
-
-        lastEvent.DateStart = CalculateDateStart(lastEvent, _newAmount);
-        lastEvent.Platform = EventViewModel.SelectedPlatformType;
-        lastEvent.Amount = _newAmount;
-        lastEvent.Chapter = EventViewModel.NewEventChapter;
-
-        _datasource.Add(SelectedItem, lastEvent);
+        _datasource.Add(NewItem);
 
         ReloadData();
         ClearNewItemControls();
@@ -225,16 +177,10 @@ public partial class ComicsViewModel : ViewModelBase
         GridCountItemsBookmarked = GridItemsBookmarked.Count;
     }
 
-    private static DateTime CalculateDateStart(Event e, int amount)
-    {
-        return e.DateEnd.Value.TimeOfDay.Ticks == 0
-             ? e.DateEnd.Value
-             : e.DateEnd.Value.AddMinutes(-amount * AMOUNT_TO_MINUTES_MODIFIER);
-    }
     private void ClearNewItemControls()
     {
         NewItem = default;
-        NewEvent = default;
+
         NewImage = default;
         SelectedPerson = default;
     }
@@ -243,88 +189,32 @@ public partial class ComicsViewModel : ViewModelBase
     {
         _itemList = _datasource.GetList<Comic>();
 
-        return _eventList
-            .OrderByDescending(o => o.DateEnd)
-            .DistinctBy(o => o.ItemID)
-            .OrderBy(o => o.DateEnd)
-            .Select(
-                (o, i) =>
-                    Convert(
-                        i,
-                        o,
-                        _itemList.First(m => m.ID == o.ItemID),
-                        _eventList.Where(e => e.ItemID == o.ItemID)
-                    )
-            )
-            .ToList();
+        return [];
     }
 
     private List<ComicGridItem> LoadDataBookmarked(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<Comic>();
 
-        var dateFilter = yearsAgo.HasValue
-            ? DateTime.Now.AddYears(-yearsAgo.Value)
-            : DateTime.MaxValue;
-
-        return _eventList
-            .OrderByDescending(o => o.DateEnd)
-            .DistinctBy(o => o.ItemID)
-            .OrderBy(o => o.DateEnd)
-            .Where(o => o.DateEnd.HasValue && o.DateEnd.Value <= dateFilter)
-            .Where(o => o.Bookmakred)
-            .Select(
-                (o, i) =>
-                    Convert(
-                        i,
-                        o,
-                        _itemList.First(m => m.ID == o.ItemID),
-                        _eventList.Where(e => e.ItemID == o.ItemID)
-                    )
-            )
-            .ToList();
+        return [];
     }
 
-    private int GetComicPages(IEnumerable<Event> eventList)
-    {
-        // This is for the case that the Comic is already completed by you are rereading it.
-        var lastCompletedDate = eventList.Where(o => o.Completed)?.MaxBy(o => o.DateEnd)?.DateEnd ?? DateTime.MinValue;
-        var lastDate = eventList.MaxBy(o => o.DateEnd)?.DateEnd ?? DateTime.MinValue;
-        var dateFilter = lastCompletedDate;
-
-        var lastChapter = eventList.LastOrDefault()?.Chapter ?? 1;
-
-        if (EventViewModel is not null && lastChapter < EventViewModel.NewEventChapter)
-        {
-            lastChapter = EventViewModel.NewEventChapter;
-        }
-
-        var eventsByChapter = eventList.Where(o => o.Chapter == lastChapter);
-
-        if (lastCompletedDate == lastDate)
-        {
-            return eventsByChapter.Sum(o => o.Amount);
-        }
-
-        return eventsByChapter.Where(o => o.DateEnd > dateFilter).Sum(o => o.Amount);
-    }
-
-    private ComicGridItem Convert(int index, Event e, Comic i, IEnumerable<Event> eventList)
+    private ComicGridItem Convert(int index, Comic i)
     {
         return new ComicGridItem(
             i.ID,
             index + 1,
             i.Title,
             i.Writer,
-            e.Chapter,
-            GetComicPages(eventList),
-            e.Rating
+            1,
+            0,
+            0
         );
     }
 
     public void SelectedItemChanged()
     {
-        Events.Clear();
+
         Image = null;
 
         if (SelectedGridItem == null)
@@ -333,11 +223,6 @@ public partial class ComicsViewModel : ViewModelBase
         }
 
         SelectedItem = _itemList.First(o => o.ID == SelectedGridItem.ID);
-        Events.AddRange(
-            _eventList
-                .Where(o => o.ItemID == SelectedItem.ID && o.DateEnd.HasValue)
-                .OrderBy(o => o.DateEnd)
-        );
 
         var item = _itemList.First(o => o.ID == SelectedItem.ID);
         Image = FileRepsitory.GetImage<Comic>(item.ID);

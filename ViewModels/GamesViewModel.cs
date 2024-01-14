@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using Avalonia.Media.Imaging;
-using AvaloniaApplication1.Models;
 using DynamicData;
 using ReactiveUI;
 using Repositories;
@@ -17,11 +16,9 @@ public partial class GamesViewModel : ViewModelBase
     private readonly IDatasource _datasource;
     private GameGridItem _selectedGridItem;
     private List<Game> _itemList;
-    private List<Event> _eventList;
     private Game _newItem;
     private Bitmap? _itemImage;
     private Bitmap? _newItemImage;
-    private Event _newEvent;
 
     private bool _useNewDate;
     private Game _selectedItem;
@@ -30,8 +27,6 @@ public partial class GamesViewModel : ViewModelBase
     private int _gridCountItemsBookmarked;
     private int _addAmount;
     private string _addAmountString;
-
-    public EventViewModel EventViewModel { get; }
 
     public int AddAmount
     {
@@ -71,7 +66,6 @@ public partial class GamesViewModel : ViewModelBase
         get => _selectedItem;
         set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
     }
-    public ObservableCollection<Event> Events { get; set; }
 
     public ReactiveCommand<Unit, Unit> AddItemClick { get; }
     public ReactiveCommand<Unit, Unit> AddEventClick { get; }
@@ -86,11 +80,6 @@ public partial class GamesViewModel : ViewModelBase
         new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
     public TimeSpan NewTime { get; set; } = new TimeSpan();
-    public Event NewEvent
-    {
-        get => _newEvent;
-        set => this.RaiseAndSetIfChanged(ref _newEvent, value);
-    }
 
     public Bitmap? Image
     {
@@ -133,11 +122,7 @@ public partial class GamesViewModel : ViewModelBase
         GridItemsBookmarked = [];
         ReloadData();
 
-        Events = [];
-        EventViewModel = new EventViewModel(Events, MusicPlatformTypes);
-
         AddItemClick = ReactiveCommand.Create(AddItemClickAction);
-        AddEventClick = ReactiveCommand.Create(AddEventClickAction);
 
         SelectedGridItem = GridItems.LastOrDefault();
     }
@@ -151,42 +136,8 @@ public partial class GamesViewModel : ViewModelBase
 
     private void AddItemClickAction()
     {
-        NewEvent.DateEnd = UseNewDate ? NewDate + NewTime : DateTime.Now;
-        NewEvent.DateStart =
-            NewEvent.DateEnd.Value.TimeOfDay.Ticks == 0
-                ? NewEvent.DateEnd.Value
-                : NewEvent.DateEnd.Value.AddMinutes(-NewEvent.Amount);
-        NewEvent.People = SelectedPerson?.ID.ToString() ?? null;
 
-        _datasource.Add(NewItem, NewEvent);
-
-        ReloadData();
-        ClearNewItemControls();
-    }
-
-    private void AddEventClickAction()
-    {
-        var lastEvent = Events.MaxBy(o => o.DateEnd);
-
-        lastEvent.ID = 0;
-
-        if (!EventViewModel.IsEditDate)
-        {
-            lastEvent.DateEnd = DateTime.Now;
-        }
-
-        lastEvent.DateStart =
-            lastEvent.DateEnd.Value.TimeOfDay.Ticks == 0
-                ? lastEvent.DateEnd.Value
-                : lastEvent.DateEnd.Value.AddMinutes(-_addAmount);
-
-        lastEvent.Platform = EventViewModel.SelectedPlatformType;
-        lastEvent.Amount = _addAmount;
-
-        // For now
-        lastEvent.Comment = null;
-
-        _datasource.Add(SelectedItem, lastEvent);
+        _datasource.Add(NewItem);
 
         ReloadData();
         ClearNewItemControls();
@@ -206,7 +157,7 @@ public partial class GamesViewModel : ViewModelBase
     private void ClearNewItemControls()
     {
         NewItem = default;
-        NewEvent = default;
+
         NewImage = default;
         SelectedPerson = default;
     }
@@ -249,7 +200,6 @@ public partial class GamesViewModel : ViewModelBase
 
     public void SelectedItemChanged()
     {
-        Events.Clear();
         Image = null;
 
         if (SelectedGridItem == null)
