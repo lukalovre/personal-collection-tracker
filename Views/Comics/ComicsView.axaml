@@ -18,7 +18,7 @@
                         IsReadOnly="True"
                         GridLinesVisibility="All"
                         BorderThickness="2"
-                        BorderBrush="Teal"
+                        BorderBrush="Tan"
                         SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Index}"
@@ -48,7 +48,7 @@
                         IsReadOnly="True"
                         GridLinesVisibility="All"
                         BorderThickness="2"
-                        BorderBrush="Teal"
+                        BorderBrush="Tan"
                         SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Index}"

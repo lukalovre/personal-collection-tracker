@@ -9,7 +9,7 @@
     x:Class="AvaloniaApplication1.Views.EventView"
     xmlns:view="using:AvaloniaApplication1.Views"
     x:CompileBindings="True">
-    <Border Background="Teal"
+    <Border Background="Tan"
         BorderBrush="Black"
         BorderThickness="2"
         CornerRadius="3"
