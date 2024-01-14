@@ -214,67 +214,37 @@ public partial class GamesViewModel : ViewModelBase
     private List<GameGridItem> LoadData()
     {
         _itemList = _datasource.GetList<Game>();
-        _eventList = _datasource.GetEventList<Game>();
 
-        return _eventList
-            .OrderByDescending(o => o.DateEnd)
-            .DistinctBy(o => o.ItemID)
-            .OrderBy(o => o.DateEnd)
-            .Select(
-                (o, i) =>
-                    Convert(
-                        i,
-                        o,
-                        _itemList.First(m => m.ID == o.ItemID),
-                        _eventList.Where(e => e.ItemID == o.ItemID)
-                    )
-            )
+        return _itemList
+            .OrderBy(o => o.Date)
+            .Select((o, i) => Convert(i, o))
             .ToList();
     }
 
     private List<GameGridItem> LoadDataBookmarked(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<Game>();
-        _eventList = _datasource.GetEventList<Game>();
 
         var dateFilter = yearsAgo.HasValue
             ? DateTime.Now.AddYears(-yearsAgo.Value)
             : DateTime.MaxValue;
 
-        return _eventList
-            .OrderByDescending(o => o.DateEnd)
-            .DistinctBy(o => o.ItemID)
-            .OrderBy(o => o.DateEnd)
-            .Where(o => o.DateEnd.HasValue && o.DateEnd.Value <= dateFilter)
-            .Where(o => o.Bookmakred)
-            .Select(
-                (o, i) =>
-                    Convert(
-                        i,
-                        o,
-                        _itemList.First(m => m.ID == o.ItemID),
-                        _eventList.Where(e => e.ItemID == o.ItemID)
-                    )
-            )
+        return _itemList
+            .OrderBy(o => o.Date)
+            .Select((o, i) => Convert(i, o))
             .ToList();
     }
 
-    private static GameGridItem Convert(int index, Event e, Game i, IEnumerable<Event> eventList)
+    private static GameGridItem Convert(int index, Game i)
     {
-        var lastDate = eventList.MaxBy(o => o.DateEnd)?.DateEnd ?? DateTime.MinValue;
-        var daysAgo = (int)(DateTime.Now - lastDate).TotalDays;
-
         return new GameGridItem(
             i.ID,
             index + 1,
             i.Title,
             i.Year,
             i.Platform,
-            eventList.Sum(o => o.Amount),
-            e.Completed,
-            lastDate,
-            daysAgo
-        );
+            i.HLTB,
+            i.Date);
     }
 
     public void SelectedItemChanged()
@@ -288,11 +258,6 @@ public partial class GamesViewModel : ViewModelBase
         }
 
         SelectedItem = _itemList.First(o => o.ID == SelectedGridItem.ID);
-        Events.AddRange(
-            _eventList
-                .Where(o => o.ItemID == SelectedItem.ID && o.DateEnd.HasValue)
-                .OrderBy(o => o.DateEnd)
-        );
 
         var item = _itemList.First(o => o.ID == SelectedItem.ID);
         Image = FileRepsitory.GetImage<Game>(item.ID);

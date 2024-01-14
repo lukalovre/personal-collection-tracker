@@ -6,8 +6,5 @@ public record GameGridItem(
     string Title,
     int Year,
     string Platform,
-    int Time,
-    bool Completed,
-    DateTime? LastDate,
-    int DaysAgo
-);
+    int HLTB,
+    DateTime? Purchased);

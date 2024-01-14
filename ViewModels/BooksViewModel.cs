@@ -20,7 +20,7 @@ public partial class BooksViewModel : ViewModelBase
     private readonly IExternal<Book> _external;
     private BookGridItem _selectedGridItem;
     private List<Book> _itemList;
-    private List<Event> _eventList;
+    private List<Event> _eventList = [];
     private Book _newItem;
     private Bitmap? _itemImage;
     private Bitmap? _newItemImage;
@@ -243,7 +243,6 @@ public partial class BooksViewModel : ViewModelBase
     private List<BookGridItem> LoadData()
     {
         _itemList = _datasource.GetList<Book>();
-        _eventList = _datasource.GetEventList<Book>();
 
         return _eventList
             .OrderByDescending(o => o.DateEnd)
@@ -264,7 +263,6 @@ public partial class BooksViewModel : ViewModelBase
     private List<BookGridItem> LoadDataBookmarked(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<Book>();
-        _eventList = _datasource.GetEventList<Book>();
 
         var dateFilter = yearsAgo.HasValue
             ? DateTime.Now.AddYears(-yearsAgo.Value)

@@ -20,7 +20,7 @@ public partial class MusicViewModel : ViewModelBase
     private readonly IExternal<Music> _external;
     private MusicGridItem _selectedItem;
     private List<Music> _itemList;
-    private List<Event> _eventList;
+    private List<Event> _eventList = [];
     private string _inputUrl;
     private Music _newMusic;
     private Bitmap? _cover;
@@ -295,7 +295,6 @@ public partial class MusicViewModel : ViewModelBase
     private List<MusicGridItem> LoadData()
     {
         _itemList = _datasource.GetList<Music>();
-        _eventList = _datasource.GetEventList<Music>();
 
         return _eventList
             .OrderByDescending(o => o.DateEnd)
@@ -317,7 +316,6 @@ public partial class MusicViewModel : ViewModelBase
     private List<MusicGridItem> LoadDataBookmarked(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<Music>();
-        _eventList = _datasource.GetEventList<Music>();
 
         var dateFilter = yearsAgo.HasValue
             ? DateTime.Now.AddYears(-yearsAgo.Value)
@@ -344,7 +342,6 @@ public partial class MusicViewModel : ViewModelBase
     private List<MusicGridItem> LoadArtistData(Music item)
     {
         _itemList = _datasource.GetList<Music>();
-        _eventList = _datasource.GetEventList<Music>();
 
         return _eventList
             .OrderByDescending(o => o.DateEnd)

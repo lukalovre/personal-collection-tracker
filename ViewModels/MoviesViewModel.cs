@@ -19,7 +19,7 @@ public partial class MoviesViewModel : ViewModelBase
     private readonly IExternal<Movie> _external;
     private MovieGridItem _selectedGridItem;
     private List<Movie> _itemList;
-    private List<Event> _eventList;
+    private List<Event> _eventList = [];
     private Movie _newItem;
     private Bitmap? _itemImage;
     private Bitmap? _newItemImage;
@@ -183,7 +183,6 @@ public partial class MoviesViewModel : ViewModelBase
     private IEnumerable<MovieGridItem> LoadArtistData(Movie searchMovie)
     {
         _itemList = _datasource.GetList<Movie>();
-        _eventList = _datasource.GetEventList<Movie>();
 
         return _eventList
             .OrderByDescending(o => o.DateEnd)
@@ -278,7 +277,6 @@ public partial class MoviesViewModel : ViewModelBase
     private List<MovieGridItem> LoadData()
     {
         _itemList = _datasource.GetList<Movie>();
-        _eventList = _datasource.GetEventList<Movie>();
 
         return _eventList
             .OrderByDescending(o => o.DateEnd)
@@ -299,7 +297,6 @@ public partial class MoviesViewModel : ViewModelBase
     private List<MovieGridItem> LoadDataBookmarked(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<Movie>();
-        _eventList = _datasource.GetEventList<Movie>();
 
         var dateFilter = yearsAgo.HasValue
             ? DateTime.Now.AddYears(-yearsAgo.Value)

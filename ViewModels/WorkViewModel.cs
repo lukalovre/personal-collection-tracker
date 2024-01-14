@@ -18,7 +18,7 @@ public partial class WorkViewModel : ViewModelBase
     private readonly IDatasource _datasource;
     private WorkGridItem _selectedItem;
     private List<Work> _itemList;
-    private List<Event> _eventList;
+    private List<Event> _eventList = [];
     private string _inputUrl;
     private Work _newWork;
     private Bitmap? _cover;
@@ -196,7 +196,6 @@ public partial class WorkViewModel : ViewModelBase
     private List<WorkGridItem> LoadData()
     {
         _itemList = _datasource.GetList<Work>();
-        _eventList = _datasource.GetEventList<Work>();
 
         return _eventList
             .OrderByDescending(o => o.DateEnd)
@@ -217,7 +216,6 @@ public partial class WorkViewModel : ViewModelBase
     private List<WorkGridItem> LoadDataBookmarked(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<Work>();
-        _eventList = _datasource.GetEventList<Work>();
 
         var dateFilter = yearsAgo.HasValue
             ? DateTime.Now.AddYears(-yearsAgo.Value)

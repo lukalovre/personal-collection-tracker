@@ -19,7 +19,7 @@ public partial class TVShowsViewModel : ViewModelBase
     private readonly IExternal<TVShow> _external;
     private TVShowGridItem _selectedGridItem;
     private List<TVShow> _itemList;
-    private List<Event> _eventList;
+    private List<Event> _eventList = [];
     private TVShow _newItem;
     private Bitmap? _itemImage;
     private Bitmap? _newItemImage;
@@ -229,7 +229,6 @@ public partial class TVShowsViewModel : ViewModelBase
     private List<TVShowGridItem> LoadData()
     {
         _itemList = _datasource.GetList<TVShow>();
-        _eventList = _datasource.GetEventList<TVShow>();
 
         return _eventList
             .OrderByDescending(o => o.DateEnd)
@@ -250,7 +249,6 @@ public partial class TVShowsViewModel : ViewModelBase
     private List<TVShowGridItem> LoadDataBookmarked(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<TVShow>();
-        _eventList = _datasource.GetEventList<TVShow>();
 
         var dateFilter = yearsAgo.HasValue
             ? DateTime.Now.AddYears(-yearsAgo.Value)

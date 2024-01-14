@@ -20,7 +20,7 @@ public partial class ComicsViewModel : ViewModelBase
     private readonly IExternal<Comic> _external;
     private ComicGridItem _selectedGridItem;
     private List<Comic> _itemList;
-    private List<Event> _eventList;
+    private List<Event> _eventList = [];
     private Comic _newItem;
     private Bitmap? _itemImage;
     private Bitmap? _newItemImage;
@@ -242,7 +242,6 @@ public partial class ComicsViewModel : ViewModelBase
     private List<ComicGridItem> LoadData()
     {
         _itemList = _datasource.GetList<Comic>();
-        _eventList = _datasource.GetEventList<Comic>();
 
         return _eventList
             .OrderByDescending(o => o.DateEnd)
@@ -263,7 +262,6 @@ public partial class ComicsViewModel : ViewModelBase
     private List<ComicGridItem> LoadDataBookmarked(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<Comic>();
-        _eventList = _datasource.GetEventList<Comic>();
 
         var dateFilter = yearsAgo.HasValue
             ? DateTime.Now.AddYears(-yearsAgo.Value)
