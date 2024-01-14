@@ -21,5 +21,5 @@ public class Game : IItem, ICollection
     public bool PhysicalCopy { get; set; }
     public int HLTB { get; set; }
     public string Owner { get; set; }
-    public int Igdb { get; set; }
+    public string ExternalID { get; set; }
 }
