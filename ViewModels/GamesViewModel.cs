@@ -175,12 +175,10 @@ public partial class GamesViewModel : ViewModelBase
     private List<GameGridItem> LoadDataBookmarked(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<Game>();
-
-        var dateFilter = yearsAgo.HasValue
-            ? DateTime.Now.AddYears(-yearsAgo.Value)
-            : DateTime.MaxValue;
+        var playedList = _datasource.GetListItem<GameItem>().Select(o => o.ExternalID);
 
         return _itemList
+        .Where(o => !playedList.Contains(o.ExternalID))
             .OrderBy(o => o.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();

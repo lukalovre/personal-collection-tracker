@@ -156,4 +156,29 @@ internal class TsvDatasource : IDatasource
         writer.Flush();
     }
 
+    public List<T> GetListItem<T>() where T : IItem
+    {
+        var itemFilePath = "/home/luka/Documents/Data/Games.tsv";
+
+        if (!File.Exists(itemFilePath))
+        {
+            return [];
+        }
+
+        var text = File.ReadAllText(itemFilePath);
+
+        var reader = new StringReader(text);
+
+        // Use _config once all old tsvs are converted
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            Delimiter = "\t",
+            HasHeaderRecord = false,
+            MissingFieldFound = null,
+            BadDataFound = null
+        };
+
+        using var csv = new CsvReader(reader, config);
+        return csv.GetRecords<T>().ToList();
+    }
 }
