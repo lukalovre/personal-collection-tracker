@@ -10,6 +10,7 @@ public static class Paths
     public static string Images => Path.Combine(GetRootPath(), "Images");
     public static string APIKeys => Path.Combine(GetRootPath(), ".Keys");
     public static string Data => GetRootPath();
+    public static string EventDataPath => Settings.Instance.EventsDatasourcePath;
 
     public static string GetImagePath<T>(int itemID) =>
         Path.Combine(Images, typeof(T).ToString(), $"{itemID}.png");

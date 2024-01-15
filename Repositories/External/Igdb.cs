@@ -1,72 +1,77 @@
+using System.IO;
+using System.Linq;
+using System.Net;
+using HtmlAgilityPack;
+using Repositories;
+
 namespace AvaloniaApplication1.Repositories.External;
 
 public class Igdb : IExternal<Game>
 {
+    private const string API_KEY_FILE_NAME = "igdb_keys.txt";
     public static string UrlIdentifier => "igdb.com";
 
     public Game GetItem(string url)
     {
-        throw new System.NotImplementedException();
+
+        using var client = new WebClient();
+        client.Headers.Add("user-agent", "...");
+        var content = client.DownloadData(url);
+        using var stream = new MemoryStream(content);
+        string result = System.Text.Encoding.UTF8.GetString(stream.ToArray());
+        var htmlDocument = new HtmlDocument();
+        htmlDocument.LoadHtml(result);
+
+        var title = GetTitle(htmlDocument);
+        var id = GetID(htmlDocument);
+        var year = GetYear(htmlDocument);
+        var imageUrl = GetImageUrl(htmlDocument);
+
+        var destinationFile = Paths.GetTempPath<Game>();
+        HtmlHelper.DownloadPNG(imageUrl, destinationFile);
+
+        return new Game
+        {
+            ExternalID = id.ToString(),
+            Title = title,
+            Year = year
+        };
     }
 
-    // public static async Task<Model.dbo.Game> GetDataFromAPIAsync(string igdbUrl, bool downloadPoster = true)
-    // {
-    // 	m_api = GetApiClient();
+    private int GetYear(HtmlDocument htmlDocument)
+    {
+        var node = htmlDocument.DocumentNode.SelectSingleNode(
+          "//title");
 
-    // 	var games = await m_api.QueryAsync<Game>(IGDBClient.Endpoints.Games, $"fields name, url, summary, first_release_date, id, involved_companies, cover.image_id; where url = \"{igdbUrl.Trim()}\";");
-    // 	var game = games.FirstOrDefault();
+        var titleAndYear = node.InnerText.Trim();
 
-    // 	if (downloadPoster)
-    // 	{
-    // 		var imageId = game.Cover.Value.ImageId;
-    // 		var coverUrl = $"https://images.igdb.com/igdb/image/upload/t_cover_big/{imageId}.jpg";
-    // 		var destinationFile = Path.Combine(Paths.GameCovers, $"{game.Id.Value}");
+        var split1 = titleAndYear.Split('(').Last();
+        var split2 = split1.Split(')').First();
 
-    // 		Web.DownloadPNG(coverUrl, destinationFile);
-    // 	}
+        return HtmlHelper.GetYear(split2);
+    }
 
-    // 	return new Model.dbo.Game
-    // 	{
-    // 		Igdb = (int)game.Id.Value,
-    // 		Title = game.Name,
-    // 		Year = game.FirstReleaseDate.Value.Year
-    // 	};
-    // }
+    private int GetID(HtmlDocument htmlDocument)
+    {
+        var node = htmlDocument.DocumentNode.SelectSingleNode(
+            "//meta[contains(@id, 'pageid')]");
 
+        return int.Parse(node.GetAttributeValue("data-game-id", string.Empty).Trim());
+    }
 
-    // public static async Task<string> GetUrlFromAPIAsync(int igdbID)
-    // {
-    //     m_api = GetApiClient();
+    private string GetImageUrl(HtmlDocument htmlDocument)
+    {
+        var node = htmlDocument.DocumentNode.SelectSingleNode(
+            "//meta[contains(@property, 'og:image')]");
 
-    //     var games = await m_api.QueryAsync<Game>(
-    //         IGDBClient.Endpoints.Games,
-    //         $"fields name, url, summary, first_release_date, id, involved_companies, cover.image_id; where id = {igdbID};"
-    //     );
-    //     var game = games.FirstOrDefault();
+        return node.GetAttributeValue("content", string.Empty).Trim();
+    }
 
-    //     return game.Url;
-    // }
+    private string GetTitle(HtmlDocument htmlDocument)
+    {
+        var node = htmlDocument.DocumentNode.SelectSingleNode(
+            "//meta[contains(@property, 'og:title')]");
 
-
-    // 	public static async void OpenLink(Game1001 listItem)
-    // {
-    // 	var url = await GetUrlFromAPIAsync(listItem.Igdb);
-    // 	Web.OpenLink(url);
-    // }
-
-
-    // 		private static IGDBClient GetApiClient()
-    // {
-    // 	if (m_api != null)
-    // 	{
-    // 		return m_api;
-    // 	}
-
-    // 	var lines = File.ReadAllLines(@"..\..\..\Keys\igdb_keys.txt");
-
-    // 	var clientId = lines[0];
-    // 	var clientSecret = lines[1];
-
-    // 	return new IGDBClient(clientId, clientSecret);
-    // }
+        return node.GetAttributeValue("content", string.Empty).Trim();
+    }
 }

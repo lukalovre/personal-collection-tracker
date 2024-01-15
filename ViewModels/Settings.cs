@@ -14,6 +14,7 @@ public class Settings
 
     private static Settings? _instance;
     public string DatasourcePath { get; set; } = string.Empty;
+    public string EventsDatasourcePath { get; set; } = string.Empty;
 
     public static Settings Instance
     {

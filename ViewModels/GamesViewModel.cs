@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using Avalonia.Media.Imaging;
+using AvaloniaApplication1.Repositories;
 using DynamicData;
 using ReactiveUI;
 using Repositories;
@@ -14,6 +15,7 @@ namespace AvaloniaApplication1.ViewModels;
 public partial class GamesViewModel : ViewModelBase
 {
     private readonly IDatasource _datasource;
+    private readonly IExternal<Game> _external;
     private GameGridItem _selectedGridItem;
     private List<Game> _itemList;
     private Game _newItem;
@@ -27,11 +29,22 @@ public partial class GamesViewModel : ViewModelBase
     private int _gridCountItemsBookmarked;
     private int _addAmount;
     private string _addAmountString;
+    private string _inputUrl;
 
     public int AddAmount
     {
         get => _addAmount;
         set { _addAmount = SetAmount(value); }
+    }
+
+    public string InputUrl
+    {
+        get => _inputUrl;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _inputUrl, value);
+            InputUrlChanged();
+        }
     }
 
     public string AddAmountString
@@ -114,9 +127,10 @@ public partial class GamesViewModel : ViewModelBase
         }
     }
 
-    public GamesViewModel(IDatasource datasource)
+    public GamesViewModel(IDatasource datasource, IExternal<Game> external)
     {
         _datasource = datasource;
+        _external = external;
 
         GridItems = [];
         GridItemsBookmarked = [];
@@ -125,6 +139,14 @@ public partial class GamesViewModel : ViewModelBase
         AddItemClick = ReactiveCommand.Create(AddItemClickAction);
 
         SelectedGridItem = GridItems.LastOrDefault();
+    }
+
+    public void InputUrlChanged()
+    {
+        NewItem = _external.GetItem(InputUrl);
+        NewImage = FileRepsitory.GetImageTemp<Game>();
+
+        _inputUrl = string.Empty;
     }
 
     private int SetAmount(int value)
@@ -136,7 +158,7 @@ public partial class GamesViewModel : ViewModelBase
 
     private void AddItemClickAction()
     {
-
+        NewItem.Date = UseNewDate ? NewDate : DateTime.Now;
         _datasource.Add(NewItem);
 
         ReloadData();
@@ -175,10 +197,10 @@ public partial class GamesViewModel : ViewModelBase
     private List<GameGridItem> LoadDataBookmarked(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<Game>();
-        var playedList = _datasource.GetListItem<GameItem>().Select(o => o.ExternalID);
+        var doneList = _datasource.GetDoneList<GameItem>().Select(o => o.ExternalID);
 
         return _itemList
-        .Where(o => !playedList.Contains(o.ExternalID))
+        .Where(o => !doneList.Contains(o.ExternalID))
             .OrderBy(o => o.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();

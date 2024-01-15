@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
@@ -54,7 +53,8 @@ internal class TsvDatasource : IDatasource
 
     private static string GetEventFilePath<T>()
     {
-        return Path.Combine(Paths.Data, $"{typeof(T)}Events.tsv");
+        var tableName = GetDataName<T>();
+        return Path.Combine(Paths.EventDataPath, $"{tableName}.tsv");
     }
 
     private static string? GetDataName<T>()
@@ -156,9 +156,9 @@ internal class TsvDatasource : IDatasource
         writer.Flush();
     }
 
-    public List<T> GetListItem<T>() where T : IItem
+    public List<T> GetDoneList<T>() where T : IExternalItem
     {
-        var itemFilePath = "/home/luka/Documents/Data/Games.tsv";
+        var itemFilePath = GetEventFilePath<T>();
 
         if (!File.Exists(itemFilePath))
         {
