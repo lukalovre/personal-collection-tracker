@@ -1,4 +1,5 @@
 using System;
+using AvaloniaApplication1.Models;
 
 public record GameGridItem(
     int ID,
@@ -7,4 +8,4 @@ public record GameGridItem(
     int Year,
     string Platform,
     int HLTB,
-    DateTime? Purchased);
+    DateTime? Purchased) : IGridItem;

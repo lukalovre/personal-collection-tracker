@@ -1,3 +1,5 @@
+using AvaloniaApplication1.Models;
+
 namespace AvaloniaApplication1.Repositories;
 
 public interface IExternal<T>

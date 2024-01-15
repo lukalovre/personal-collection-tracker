@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using Avalonia.Media.Imaging;
+using AvaloniaApplication1.Models;
 using AvaloniaApplication1.Repositories;
 using DynamicData;
 using ReactiveUI;
@@ -12,21 +13,48 @@ using Repositories;
 
 namespace AvaloniaApplication1.ViewModels;
 
-public partial class SongsViewModel : ViewModelBase, IExternalItem
+public class ItemViewModel<TItem, TGridItem> : ViewModelBase
+where TItem : IItem
+where TGridItem : IGridItem
 {
     private readonly IDatasource _datasource;
-    private readonly IExternal<Song> _external;
-    private SongGridItem _selectedGridItem;
-    private List<Song> _itemList;
-    private Song _newItem;
+    private readonly IExternal<TItem> _external;
+    private TGridItem _selectedGridItem;
+    private List<TItem> _itemList;
+    private TItem _newItem;
     private Bitmap? _itemImage;
     private Bitmap? _newItemImage;
 
     private bool _useNewDate;
-    private Song _selectedItem;
+    private TItem _selectedItem;
     private int _gridCountItems;
+
     private int _gridCountItemsBookmarked;
+    private int _addAmount;
+    private string _addAmountString;
     private string _inputUrl;
+
+    public int AddAmount
+    {
+        get => _addAmount;
+        set { _addAmount = SetAmount(value); }
+    }
+
+    public string InputUrl
+    {
+        get => _inputUrl;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _inputUrl, value);
+            InputUrlChanged();
+        }
+    }
+
+    public string AddAmountString
+    {
+        get => _addAmountString;
+        set => this.RaiseAndSetIfChanged(ref _addAmountString, value);
+    }
 
     public bool UseNewDate
     {
@@ -34,17 +62,22 @@ public partial class SongsViewModel : ViewModelBase, IExternalItem
         set => this.RaiseAndSetIfChanged(ref _useNewDate, value);
     }
 
-    public static ObservableCollection<string> MusicPlatformTypes => [];
+    public static ObservableCollection<string> MusicPlatformTypes =>
+        new(
+            Enum.GetValues(typeof(eGamePlatformTypes))
+                .Cast<eGamePlatformTypes>()
+                .Select(v => v.ToString())
+        );
 
     public static ObservableCollection<PersonComboBoxItem> PeopleList =>
         new(PeopleManager.Instance.GetComboboxList());
 
     public PersonComboBoxItem SelectedPerson { get; set; }
 
-    public ObservableCollection<SongGridItem> GridItems { get; set; }
-    public ObservableCollection<SongGridItem> GridItemsBookmarked { get; set; }
+    public ObservableCollection<TGridItem> GridItems { get; set; }
+    public ObservableCollection<TGridItem> GridItemsBookmarked { get; set; }
 
-    public Song SelectedItem
+    public TItem SelectedItem
     {
         get => _selectedItem;
         set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
@@ -52,9 +85,8 @@ public partial class SongsViewModel : ViewModelBase, IExternalItem
 
     public ReactiveCommand<Unit, Unit> AddItemClick { get; }
     public ReactiveCommand<Unit, Unit> AddEventClick { get; }
-    public ReactiveCommand<Unit, Unit> OpenLink { get; }
 
-    public Song NewItem
+    public TItem NewItem
     {
         get => _newItem;
         set => this.RaiseAndSetIfChanged(ref _newItem, value);
@@ -88,7 +120,7 @@ public partial class SongsViewModel : ViewModelBase, IExternalItem
         get => _gridCountItemsBookmarked;
         private set => this.RaiseAndSetIfChanged(ref _gridCountItemsBookmarked, value);
     }
-    public SongGridItem SelectedGridItem
+    public TGridItem SelectedGridItem
     {
         get => _selectedGridItem;
         set
@@ -98,17 +130,7 @@ public partial class SongsViewModel : ViewModelBase, IExternalItem
         }
     }
 
-    public string InputUrl
-    {
-        get => _inputUrl;
-        set
-        {
-            this.RaiseAndSetIfChanged(ref _inputUrl, value);
-            InputUrlChanged();
-        }
-    }
-
-    public SongsViewModel(IDatasource datasource, IExternal<Song> external)
+    public ItemViewModel(IDatasource datasource, IExternal<TItem> external)
     {
         _datasource = datasource;
         _external = external;
@@ -119,31 +141,27 @@ public partial class SongsViewModel : ViewModelBase, IExternalItem
 
         AddItemClick = ReactiveCommand.Create(AddItemClickAction);
 
-        OpenLink = ReactiveCommand.Create(OpenLinkAction);
-
         SelectedGridItem = GridItems.LastOrDefault();
-    }
-
-    public void OpenLinkAction()
-    {
-        var openLinkParams = SelectedItem.Artist.Split(' ').ToList();
-        openLinkParams.AddRange(SelectedItem.Title.Split(' '));
-        openLinkParams.AddRange(new string[] { SelectedItem.Year.ToString() });
-
-        HtmlHelper.OpenLink(SelectedItem.Link, [.. openLinkParams]);
     }
 
     public void InputUrlChanged()
     {
         NewItem = _external.GetItem(InputUrl);
-        NewImage = FileRepsitory.GetImageTemp<Song>();
+        NewImage = FileRepsitory.GetImageTemp<TItem>();
 
         _inputUrl = string.Empty;
     }
 
+    private int SetAmount(int value)
+    {
+        _addAmount = value;
+        AddAmountString = $"    Adding {_addAmount} minutes";
+        return value;
+    }
+
     private void AddItemClickAction()
     {
-
+        NewItem.Date = UseNewDate ? NewDate : DateTime.Now;
         _datasource.Add(NewItem);
 
         ReloadData();
@@ -164,45 +182,39 @@ public partial class SongsViewModel : ViewModelBase, IExternalItem
     private void ClearNewItemControls()
     {
         NewItem = default;
-
         NewImage = default;
         SelectedPerson = default;
     }
 
-    private List<SongGridItem> LoadData()
+    private List<TGridItem> LoadData()
     {
-        _itemList = _datasource.GetList<Song>();
+        _itemList = _datasource.GetList<TItem>();
 
-        return [];
+        return _itemList
+            .OrderBy(o => o.Date)
+            .Select((o, i) => Convert(i, o))
+            .ToList();
     }
 
-    private List<SongGridItem> LoadDataBookmarked(int? yearsAgo = null)
+    private List<TGridItem> LoadDataBookmarked(int? yearsAgo = null)
     {
-        _itemList = _datasource.GetList<Song>();
+        _itemList = _datasource.GetList<TItem>();
+        var doneList = _datasource.GetDoneList<GameItem>().Select(o => o.ExternalID);
 
-        var dateFilter = yearsAgo.HasValue
-            ? DateTime.Now.AddYears(-yearsAgo.Value)
-            : DateTime.MaxValue;
-
-        return [];
+        return _itemList
+        .Where(o => !doneList.Contains(o.ExternalID))
+            .OrderBy(o => o.Date)
+            .Select((o, i) => Convert(i, o))
+            .ToList();
     }
 
-    private static SongGridItem Convert(int index, Song i)
+    public virtual TGridItem Convert(int index, TItem i)
     {
-
-        return new SongGridItem(
-            i.ID,
-            index + 1,
-            i.Artist,
-            i.Title,
-            i.Year,
-            0,
-            false);
+        return default;
     }
 
     public void SelectedItemChanged()
     {
-
         Image = null;
 
         if (SelectedGridItem == null)
@@ -213,7 +225,6 @@ public partial class SongsViewModel : ViewModelBase, IExternalItem
         SelectedItem = _itemList.First(o => o.ID == SelectedGridItem.ID);
 
         var item = _itemList.First(o => o.ID == SelectedItem.ID);
-        Image = FileRepsitory.GetImage<Song>(item.ID);
+        Image = FileRepsitory.GetImage<TItem>(item.ID);
     }
-
 }

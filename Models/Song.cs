@@ -1,5 +1,7 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using AvaloniaApplication1.Models;
 
 [Table("Songs")]
 public class Song : IItem
@@ -11,4 +13,6 @@ public class Song : IItem
     public int Year { get; set; }
     public int Runtime { get; set; }
     public string Link { get; set; }
+    public string ExternalID { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public DateTime? Date { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 }

@@ -1,5 +1,7 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using AvaloniaApplication1.Models;
 
 [Table("Movies")]
 public class Movie : IItem
@@ -19,4 +21,6 @@ public class Movie : IItem
     public string Language { get; set; }
     public string Plot { get; set; }
     public string Type { get; set; }
+    public string ExternalID { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public DateTime? Date { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 }

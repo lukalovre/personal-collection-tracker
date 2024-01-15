@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using AvaloniaApplication1.Models;
 
 [Table("Games")]
 public class GameItem : IItem, IExternalItem
@@ -12,4 +13,5 @@ public class GameItem : IItem, IExternalItem
     public int Year { get; set; }
     public string Platform { get; set; }
     public string ExternalID { get; set; }
+    public DateTime? Date { get; set; }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using AvaloniaApplication1.Models;
 using Repositories;
 
 namespace AvaloniaApplication1.Repositories.External;
