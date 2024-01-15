@@ -13,10 +13,12 @@ using Repositories;
 
 namespace AvaloniaApplication1.ViewModels;
 
-public class ItemViewModel<TItem, TGridItem> : ViewModelBase
+public class ItemViewModel<TItem, TGridItem, TEventItem> : ViewModelBase
 where TItem : IItem
 where TGridItem : IGridItem
+where TEventItem : IExternalItem
 {
+    public virtual float AmountToMinutesModifier => 1f;
     private readonly IDatasource _datasource;
     private readonly IExternal<TItem> _external;
     private TGridItem _selectedGridItem;
@@ -199,7 +201,7 @@ where TGridItem : IGridItem
     private List<TGridItem> LoadDataBookmarked(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<TItem>();
-        var doneList = _datasource.GetDoneList<GameItem>().Select(o => o.ExternalID);
+        var doneList = _datasource.GetDoneList<TEventItem>().Select(o => o.ExternalID);
 
         return _itemList
         .Where(o => !doneList.Contains(o.ExternalID))

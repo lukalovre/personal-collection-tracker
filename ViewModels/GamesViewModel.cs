@@ -3,13 +3,9 @@ using Repositories;
 
 namespace AvaloniaApplication1.ViewModels;
 
-public partial class GamesViewModel : ItemViewModel<Game, GameGridItem>
+public partial class GamesViewModel(IDatasource datasource, IExternal<Game> external)
+: ItemViewModel<Game, GameGridItem, GameItem>(datasource, external)
 {
-    public GamesViewModel(IDatasource datasource, IExternal<Game> external)
-    : base(datasource, external)
-    {
-    }
-
     public override GameGridItem Convert(int index, Game i)
     {
         return new GameGridItem(

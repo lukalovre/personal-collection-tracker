@@ -113,16 +113,16 @@
                         </StackPanel>
                         <TextBox Watermark="Year"
                             Text="{Binding NewItem.Year}"/>
-                        <TextBox Watermark="GoodreadsID"
-                            Text="{Binding NewItem.GoodreadsID}"/>
-                        <CheckBox IsChecked="{Binding NewItem.is1001}">1001</CheckBox>
+                        <TextBox Watermark="ExternalID"
+                            Text="{Binding NewItem.ExternalID}"/>
+                        <CheckBox IsChecked="{Binding NewItem._1001}">1001</CheckBox>
                         <Image Source="{Binding NewImage}" />
                         <StackPanel Orientation="Horizontal">
                             <CheckBox IsChecked="{Binding UseNewDate}" />
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Date" />
                                 <TextBlock Text="    " />
-                                <TextBox Text = "{Binding NewDateEnd, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}"/>
+                                <TextBox Text = "{Binding NewDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}"/>
                             </StackPanel>
                         </StackPanel>
 
