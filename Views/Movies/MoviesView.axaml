@@ -113,8 +113,8 @@
                                 Margin="15" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Imdb" />
-                            <TextBox Text="{Binding NewItem.Imdb}"
+                            <TextBlock Text="ExternalID" />
+                            <TextBox Text="{Binding NewItem.ExternalID}"
                                 HorizontalAlignment="Stretch" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
@@ -125,11 +125,6 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Year" />
                             <TextBox Text="{Binding NewItem.Year}"
-                                HorizontalAlignment="Stretch" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Runtime" />
-                            <TextBox Text="{Binding NewItem.Runtime}"
                                 HorizontalAlignment="Stretch" />
                         </StackPanel>
                         <Image Source="{Binding NewImage}" />

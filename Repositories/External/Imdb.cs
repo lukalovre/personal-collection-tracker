@@ -27,17 +27,17 @@ public class Imdb : IExternal<Movie>, IExternal<TVShow>
         return new Movie
         {
             Title = imdbData.Title,
-            Runtime = runtime,
+            // Runtime = runtime,
             Year = year,
-            Imdb = imdbData.imdbID,
-            Actors = imdbData.Actors,
-            Country = imdbData.Country,
+            ExternalID = imdbData.imdbID,
+            // Actors = imdbData.Actors,
+            // Country = imdbData.Country,
             Director = imdbData.Director,
-            Ganre = imdbData.Genre,
-            Language = imdbData.Language,
-            Plot = imdbData.Plot,
-            Type = imdbData.Type,
-            Writer = imdbData.Writer
+            // Ganre = imdbData.Genre,
+            // Language = imdbData.Language,
+            // Plot = imdbData.Plot,
+            // Type = imdbData.Type,
+            // Writer = imdbData.Writer
         };
     }
 

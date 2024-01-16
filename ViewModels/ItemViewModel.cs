@@ -87,6 +87,7 @@ where TEventItem : IExternalItem
 
     public ReactiveCommand<Unit, Unit> AddItemClick { get; }
     public ReactiveCommand<Unit, Unit> AddEventClick { get; }
+    public ReactiveCommand<Unit, Unit> Search { get; }
 
     public TItem NewItem
     {
@@ -132,6 +133,8 @@ where TEventItem : IExternalItem
         }
     }
 
+    public string SearchText { get; set; }
+
     public ItemViewModel(IDatasource datasource, IExternal<TItem> external)
     {
         _datasource = datasource;
@@ -142,8 +145,26 @@ where TEventItem : IExternalItem
         ReloadData();
 
         AddItemClick = ReactiveCommand.Create(AddItemClickAction);
+        Search = ReactiveCommand.Create(SearchAction);
 
         SelectedGridItem = GridItems.LastOrDefault();
+    }
+
+    private void SearchAction()
+    {
+        SearchText = SearchText.Trim();
+
+        if (string.IsNullOrWhiteSpace(SearchText))
+        {
+            GridItemsBookmarked.Clear();
+            GridItemsBookmarked.AddRange(LoadData());
+            return;
+        }
+
+        // var searchMovie = new Movie { Director = SearchText, Title = SearchText };
+
+        GridItemsBookmarked.Clear();
+        GridItemsBookmarked.AddRange(LoadDataBookmarked());
     }
 
     public void InputUrlChanged()
