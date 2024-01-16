@@ -88,8 +88,8 @@ public class Goodreads : IExternal<Book>, IExternal<Comic>
                     Title = title,
                     Writer = writer,
                     Illustrator = illustrator,
-                    Year = year,
-                    GoodreadsID = goodreadsID
+                    // Year = year,
+                    ExternalID = goodreadsID.ToString()
                 };
             }
         }
