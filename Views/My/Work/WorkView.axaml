@@ -14,7 +14,7 @@
                 <DockPanel>
                     <DataGrid Margin="1"
                         Width="570"
-                        ItemsSource="{Binding WorkBookmarked}"
+                        ItemsSource="{Binding GridItemsBookmarked}"
                         IsReadOnly="True"
                         GridLinesVisibility="All"
                         BorderThickness="2"
@@ -22,14 +22,11 @@
                         SelectedItem="{Binding SelectedItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Index}"
-                                Header="{Binding GridCountWorkBookmarked}"
+                                Header="{Binding GridCountItemsBookmarked}"
                                 Width="70" />
                             <DataGridTextColumn Binding="{Binding Title}"
                                 Header="Title"
                                 Width="*" />
-                            <DataGridTextColumn Binding="{Binding Minutes, Converter={StaticResource TimeToStringConverter}}"
-                                Header="Min"
-                                Width="150" />
                             <DataGridTextColumn Binding="{Binding LastDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm}}"
                                 Header="Last Date"
                                 Width="200" />
@@ -41,7 +38,7 @@
                 <DockPanel>
                     <DataGrid Margin="1"
                         Width="570"
-                        ItemsSource="{Binding Work}"
+                        ItemsSource="{Binding GridItems}"
                         IsReadOnly="True"
                         GridLinesVisibility="All"
                         BorderThickness="2"
@@ -49,14 +46,11 @@
                         SelectedItem="{Binding SelectedItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Index}"
-                                Header="{Binding GridCountWork}"
+                                Header="{Binding GridCountItems}"
                                 Width="70" />
                             <DataGridTextColumn Binding="{Binding Title}"
                                 Header="Title"
                                 Width="*" />
-                            <DataGridTextColumn Binding="{Binding Minutes, Converter={StaticResource TimeToStringConverter}}"
-                                Header="Min"
-                                Width="150" />
                             <DataGridTextColumn Binding="{Binding LastDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm}}"
                                 Header="Last Date"
                                 Width="200" />
@@ -69,7 +63,7 @@
             <TabItem Header="Info">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBlock Text="{Binding SelectedWork.Title}"
+                        <TextBlock Text="{Binding SelectedItem.Title}"
                             FontSize="20"
                             FontWeight="Bold" />
                         <Button>
@@ -77,12 +71,6 @@
                                 Width="430"
                                 Height="430" />
                         </Button>
-
-                        <StackPanel Orientation="Horizontal">
-                            <Button Command="{Binding ListenAgain}">Add minutes</Button>
-                            <TextBox Text="{Binding AddMinutes}"
-                                Watermark="Minutes" />
-                        </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -90,12 +78,12 @@
                 <ScrollViewer>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button Command="{Binding AddClick}"
+                            <Button Command="{Binding AddItemClick}"
                                 Margin="15">Add</Button>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBox Watermark="Artist"
-                                Text="{Binding NewWork.Title}"
+                                Text="{Binding NewItem.Title}"
                                 HorizontalAlignment="Stretch" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">

@@ -136,7 +136,7 @@ where TEventItem : IExternalItem
 
     public string SearchText { get; set; }
 
-    public ItemViewModel(IDatasource datasource, IExternal<TItem> external)
+    public ItemViewModel(IDatasource datasource, IExternal<TItem> external = null!)
     {
         _datasource = datasource;
         _external = external;
