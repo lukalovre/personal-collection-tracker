@@ -88,6 +88,7 @@ where TEventItem : IExternalItem
     public ReactiveCommand<Unit, Unit> AddItemClick { get; }
     public ReactiveCommand<Unit, Unit> AddEventClick { get; }
     public ReactiveCommand<Unit, Unit> Search { get; }
+    public ReactiveCommand<Unit, Unit> OpenLink { get; }
 
     public TItem NewItem
     {
@@ -146,8 +147,19 @@ where TEventItem : IExternalItem
 
         AddItemClick = ReactiveCommand.Create(AddItemClickAction);
         Search = ReactiveCommand.Create(SearchAction);
+        OpenLink = ReactiveCommand.Create(OpenLinkAction);
 
         SelectedGridItem = GridItems.LastOrDefault();
+    }
+
+    public virtual List<string> OpenLinkAlternativeParameters()
+    {
+        return [];
+    }
+
+    private void OpenLinkAction()
+    {
+        HtmlHelper.OpenLink(SelectedItem.ExternalID, OpenLinkAlternativeParameters());
     }
 
     private void SearchAction()

@@ -35,9 +35,9 @@ public class Spotify : IExternal<Music>
                 album.ReleaseDate.Length == "1996".Length
                     ? int.Parse(album.ReleaseDate)
                     : DateTime.Parse(album.ReleaseDate).Year,
-            _1001 = false,
-            Runtime = album.Tracks.Items.Sum(o => o.DurationMs) / 1000 / 60,
-            SpotifyID = url
+            // _1001 = false,
+            // Runtime = album.Tracks.Items.Sum(o => o.DurationMs) / 1000 / 60,
+            ExternalID = url
         };
     }
 
