@@ -150,6 +150,7 @@ where TEventItem : IExternalItem
         OpenLink = ReactiveCommand.Create(OpenLinkAction);
 
         SelectedGridItem = GridItems.LastOrDefault();
+        NewItem = (TItem)Activator.CreateInstance(typeof(TItem));
     }
 
     public virtual List<string> OpenLinkAlternativeParameters()
