@@ -35,34 +35,23 @@
                 <ScrollViewer>
                     <StackPanel>
                         <TextBox Watermark="Title" Text="{Binding SelectedItem.Title}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="Year" Text="{Binding SelectedItem.Year}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="Edition" Text="{Binding SelectedItem.Edition}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="Platform" Text="{Binding SelectedItem.Platform}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="Client" Text="{Binding SelectedItem.Client}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="Price" Text="{Binding SelectedItem.Price}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="HLTB" Text="{Binding SelectedItem.HLTB}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="Owner" Text="{Binding SelectedItem.Owner}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="ExternalID" Text="{Binding SelectedItem.ExternalID}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" HorizontalAlignment="Stretch" />
-
-                        <CheckBox IsChecked="{Binding SelectedItem.Expansion}">Expansion</CheckBox>
-                        <CheckBox IsChecked="{Binding SelectedItem.New}">New</CheckBox>
-                        <CheckBox IsChecked="{Binding SelectedItem.GotFree}">GotFree</CheckBox>
-                        <CheckBox IsChecked="{Binding SelectedItem.PhysicalCopy}">PhysicalCopy</CheckBox>
-
-                        <Image Source="{Binding Image}" Width="150"/>
-
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding SelectedItem.Expansion}">Expansion </CheckBox>
+                            <CheckBox IsChecked="{Binding SelectedItem.New}">New </CheckBox>
+                            <CheckBox IsChecked="{Binding SelectedItem.GotFree}">GotFree </CheckBox>
+                            <CheckBox IsChecked="{Binding SelectedItem.PhysicalCopy}">PhysicalCopy </CheckBox>
+                        </StackPanel>
+                        <Image Source="{Binding Image}" Width="300"/>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -74,32 +63,22 @@
                             <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
                         <TextBox Watermark="Title" Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="Year" Text="{Binding NewItem.Year}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="Edition" Text="{Binding NewItem.Edition}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="Platform" Text="{Binding NewItem.Platform}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="Client" Text="{Binding NewItem.Client}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="Price" Text="{Binding NewItem.Price}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="PriceInRSD" Text="{Binding NewItem.PriceInRSD}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="HLTB" Text="{Binding NewItem.HLTB}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="Owner" Text="{Binding NewItem.Owner}" HorizontalAlignment="Stretch" />
-
                         <TextBox Watermark="ExternalID" Text="{Binding NewItem.ExternalID}" HorizontalAlignment="Stretch" />
-
-                        <CheckBox IsChecked="{Binding NewItem.Expansion}">Expansion</CheckBox>
-                        <CheckBox IsChecked="{Binding NewItem.New}">New</CheckBox>
-                        <CheckBox IsChecked="{Binding NewItem.GotFree}">GotFree</CheckBox>
-                        <CheckBox IsChecked="{Binding NewItem.PhysicalCopy}">PhysicalCopy</CheckBox>
-
-                        <Image Source="{Binding NewImage}" Width="150"/>
-
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding NewItem.Expansion}">Expansion </CheckBox>
+                            <CheckBox IsChecked="{Binding NewItem.New}">New </CheckBox>
+                            <CheckBox IsChecked="{Binding NewItem.GotFree}">GotFree </CheckBox>
+                            <CheckBox IsChecked="{Binding NewItem.PhysicalCopy}">PhysicalCopy </CheckBox>
+                        </StackPanel>
+                        <Image Source="{Binding NewImage}" Width="250"/>
                         <StackPanel Orientation="Horizontal">
                             <CheckBox IsChecked="{Binding UseNewDate}" />
                             <TextBox Watermark="Date" Text="{Binding NewDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" Width="200" />
