@@ -32,12 +32,21 @@
             <TabItem Header="Info">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBlock Text="{Binding SelectedItem.Title}" FontSize="20" FontWeight="Bold" />
+                        <TextBox Text="{Binding SelectedItem.Owner}" />
+                        <TextBox Text="{Binding SelectedItem.Title}" />
+                        <TextBox Text="{Binding SelectedItem.Chapter}" />
+                        <TextBox Text="{Binding SelectedItem.Writer}" />
+                        <TextBox Text="{Binding SelectedItem.Illustrator}" />
+                        <TextBox Text="{Binding SelectedItem.Language}" />
+                        <TextBox Text="{Binding SelectedItem.ExternalID}" />
+                        <TextBox Text="{Binding SelectedItem.Date}" />
+                        <TextBox Text="{Binding SelectedItem.Price}" />
+                        <TextBox Text="{Binding SelectedItem.PriceInRSD}" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
                         <StackPanel Orientation="Horizontal">
-                            <Button Command="{Binding AddEventClick}">Add pages</Button>
+                            <Button Command="{Binding AddEventClick}">Add</Button>
                             <TextBox Text="{Binding AddAmount}" Watermark="Pages" />
                             <TextBlock Text="{Binding AddAmountString}" />
                         </StackPanel>
@@ -51,12 +60,19 @@
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
                             <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark="Writer" Text="{Binding NewItem.Writer}" HorizontalAlignment="Stretch" />
-                            <TextBox Watermark="Title" Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
-                        </StackPanel>
-                        <TextBox Watermark="ExternalID" Text="{Binding NewItem.ExternalID}"/>
-                        <Image Source="{Binding NewImage}" />
+                        <TextBox Text="{Binding NewItem.Owner}" />
+                        <TextBox Text="{Binding NewItem.Title}" />
+                        <TextBox Text="{Binding NewItem.Chapter}" />
+                        <TextBox Text="{Binding NewItem.Writer}" />
+                        <TextBox Text="{Binding NewItem.Illustrator}" />
+                        <TextBox Text="{Binding NewItem.Language}" />
+                        <TextBox Text="{Binding NewItem.ExternalID}" />
+                        <TextBox Text="{Binding NewItem.Date}" />
+                        <TextBox Text="{Binding NewItem.Price}" />
+                        <TextBox Text="{Binding NewItem.PriceInRSD}" />
+                        <Button>
+                            <Image Source="{Binding NewImage}" Width="430" Height="430" />
+                        </Button>
                         <StackPanel Orientation="Horizontal">
                             <CheckBox IsChecked="{Binding UseNewDate}" />
                             <StackPanel Orientation="Horizontal">
