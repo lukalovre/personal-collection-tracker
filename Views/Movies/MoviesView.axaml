@@ -1,80 +1,32 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:vm="using:AvaloniaApplication1.ViewModels"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:uc="clr-namespace:AvaloniaApplication1.Views;assembly=AvaloniaApplication1"
-    mc:Ignorable="d"
-    x:DataType="vm:MoviesViewModel"
-    x:Class="AvaloniaApplication1.Views.MoviesView"
-    xmlns:view="using:AvaloniaApplication1.Views">
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:AvaloniaApplication1.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:AvaloniaApplication1.Views;assembly=AvaloniaApplication1" mc:Ignorable="d" x:DataType="vm:MoviesViewModel" x:Class="AvaloniaApplication1.Views.MoviesView" xmlns:view="using:AvaloniaApplication1.Views">
     <DockPanel>
         <TabControl>
             <TabItem Header="★">
                 <DockPanel>
-                    <StackPanel Orientation="Horizontal"
-                        DockPanel.Dock="Top">
-                        <TextBox Text="{Binding SearchText}"
-                            Watermark="Filter"
-                            DockPanel.Dock="Top"
-                            Width="150" />
-                        <Button Command="{Binding Search}"
-                            HotKey="Enter">Search</Button>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <TextBox Text="{Binding SearchText}" Watermark="Filter" DockPanel.Dock="Top" Width="150" />
+                        <Button Command="{Binding Search}" HotKey="Enter">Search</Button>
                     </StackPanel>
-                    <DataGrid Margin="1"
-                        Width="570"
-                        ItemsSource="{Binding GridItemsBookmarked}"
-                        IsReadOnly="True"
-                        GridLinesVisibility="All"
-                        BorderThickness="2"
-                        BorderBrush="Tan"
-                        SelectedItem="{Binding SelectedGridItem}">
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Index}"
-                                Header="{Binding GridCountItemsBookmarked}"
-                                Width="45" />
-                            <DataGridTextColumn Binding="{Binding Title}"
-                                Header="Title"
-                                Width="*" />
-                            <DataGridTextColumn Binding="{Binding Director}"
-                                Header="Director"
-                                Width="70" />
-                            <DataGridTextColumn Binding="{Binding Year}"
-                                Header="Year"
-                                Width="70" />
-                            <DataGridTextColumn Binding="{Binding Rating}"
-                                Header="Rating"
-                                Width="120" />
+                            <DataGridTextColumn Binding="{Binding Index}" Header="{Binding GridCountItemsBookmarked}" Width="45" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Director}" Header="Director" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Rating}" Header="Rating" Width="120" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
             </TabItem>
             <TabItem Header="All">
                 <DockPanel>
-                    <DataGrid Margin="1"
-                        Width="570"
-                        ItemsSource="{Binding GridItems}"
-                        IsReadOnly="True"
-                        GridLinesVisibility="All"
-                        BorderThickness="2"
-                        BorderBrush="Tan"
-                        SelectedItem="{Binding SelectedGridItem}">
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Index}"
-                                Header="{Binding GridCountItems}"
-                                Width="45" />
-                            <DataGridTextColumn Binding="{Binding Title}"
-                                Header="Title"
-                                Width="*" />
-                            <DataGridTextColumn Binding="{Binding Director}"
-                                Header="Director"
-                                Width="70" />
-                            <DataGridTextColumn Binding="{Binding Year}"
-                                Header="Year"
-                                Width="70" />
-                            <DataGridTextColumn Binding="{Binding Rating}"
-                                Header="Rating"
-                                Width="120" />
+                            <DataGridTextColumn Binding="{Binding Index}" Header="{Binding GridCountItems}" Width="45" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Director}" Header="Director" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Rating}" Header="Rating" Width="120" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
@@ -84,19 +36,14 @@
             <TabItem Header="Info">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBlock Text="{Binding SelectedItem.Title}"
-                            FontSize="20"
-                            FontWeight="Bold" />
+                        <TextBlock Text="{Binding SelectedItem.Title}" FontSize="20" FontWeight="Bold" />
                         <Button>
-                            <Image Source="{Binding Image}"
-                                Width="430"
-                                Height="430" />
+                            <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
 
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding AddEventClick}">Add pages</Button>
-                            <TextBox Text="{Binding AddAmount}"
-                                Watermark="Pages" />
+                            <TextBox Text="{Binding AddAmount}" Watermark="Pages" />
                             <TextBlock Text="{Binding AddAmountString}" />
                         </StackPanel>
                     </StackPanel>
@@ -106,32 +53,25 @@
                 <ScrollViewer>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button Command="{Binding AddItemClick}"
-                                Margin="15">Add</Button>
-                            <TextBox Watermark="Paste url"
-                                Text="{Binding InputUrl}"
-                                Margin="15" />
+                            <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
+                            <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="ExternalID" />
-                            <TextBox Text="{Binding NewItem.ExternalID}"
-                                HorizontalAlignment="Stretch" />
+                            <TextBox Text="{Binding NewItem.ExternalID}" HorizontalAlignment="Stretch" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Title" />
-                            <TextBox Text="{Binding NewItem.Title}"
-                                HorizontalAlignment="Stretch" />
+                            <TextBox Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Year" />
-                            <TextBox Text="{Binding NewItem.Year}"
-                                HorizontalAlignment="Stretch" />
+                            <TextBox Text="{Binding NewItem.Year}" HorizontalAlignment="Stretch" />
                         </StackPanel>
                         <Image Source="{Binding NewImage}" />
                         <StackPanel Orientation="Horizontal">
                             <CheckBox IsChecked="{Binding UseNewDate}" />
-                            <TextBox Text="{Binding NewDate, Mode=TwoWay}"
-                                IsEnabled="{Binding UseNewDate}" />
+                            <TextBox Text="{Binding NewDate, Mode=TwoWay}" IsEnabled="{Binding UseNewDate}" />
                         </StackPanel>
 
                     </StackPanel>
