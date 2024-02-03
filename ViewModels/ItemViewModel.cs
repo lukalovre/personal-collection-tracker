@@ -217,7 +217,7 @@ where TEventItem : IExternalItem
 
     private void ClearNewItemControls()
     {
-        NewItem = default;
+        NewItem = (TItem)Activator.CreateInstance(typeof(TItem));
         NewImage = default;
         SelectedPerson = default;
     }
