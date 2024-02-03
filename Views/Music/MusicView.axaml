@@ -52,7 +52,6 @@
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
-
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
