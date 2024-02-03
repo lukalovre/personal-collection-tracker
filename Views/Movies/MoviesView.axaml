@@ -36,16 +36,20 @@
             <TabItem Header="Info">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBlock Text="{Binding SelectedItem.Title}" FontSize="20" FontWeight="Bold" />
+                        <TextBox Text="{Binding SelectedItem.Owner}" />
+                        <TextBox Text="{Binding SelectedItem.Director}" />
+                        <TextBox Text="{Binding SelectedItem.Title}" />
+                        <TextBox Text="{Binding SelectedItem.Year}" />
+                        <TextBox Text="{Binding SelectedItem.Format}" />
+                        <TextBox Text="{Binding SelectedItem.Region}" />
+                        <TextBox Text="{Binding SelectedItem.Price}" />
+                        <TextBox Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox Text="{Binding SelectedItem.Date}" />
+                        <TextBox Text="{Binding SelectedItem.ExternalID}" />
+                        <TextBox Text="{Binding SelectedItem.Comment}" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
-
-                        <StackPanel Orientation="Horizontal">
-                            <Button Command="{Binding AddEventClick}">Add pages</Button>
-                            <TextBox Text="{Binding AddAmount}" Watermark="Pages" />
-                            <TextBlock Text="{Binding AddAmountString}" />
-                        </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -56,24 +60,20 @@
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
                             <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="ExternalID" />
-                            <TextBox Text="{Binding NewItem.ExternalID}" HorizontalAlignment="Stretch" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Title" />
-                            <TextBox Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Year" />
-                            <TextBox Text="{Binding NewItem.Year}" HorizontalAlignment="Stretch" />
-                        </StackPanel>
-                        <Image Source="{Binding NewImage}" />
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding UseNewDate}" />
-                            <TextBox Text="{Binding NewDate, Mode=TwoWay}" IsEnabled="{Binding UseNewDate}" />
-                        </StackPanel>
-
+                        <TextBox Text="{Binding NewItem.Owner}" />
+                        <TextBox Text="{Binding NewItem.Director}" />
+                        <TextBox Text="{Binding NewItem.Title}" />
+                        <TextBox Text="{Binding NewItem.Year}" />
+                        <TextBox Text="{Binding NewItem.Format}" />
+                        <TextBox Text="{Binding NewItem.Region}" />
+                        <TextBox Text="{Binding NewItem.Price}" />
+                        <TextBox Text="{Binding NewItem.PriceInRSD}" />
+                        <TextBox Text="{Binding NewItem.Date}" />
+                        <TextBox Text="{Binding NewItem.ExternalID}" />
+                        <TextBox Text="{Binding NewItem.Comment}" />
+                        <Button>
+                            <Image Source="{Binding NewImage}" Width="430" Height="430" />
+                        </Button>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
