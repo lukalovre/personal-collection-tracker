@@ -7,7 +7,7 @@
                         <TextBox Text="{Binding SearchText}" Watermark="Filter" DockPanel.Dock="Top" Width="150" />
                         <Button Command="{Binding Search}" HotKey="Enter">Search</Button>
                     </StackPanel>
-                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedItem}">
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Index}" Header="{Binding GridCountItems}" Width="70" />
                             <DataGridTextColumn Binding="{Binding Artist}" Header="Artist" Width="150" />
@@ -22,7 +22,7 @@
             </TabItem>
             <TabItem Header="★">
                 <DockPanel>
-                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedItem}">
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Index}" Header="{Binding GridCountItemsBookmarked}" Width="70" />
                             <DataGridTextColumn Binding="{Binding Artist}" Header="Artist" Width="150" />
@@ -40,18 +40,15 @@
             <TabItem Header="Info">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBlock Text="{Binding SelectedItem.Artist}" FontSize="20" FontWeight="Bold" />
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding SelectedItem.Title}" FontSize="20" />
-                            <TextBlock Text=" " FontSize="20" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding SelectedItem.Year}" FontWeight="Bold" VerticalAlignment="Center" />
-                            <TextBlock Text="   " />
-
-                            <TextBlock Text="  " />
-                            <Button Command="{Binding OpenLink}">Open Link</Button>
-                        </StackPanel>
+                        <TextBox Text="{Binding SelectedItem.Owner}" />
+                        <TextBox Text="{Binding SelectedItem.Artist}" />
+                        <TextBox Text="{Binding SelectedItem.Title}" />
+                        <TextBox Text="{Binding SelectedItem.Year}" />
+                        <TextBox Text="{Binding SelectedItem.Format}" />
+                        <TextBox Text="{Binding SelectedItem.Price}" />
+                        <TextBox Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox Text="{Binding SelectedItem.Date}" />
+                        <TextBox Text="{Binding SelectedItem.ExternalID}" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
@@ -66,21 +63,15 @@
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
                             <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark="Artist" Text="{Binding NewItem.Artist}" HorizontalAlignment="Stretch" />
-                            <TextBox Watermark="Title" Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark="Year" Text="{Binding NewItem.Year}" />
-                        </StackPanel>
-                        <TextBox Watermark="External Link" Text="{Binding NewItem.ExternalID}" />
-                        <Image Source="{Binding NewImage}" />
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding UseNewDate}" />
-                            <CalendarDatePicker SelectedDate="{Binding NewDate, Mode=TwoWay}" IsEnabled="{Binding UseNewDate}" SelectedDateFormat="Custom" CustomDateFormatString="yyyy-MM-dd" />
-                            <TimePicker SelectedTime="{Binding NewTime, Mode=TwoWay}" ClockIdentifier="24HourClock" IsEnabled="{Binding UseNewDate}" />
-                        </StackPanel>
-
+                        <TextBox Text="{Binding NewItem.Owner}" />
+                        <TextBox Text="{Binding NewItem.Artist}" />
+                        <TextBox Text="{Binding NewItem.Title}" />
+                        <TextBox Text="{Binding NewItem.Year}" />
+                        <TextBox Text="{Binding NewItem.Format}" />
+                        <TextBox Text="{Binding NewItem.Price}" />
+                        <TextBox Text="{Binding NewItem.PriceInRSD}" />
+                        <TextBox Text="{Binding NewItem.Date}" />
+                        <TextBox Text="{Binding NewItem.ExternalID}" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
