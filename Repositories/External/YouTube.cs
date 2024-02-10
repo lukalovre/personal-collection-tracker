@@ -4,17 +4,18 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using AvaloniaApplication1.ViewModels.Extensions;
 using HtmlAgilityPack;
 using Repositories;
 
 namespace AvaloniaApplication1.Repositories.External;
 
-public class YouTube : IExternal<TVShow>, IExternal<Song>
+public class YouTube : IExternal<TVShow>, IExternal<Song>, IExternal<Music>
 {
     public static string UrlIdentifier => "youtube.com";
 
-    public TVShow GetItem(string url)
+    public async Task<TVShow> GetItem(string url)
     {
         using var client = new WebClient();
         var content = client.DownloadData(url);
@@ -54,7 +55,7 @@ public class YouTube : IExternal<TVShow>, IExternal<Song>
         return node.GetAttributeValue("content", string.Empty).Trim();
     }
 
-    Song IExternal<Song>.GetItem(string url)
+    async Task<Song> IExternal<Song>.GetItem(string url)
     {
         using var client = new WebClient();
         var content = client.DownloadData(url);
@@ -74,7 +75,7 @@ public class YouTube : IExternal<TVShow>, IExternal<Song>
             title = artist;
 
             var channelNameNode = htmlDocument.DocumentNode.SelectSingleNode("//meta[contains(@property, 'og:video:tag')]");
-            artist = channelNameNode.GetAttributeValue("content", string.Empty).Trim();
+            artist = channelNameNode?.GetAttributeValue("content", string.Empty).Trim();
         }
 
         var link = GetUrl(url);
@@ -119,6 +120,12 @@ public class YouTube : IExternal<TVShow>, IExternal<Song>
         var yearNode = htmlDocument.DocumentNode.SelectSingleNode(
             "//meta[contains(@itemprop, 'datePublished')]"
         );
+
+        if (yearNode == null)
+        {
+            return 0;
+        }
+
         var yearText = yearNode.GetAttributeValue("content", string.Empty).Trim();
         var year = int.Parse(yearText.Split('-').FirstOrDefault());
         return year;
@@ -145,7 +152,14 @@ public class YouTube : IExternal<TVShow>, IExternal<Song>
             "|HQ|",
             "(Audio)"};
 
-        videoTitle = videoTitle.Split(" - ")[1];
+        var split = videoTitle.Split(" - ");
+
+        if (split.Length <= 1)
+        {
+            return videoTitle;
+        }
+
+        videoTitle = split[1];
 
         foreach (var item in toRemoveList)
         {
@@ -160,4 +174,17 @@ public class YouTube : IExternal<TVShow>, IExternal<Song>
         return videoTitle.Split(" - ")[0].Trim();
     }
 
+    async Task<Music> IExternal<Music>.GetItem(string url)
+    {
+        var song = (this as IExternal<Song>).GetItem(url).Result;
+
+        return new Music
+        {
+            Title = song.Title,
+            Artist = song.Artist,
+            Year = song.Year,
+            // Runtime = song.Runtime,
+            ExternalID = song.Link
+        };
+    }
 }

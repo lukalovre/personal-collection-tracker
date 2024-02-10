@@ -4,18 +4,18 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using AvaloniaApplication1.Models;
+using System.Threading.Tasks;
 using Repositories;
 
 namespace AvaloniaApplication1.Repositories.External;
 
-public class Imdb : IExternal<Movie>, IExternal<TVShow>
+public class Imdb : IExternal<Movie>, IExternal<TVShow>, IExternal<Standup>
 {
     private const string API_KEY_FILE_NAME = "omdbapi_key.txt";
 
     public static string UrlIdentifier => "imdb.com";
 
-    Movie IExternal<Movie>.GetItem(string url)
+    async Task<Movie> IExternal<Movie>.GetItem(string url)
     {
         string inputImdb = GetImdbID(url);
 
@@ -41,7 +41,7 @@ public class Imdb : IExternal<Movie>, IExternal<TVShow>
         };
     }
 
-    public TVShow GetItem(string url)
+    public async Task<TVShow> GetItem(string url)
     {
         string inputImdb = GetImdbID(url);
 
@@ -124,6 +124,45 @@ public class Imdb : IExternal<Movie>, IExternal<TVShow>
     private static string GetImdbID(string url)
     {
         return url.Split('/').FirstOrDefault(i => i.StartsWith("tt"));
+    }
+
+    async Task<Standup> IExternal<Standup>.GetItem(string url)
+    {
+        string inputImdb = GetImdbID(url);
+
+        var imdbData = GetDataFromAPI<Standup>(inputImdb);
+
+        var runtime = GetRuntime(imdbData.Runtime);
+        int year = GetYear(imdbData.Year);
+
+        var split = imdbData.Title.Split(':');
+
+        string performer;
+        string title;
+
+        if (split.Count() > 1)
+        {
+            performer = split[0].Trim();
+            title = split[1].Trim();
+        }
+        else
+        {
+            performer = imdbData.Writer;
+            title = imdbData.Title;
+        }
+
+        return new Standup
+        {
+            Performer = performer,
+            Title = title,
+            Link = url,
+            Country = imdbData.Country,
+            Director = imdbData.Director,
+            Writer = imdbData.Writer,
+            Plot = imdbData.Plot,
+            Runtime = runtime,
+            Year = year
+        };
     }
 
     // 	public static void OpenHyperlink(Movie movie)

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using AvaloniaApplication1.Repositories.External;
 using Repositories;
 
@@ -7,25 +8,32 @@ public class MusicExternal : IExternal<Music>
 {
     private readonly IExternal<Music> _bandcamp;
     private readonly IExternal<Music> _spotify;
+    private readonly IExternal<Music> _youtube;
 
     public MusicExternal()
     {
         _bandcamp = new Bandcamp();
         _spotify = new Spotify();
+        _youtube = new YouTube();
     }
 
-    public Music GetItem(string url)
+    public async Task<Music> GetItem(string url)
     {
         url = HtmlHelper.CleanUrl(url);
 
         if (url.Contains(Bandcamp.UrlIdentifier))
         {
-            return _bandcamp.GetItem(url);
+            return await _bandcamp.GetItem(url);
         }
 
         if (url.Contains(Spotify.UrlIdentifier))
         {
-            return _spotify.GetItem(url);
+            return await _spotify.GetItem(url);
+        }
+
+        if (url.Contains(YouTube.UrlIdentifier))
+        {
+            return await _youtube.GetItem(url);
         }
 
         return new Music();

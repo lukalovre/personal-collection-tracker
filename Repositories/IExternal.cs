@@ -1,4 +1,4 @@
-using AvaloniaApplication1.Models;
+using System.Threading.Tasks;
 
 namespace AvaloniaApplication1.Repositories;
 
@@ -7,5 +7,5 @@ public interface IExternal<T>
 {
     public static string UrlIdentifier { get; } = string.Empty;
 
-    public T GetItem(string url);
+    public Task<T> GetItem(string url);
 }

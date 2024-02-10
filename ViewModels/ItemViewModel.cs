@@ -180,9 +180,9 @@ where TEventItem : IExternalItem
         GridItemsBookmarked.AddRange(LoadDataBookmarked());
     }
 
-    public void InputUrlChanged()
+    public async void InputUrlChanged()
     {
-        NewItem = _external.GetItem(InputUrl);
+        NewItem = await _external.GetItem(InputUrl);
         NewImage = FileRepsitory.GetImageTemp<TItem>();
 
         _inputUrl = string.Empty;

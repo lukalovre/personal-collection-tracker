@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Repositories;
 using SpotifyAPI.Web;
 
@@ -9,20 +10,21 @@ namespace AvaloniaApplication1.Repositories.External;
 public class Spotify : IExternal<Music>
 {
     private const string API_KEY_FILE_NAME = "spotify_key.txt";
+
     public static string UrlIdentifier => "spotify.com";
 
-    public Music GetItem(string url)
+    public async Task<Music> GetItem(string url)
     {
         var albumID = url.Split('/').LastOrDefault();
 
-        var spotifyClient = GetClient();
+        var client = GetClient();
 
-        if (spotifyClient == null)
+        if (client == null)
         {
             return new Music();
         }
 
-        var album = spotifyClient.Albums.Get(albumID).Result;
+        var album = client.Albums.Get(albumID).Result;
 
         var destinationFile = Paths.GetTempPath<Music>();
         HtmlHelper.DownloadPNG(album.Images.FirstOrDefault()?.Url, destinationFile);
@@ -41,14 +43,14 @@ public class Spotify : IExternal<Music>
         };
     }
 
-    private static SpotifyClient GetClient()
+    private SpotifyClient GetClient()
     {
         var config = SpotifyClientConfig.CreateDefault();
 
         var keyFilePath = Paths.GetAPIKeyFilePath(API_KEY_FILE_NAME);
         var lines = File.ReadAllLines(keyFilePath);
 
-        if (!lines.Any())
+        if (lines.Length == 0)
         {
             // Api keys missing.
             return null;

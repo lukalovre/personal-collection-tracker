@@ -136,9 +136,9 @@ public partial class TVShowsViewModel : ViewModelBase
         SelectedGridItem = GridItems.LastOrDefault();
     }
 
-    private void InputUrlChanged()
+    private async void InputUrlChanged()
     {
-        NewItem = _external.GetItem(InputUrl);
+        NewItem = await _external.GetItem(InputUrl);
         NewImage = FileRepsitory.GetImageTemp<TVShow>();
 
         _inputUrl = string.Empty;

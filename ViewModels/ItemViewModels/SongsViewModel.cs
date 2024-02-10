@@ -133,9 +133,9 @@ public partial class SongsViewModel : ViewModelBase
         HtmlHelper.OpenLink(SelectedItem.Link, [.. openLinkParams]);
     }
 
-    public void InputUrlChanged()
+    public async void InputUrlChanged()
     {
-        NewItem = _external.GetItem(InputUrl);
+        NewItem = await _external.GetItem(InputUrl);
         NewImage = FileRepsitory.GetImageTemp<Song>();
 
         _inputUrl = string.Empty;

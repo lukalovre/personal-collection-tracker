@@ -4,16 +4,16 @@ using Repositories;
 
 namespace AvaloniaApplication1.Repositories;
 
-public class MovieExternal : IExternal<Movie>
+public class StandupExternal : IExternal<Standup>
 {
-    private readonly IExternal<Movie> _imdb;
+    private readonly IExternal<Standup> _imdb;
 
-    public MovieExternal()
+    public StandupExternal()
     {
         _imdb = new Imdb();
     }
 
-    public async Task<Movie> GetItem(string url)
+    public async Task<Standup> GetItem(string url)
     {
         url = HtmlHelper.CleanUrl(url);
 
@@ -22,7 +22,7 @@ public class MovieExternal : IExternal<Movie>
             return await _imdb.GetItem(url);
         }
 
-        return new Movie();
+        return new Standup();
     }
 
 }

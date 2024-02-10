@@ -1,7 +1,7 @@
 using System.IO;
 using System.Linq;
-using System.Net;
-using HtmlAgilityPack;
+using System.Threading.Tasks;
+using IGDB;
 using Repositories;
 
 namespace AvaloniaApplication1.Repositories.External;
@@ -11,67 +11,52 @@ public class Igdb : IExternal<Game>
     private const string API_KEY_FILE_NAME = "igdb_keys.txt";
     public static string UrlIdentifier => "igdb.com";
 
-    public Game GetItem(string url)
+    public async Task<Game> GetItem(string igdbUrl)
     {
+        var keyFilePath = Paths.GetAPIKeyFilePath(API_KEY_FILE_NAME);
+        var lines = File.ReadAllLines(keyFilePath);
 
-        using var client = new WebClient();
-        client.Headers.Add("user-agent", "...");
-        var content = client.DownloadData(url);
-        using var stream = new MemoryStream(content);
-        string result = System.Text.Encoding.UTF8.GetString(stream.ToArray());
-        var htmlDocument = new HtmlDocument();
-        htmlDocument.LoadHtml(result);
+        if (lines.Length == 0)
+        {
+            // Api keys missing.
+            // return;
+        }
 
-        var title = GetTitle(htmlDocument);
-        var id = GetID(htmlDocument);
-        var year = GetYear(htmlDocument);
-        var imageUrl = GetImageUrl(htmlDocument);
+        var clientId = lines[0];
+        var clientSecret = lines[1];
+
+        var client = new IGDBClient(clientId, clientSecret);
+
+        var games = await client.QueryAsync<IGDB.Models.Game>(
+            IGDBClient.Endpoints.Games,
+             $"fields name, url, summary, first_release_date, id, involved_companies, cover.image_id; where url = \"{igdbUrl.Trim()}\";");
+
+        var game = games.SingleOrDefault();
+
+        var imageId = game.Cover.Value.ImageId;
+        var coverUrl = $"https://images.igdb.com/igdb/image/upload/t_cover_big/{imageId}.jpg";
 
         var destinationFile = Paths.GetTempPath<Game>();
-        HtmlHelper.DownloadPNG(imageUrl, destinationFile);
+        HtmlHelper.DownloadPNG(coverUrl, destinationFile);
 
         return new Game
         {
-            ExternalID = id.ToString(),
-            Title = title,
-            Year = year
+            ExternalID = game.Id.ToString(),
+            Title = game.Name,
+            Year = game.FirstReleaseDate.Value.Year
         };
     }
 
-    private int GetYear(HtmlDocument htmlDocument)
-    {
-        var node = htmlDocument.DocumentNode.SelectSingleNode(
-          "//title");
+    // public async Task<string> GetUrlFromAPIAsync(int igdbID)
+    // {
+    //     var client = GetClient();
 
-        var titleAndYear = node.InnerText.Trim();
+    //     var games = await client.QueryAsync<IGDB.Models.Game>(
+    //         IGDBClient.Endpoints.Games,
+    //         $"fields name, url, summary, first_release_date, id, involved_companies, cover.image_id; where id = {igdbID};"
+    //     );
+    //     var game = games.FirstOrDefault();
 
-        var split1 = titleAndYear.Split('(').Last();
-        var split2 = split1.Split(')').First();
-
-        return HtmlHelper.GetYear(split2);
-    }
-
-    private int GetID(HtmlDocument htmlDocument)
-    {
-        var node = htmlDocument.DocumentNode.SelectSingleNode(
-            "//meta[contains(@id, 'pageid')]");
-
-        return int.Parse(node.GetAttributeValue("data-game-id", string.Empty).Trim());
-    }
-
-    private string GetImageUrl(HtmlDocument htmlDocument)
-    {
-        var node = htmlDocument.DocumentNode.SelectSingleNode(
-            "//meta[contains(@property, 'og:image')]");
-
-        return node.GetAttributeValue("content", string.Empty).Trim();
-    }
-
-    private string GetTitle(HtmlDocument htmlDocument)
-    {
-        var node = htmlDocument.DocumentNode.SelectSingleNode(
-            "//meta[contains(@property, 'og:title')]");
-
-        return node.GetAttributeValue("content", string.Empty).Trim();
-    }
+    //     return game.Url;
+    // }
 }
