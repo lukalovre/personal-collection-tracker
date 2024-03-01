@@ -27,7 +27,6 @@ where TEventItem : IExternalItem
     private Bitmap? _itemImage;
     private Bitmap? _newItemImage;
 
-    private bool _useNewDate;
     private TItem _selectedItem;
     private int _gridCountItems;
 
@@ -56,12 +55,6 @@ where TEventItem : IExternalItem
     {
         get => _addAmountString;
         set => this.RaiseAndSetIfChanged(ref _addAmountString, value);
-    }
-
-    public bool UseNewDate
-    {
-        get => _useNewDate;
-        set => this.RaiseAndSetIfChanged(ref _useNewDate, value);
     }
 
     public static ObservableCollection<string> MusicPlatformTypes =>
@@ -95,11 +88,6 @@ where TEventItem : IExternalItem
         get => _newItem;
         set => this.RaiseAndSetIfChanged(ref _newItem, value);
     }
-
-    public DateTime NewDate { get; set; } =
-        new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-
-    public TimeSpan NewTime { get; set; } = new TimeSpan();
 
     public Bitmap? Image
     {

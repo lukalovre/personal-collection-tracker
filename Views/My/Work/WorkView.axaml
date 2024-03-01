@@ -1,59 +1,24 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:vm="using:AvaloniaApplication1.ViewModels"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:uc="clr-namespace:AvaloniaApplication1.Views;assembly=AvaloniaApplication1"
-    mc:Ignorable="d"
-    x:DataType="vm:WorkViewModel"
-    x:Class="AvaloniaApplication1.Views.WorkView"
-    xmlns:view="using:AvaloniaApplication1.Views">
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:AvaloniaApplication1.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:AvaloniaApplication1.Views;assembly=AvaloniaApplication1" mc:Ignorable="d" x:DataType="vm:WorkViewModel" x:Class="AvaloniaApplication1.Views.WorkView" xmlns:view="using:AvaloniaApplication1.Views">
     <DockPanel>
         <TabControl>
             <TabItem Header="★">
                 <DockPanel>
-                    <DataGrid Margin="1"
-                        Width="570"
-                        ItemsSource="{Binding GridItemsBookmarked}"
-                        IsReadOnly="True"
-                        GridLinesVisibility="All"
-                        BorderThickness="2"
-                        BorderBrush="Tan"
-                        SelectedItem="{Binding SelectedItem}">
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedItem}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Index}"
-                                Header="{Binding GridCountItemsBookmarked}"
-                                Width="70" />
-                            <DataGridTextColumn Binding="{Binding Title}"
-                                Header="Title"
-                                Width="*" />
-                            <DataGridTextColumn Binding="{Binding LastDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm}}"
-                                Header="Last Date"
-                                Width="200" />
+                            <DataGridTextColumn Binding="{Binding Index}" Header="{Binding GridCountItemsBookmarked}" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding LastDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm}}" Header="Last Date" Width="200" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
             </TabItem>
             <TabItem Header="All">
                 <DockPanel>
-                    <DataGrid Margin="1"
-                        Width="570"
-                        ItemsSource="{Binding GridItems}"
-                        IsReadOnly="True"
-                        GridLinesVisibility="All"
-                        BorderThickness="2"
-                        BorderBrush="Tan"
-                        SelectedItem="{Binding SelectedItem}">
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedItem}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Index}"
-                                Header="{Binding GridCountItems}"
-                                Width="70" />
-                            <DataGridTextColumn Binding="{Binding Title}"
-                                Header="Title"
-                                Width="*" />
-                            <DataGridTextColumn Binding="{Binding LastDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm}}"
-                                Header="Last Date"
-                                Width="200" />
+                            <DataGridTextColumn Binding="{Binding Index}" Header="{Binding GridCountItems}" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding LastDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm}}" Header="Last Date" Width="200" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
@@ -63,13 +28,9 @@
             <TabItem Header="Info">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBlock Text="{Binding SelectedItem.Title}"
-                            FontSize="20"
-                            FontWeight="Bold" />
+                        <TextBlock Text="{Binding SelectedItem.Title}" FontSize="20" FontWeight="Bold" />
                         <Button>
-                            <Image Source="{Binding Image}"
-                                Width="430"
-                                Height="430" />
+                            <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
                     </StackPanel>
                 </ScrollViewer>
@@ -78,25 +39,11 @@
                 <ScrollViewer>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button Command="{Binding AddItemClick}"
-                                Margin="15">Add</Button>
+                            <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark="Artist"
-                                Text="{Binding NewItem.Title}"
-                                HorizontalAlignment="Stretch" />
+                            <TextBox Watermark="Artist" Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding UseNewDate}" />
-                            <CalendarDatePicker SelectedDate="{Binding NewDate, Mode=TwoWay}"
-                                IsEnabled="{Binding UseNewDate}"
-                                SelectedDateFormat="Custom"
-                                CustomDateFormatString="yyyy-MM-dd" />
-                            <TimePicker SelectedTime="{Binding NewTime, Mode=TwoWay}"
-                                ClockIdentifier="24HourClock"
-                                IsEnabled="{Binding UseNewDate}" />
-                        </StackPanel>
-
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

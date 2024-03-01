@@ -73,15 +73,6 @@
                         <Button>
                             <Image Source="{Binding NewImage}" Width="430" Height="430" />
                         </Button>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding UseNewDate}" />
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Date" />
-                                <TextBlock Text="    " />
-                                <TextBox Text = "{Binding NewDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}"/>
-                            </StackPanel>
-                        </StackPanel>
-
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

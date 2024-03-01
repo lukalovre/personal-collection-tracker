@@ -79,10 +79,6 @@
                             <CheckBox IsChecked="{Binding NewItem.PhysicalCopy}">PhysicalCopy </CheckBox>
                         </StackPanel>
                         <Image Source="{Binding NewImage}" Width="250"/>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding UseNewDate}" />
-                            <TextBox Watermark="Date" Text="{Binding NewDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" Width="200" />
-                        </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
