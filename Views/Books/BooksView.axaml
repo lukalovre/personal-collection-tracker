@@ -32,19 +32,19 @@
             <TabItem Header="Info">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBox Text="{Binding SelectedItem.Title}" />
-                        <TextBox Text="{Binding SelectedItem.Author}" />
-                        <TextBox Text="{Binding SelectedItem.Year}" />
-                        <TextBox Text="{Binding SelectedItem.Pages}" />
-                        <TextBox Text="{Binding SelectedItem.Type}" />
-                        <TextBox Text="{Binding SelectedItem._1001}" />
-                        <TextBox Text="{Binding SelectedItem.EminaRating}" />
-                        <TextBox Text="{Binding SelectedItem.EminaRead}" />
-                        <TextBox Text="{Binding SelectedItem.LukaRead}" />
-                        <TextBox Text="{Binding SelectedItem.ExternalID}" />
-                        <TextBox Text="{Binding SelectedItem.Price}" />
-                        <TextBox Text="{Binding SelectedItem.PriceInRSD}" />
-                        <TextBox Text="{Binding SelectedItem.Date}" />
+                        <TextBox Watermark = "Title" Text="{Binding SelectedItem.Title}" />
+                        <TextBox Watermark = "Author" Text="{Binding SelectedItem.Author}" />
+                        <TextBox Watermark = "Year" Text="{Binding SelectedItem.Year}" />
+                        <TextBox Watermark = "Pages" Text="{Binding SelectedItem.Pages}" />
+                        <TextBox Watermark = "Type" Text="{Binding SelectedItem.Type}" />
+                        <TextBox Watermark = "_1001" Text="{Binding SelectedItem._1001}" />
+                        <TextBox Watermark = "EminaRating" Text="{Binding SelectedItem.EminaRating}" />
+                        <TextBox Watermark = "EminaRead" Text="{Binding SelectedItem.EminaRead}" />
+                        <TextBox Watermark = "LukaRead" Text="{Binding SelectedItem.LukaRead}" />
+                        <TextBox Watermark = "ExternalID" Text="{Binding SelectedItem.ExternalID}" />
+                        <TextBox Watermark = "Price" Text="{Binding SelectedItem.Price}" />
+                        <TextBox Watermark = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox Watermark = "Date" Text="{Binding SelectedItem.Date}" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
@@ -58,19 +58,19 @@
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
                             <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
-                        <TextBox Text="{Binding NewItem.Title}" />
-                        <TextBox Text="{Binding NewItem.Author}" />
-                        <TextBox Text="{Binding NewItem.Year}" />
-                        <TextBox Text="{Binding NewItem.Pages}" />
-                        <TextBox Text="{Binding NewItem.Type}" />
-                        <TextBox Text="{Binding NewItem._1001}" />
-                        <TextBox Text="{Binding NewItem.EminaRating}" />
-                        <TextBox Text="{Binding NewItem.EminaRead}" />
-                        <TextBox Text="{Binding NewItem.LukaRead}" />
-                        <TextBox Text="{Binding NewItem.ExternalID}" />
-                        <TextBox Text="{Binding NewItem.Price}" />
-                        <TextBox Text="{Binding NewItem.PriceInRSD}" />
-                        <TextBox Text="{Binding NewItem.Date}" />
+                        <TextBox Watermark = "Title" Text="{Binding NewItem.Title}" />
+                        <TextBox Watermark = "Author" Text="{Binding NewItem.Author}" />
+                        <TextBox Watermark = "Year" Text="{Binding NewItem.Year}" />
+                        <TextBox Watermark = "Pages" Text="{Binding NewItem.Pages}" />
+                        <TextBox Watermark = "Type" Text="{Binding NewItem.Type}" />
+                        <TextBox Watermark = "_1001" Text="{Binding NewItem._1001}" />
+                        <TextBox Watermark = "EminaRating" Text="{Binding NewItem.EminaRating}" />
+                        <TextBox Watermark = "EminaRead" Text="{Binding NewItem.EminaRead}" />
+                        <TextBox Watermark = "LukaRead" Text="{Binding NewItem.LukaRead}" />
+                        <TextBox Watermark = "ExternalID" Text="{Binding NewItem.ExternalID}" />
+                        <TextBox Watermark = "Price" Text="{Binding NewItem.Price}" />
+                        <TextBox Watermark = "PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
+                        <TextBox Watermark = "Date" Text="{Binding NewItem.Date}" />
                         <Button>
                             <Image Source="{Binding NewImage}" Width="430" Height="430" />
                         </Button>

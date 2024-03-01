@@ -32,16 +32,16 @@
             <TabItem Header="Info">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBox Text="{Binding SelectedItem.Owner}" />
-                        <TextBox Text="{Binding SelectedItem.Title}" />
-                        <TextBox Text="{Binding SelectedItem.Chapter}" />
-                        <TextBox Text="{Binding SelectedItem.Writer}" />
-                        <TextBox Text="{Binding SelectedItem.Illustrator}" />
-                        <TextBox Text="{Binding SelectedItem.Language}" />
-                        <TextBox Text="{Binding SelectedItem.ExternalID}" />
-                        <TextBox Text="{Binding SelectedItem.Date}" />
-                        <TextBox Text="{Binding SelectedItem.Price}" />
-                        <TextBox Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox Watermark = "Owner" Text="{Binding SelectedItem.Owner}" />
+                        <TextBox Watermark = "Title" Text="{Binding SelectedItem.Title}" />
+                        <TextBox Watermark = "Chapter" Text="{Binding SelectedItem.Chapter}" />
+                        <TextBox Watermark = "Writer" Text="{Binding SelectedItem.Writer}" />
+                        <TextBox Watermark = "Illustrator" Text="{Binding SelectedItem.Illustrator}" />
+                        <TextBox Watermark = "Language" Text="{Binding SelectedItem.Language}" />
+                        <TextBox Watermark = "ExternalID" Text="{Binding SelectedItem.ExternalID}" />
+                        <TextBox Watermark = "Date" Text="{Binding SelectedItem.Date}" />
+                        <TextBox Watermark = "Price" Text="{Binding SelectedItem.Price}" />
+                        <TextBox Watermark = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
@@ -60,16 +60,16 @@
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
                             <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
-                        <TextBox Text="{Binding NewItem.Owner}" />
-                        <TextBox Text="{Binding NewItem.Title}" />
-                        <TextBox Text="{Binding NewItem.Chapter}" />
-                        <TextBox Text="{Binding NewItem.Writer}" />
-                        <TextBox Text="{Binding NewItem.Illustrator}" />
-                        <TextBox Text="{Binding NewItem.Language}" />
-                        <TextBox Text="{Binding NewItem.ExternalID}" />
-                        <TextBox Text="{Binding NewItem.Date}" />
-                        <TextBox Text="{Binding NewItem.Price}" />
-                        <TextBox Text="{Binding NewItem.PriceInRSD}" />
+                        <TextBox Watermark = "Owner" Text="{Binding NewItem.Owner}" />
+                        <TextBox Watermark = "Title" Text="{Binding NewItem.Title}" />
+                        <TextBox Watermark = "Chapter" Text="{Binding NewItem.Chapter}" />
+                        <TextBox Watermark = "Writer" Text="{Binding NewItem.Writer}" />
+                        <TextBox Watermark = "Illustrator" Text="{Binding NewItem.Illustrator}" />
+                        <TextBox Watermark = "Language" Text="{Binding NewItem.Language}" />
+                        <TextBox Watermark = "ExternalID" Text="{Binding NewItem.ExternalID}" />
+                        <TextBox Watermark = "Date" Text="{Binding NewItem.Date}" />
+                        <TextBox Watermark = "Price" Text="{Binding NewItem.Price}" />
+                        <TextBox Watermark = "PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
                         <Button>
                             <Image Source="{Binding NewImage}" Width="430" Height="430" />
                         </Button>

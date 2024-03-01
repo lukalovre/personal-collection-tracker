@@ -40,15 +40,15 @@
             <TabItem Header="Info">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBox Text="{Binding SelectedItem.Owner}" />
-                        <TextBox Text="{Binding SelectedItem.Artist}" />
-                        <TextBox Text="{Binding SelectedItem.Title}" />
-                        <TextBox Text="{Binding SelectedItem.Year}" />
-                        <TextBox Text="{Binding SelectedItem.Format}" />
-                        <TextBox Text="{Binding SelectedItem.Price}" />
-                        <TextBox Text="{Binding SelectedItem.PriceInRSD}" />
-                        <TextBox Text="{Binding SelectedItem.Date}" />
-                        <TextBox Text="{Binding SelectedItem.ExternalID}" />
+                        <TextBox Watermark="Owner" Text="{Binding SelectedItem.Owner}" />
+                        <TextBox Watermark="Artist" Text="{Binding SelectedItem.Artist}" />
+                        <TextBox Watermark="Title" Text="{Binding SelectedItem.Title}" />
+                        <TextBox Watermark="Year" Text="{Binding SelectedItem.Year}" />
+                        <TextBox Watermark="Format" Text="{Binding SelectedItem.Format}" />
+                        <TextBox Watermark="Price" Text="{Binding SelectedItem.Price}" />
+                        <TextBox Watermark="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox Watermark="Date" Text="{Binding SelectedItem.Date}" />
+                        <TextBox Watermark="ExternalID" Text="{Binding SelectedItem.ExternalID}" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
@@ -62,15 +62,15 @@
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
                             <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
-                        <TextBox Text="{Binding NewItem.Owner}" />
-                        <TextBox Text="{Binding NewItem.Artist}" />
-                        <TextBox Text="{Binding NewItem.Title}" />
-                        <TextBox Text="{Binding NewItem.Year}" />
-                        <TextBox Text="{Binding NewItem.Format}" />
-                        <TextBox Text="{Binding NewItem.Price}" />
-                        <TextBox Text="{Binding NewItem.PriceInRSD}" />
-                        <TextBox Text="{Binding NewItem.Date}" />
-                        <TextBox Text="{Binding NewItem.ExternalID}" />
+                        <TextBox Watermark="Owner" Text="{Binding NewItem.Owner}" />
+                        <TextBox Watermark="Artist" Text="{Binding NewItem.Artist}" />
+                        <TextBox Watermark="Title" Text="{Binding NewItem.Title}" />
+                        <TextBox Watermark="Year" Text="{Binding NewItem.Year}" />
+                        <TextBox Watermark="Format" Text="{Binding NewItem.Format}" />
+                        <TextBox Watermark="Price" Text="{Binding NewItem.Price}" />
+                        <TextBox Watermark="PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
+                        <TextBox Watermark="Date" Text="{Binding NewItem.Date}" />
+                        <TextBox Watermark="ExternalID" Text="{Binding NewItem.ExternalID}" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
