@@ -197,7 +197,7 @@ where TEventItem : IExternalItem
 
     private void AddItemClickAction()
     {
-        NewItem.Date = UseNewDate ? NewDate : DateTime.Now;
+        NewItem.Date = NewItem.Date ?? DateTime.Now;
         _datasource.Add(NewItem);
 
         ReloadData();
