@@ -1,16 +1,4 @@
-<Window xmlns="https://github.com/avaloniaui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:vm="using:AvaloniaApplication1.ViewModels"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:uc="clr-namespace:AvaloniaApplication1.Views;assembly=AvaloniaApplication1"
-    mc:Ignorable="d"
-    x:Class="AvaloniaApplication1.Views.MainWindow"
-    x:DataType="vm:MainWindowViewModel"
-    Icon="/Assets/avalonia-logo.ico"
-    Title="AvaloniaApplication1"
-    xmlns:v="using:AvaloniaApplication1.Views"
-    x:CompileBindings="True">
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:AvaloniaApplication1.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:AvaloniaApplication1.Views;assembly=AvaloniaApplication1" mc:Ignorable="d" x:Class="AvaloniaApplication1.Views.MainWindow" x:DataType="vm:MainWindowViewModel" Icon="/Assets/icon.ico" Title="collection-tracker" xmlns:v="using:AvaloniaApplication1.Views" x:CompileBindings="True">
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
@@ -20,8 +8,7 @@
         <TabControl Margin="5">
             <TabItem Header="Main">
                 <TabControl TabStripPlacement="Left">
-                    <TabItem Header="Music"
-                        Width="150">
+                    <TabItem Header="Music" Width="150">
                         <v:MusicView DataContext="{Binding MusicViewModel}" />
                     </TabItem>
                     <TabItem Header="Songs">
@@ -46,8 +33,7 @@
             </TabItem>
             <TabItem Header="My">
                 <TabControl TabStripPlacement="Left">
-                    <TabItem Header="Work"
-                        Width="150">
+                    <TabItem Header="Work" Width="150">
                         <v:WorkView DataContext="{Binding WorkViewModel}" />
                     </TabItem>
                     <TabItem Header="D&amp;D" />
