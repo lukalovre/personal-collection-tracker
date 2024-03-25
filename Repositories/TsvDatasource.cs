@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
@@ -5,18 +6,24 @@ using System.IO;
 using System.Linq;
 using CsvHelper;
 using CsvHelper.Configuration;
+using CsvHelper.TypeConversion;
 
 namespace Repositories;
 
 internal class TsvDatasource : IDatasource
 {
-    private readonly CsvConfiguration _config =
-        new(CultureInfo.InvariantCulture) { Delimiter = "\t" };
+    private readonly CsvConfiguration _config = new(CultureInfo.InvariantCulture)
+    {
+        Delimiter = "\t",
+        MissingFieldFound = null,
+        BadDataFound = null
+    };
 
     public void Add<T>(T item)
         where T : IItem
     {
         var items = GetList<T>();
+        var options = new TypeConverterOptions { Formats = ["yyyy-MM-dd HH:mm:ss"] };
 
         if (!items.Any(o => o.ID == item.ID))
         {
@@ -27,6 +34,8 @@ internal class TsvDatasource : IDatasource
 
             using var writerItem = new StreamWriter(itemFilePath, true);
             using var csvItem = new CsvWriter(writerItem, _config);
+            csvItem.Context.TypeConverterOptionsCache.AddOptions<DateTime>(options);
+            csvItem.Context.TypeConverterOptionsCache.AddOptions<DateTime?>(options);
 
             // if (item.ID == 1)
             // {
@@ -76,20 +85,10 @@ internal class TsvDatasource : IDatasource
         }
 
         var text = File.ReadAllText(itemFilePath);
-
         var reader = new StringReader(text);
 
-        // Use _config once all old tsvs are converted
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-        {
-            Delimiter = "\t",
-            HasHeaderRecord = false,
-            MissingFieldFound = null,
-            BadDataFound = null
-        };
-
-        using var csv = new CsvReader(reader, config);
-        return csv.GetRecords<T>().ToList();
+        using var csv = new CsvReader(reader, _config);
+        return csv.GetRecords<T>().ToList(); ;
     }
 
     public void MakeBackup(string path)
@@ -166,19 +165,9 @@ internal class TsvDatasource : IDatasource
         }
 
         var text = File.ReadAllText(itemFilePath);
-
         var reader = new StringReader(text);
 
-        // Use _config once all old tsvs are converted
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-        {
-            Delimiter = "\t",
-            HasHeaderRecord = false,
-            MissingFieldFound = null,
-            BadDataFound = null
-        };
-
-        using var csv = new CsvReader(reader, config);
+        using var csv = new CsvReader(reader, _config);
         return csv.GetRecords<T>().ToList();
     }
 }
