@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using AvaloniaApplication1.Models;
 using CsvHelper;
 using CsvHelper.Configuration;
 

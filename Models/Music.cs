@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AvaloniaApplication1.Models;
 
 [Table("Music")]
 public class Music : IItem, ICollection
