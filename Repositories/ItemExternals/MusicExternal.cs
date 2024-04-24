@@ -6,34 +6,55 @@ namespace AvaloniaApplication1.Repositories;
 
 public class MusicExternal : IExternal<Music>
 {
-    private readonly IExternal<Music> _bandcamp;
-    private readonly IExternal<Music> _spotify;
-    private readonly IExternal<Music> _youtube;
-
-    public MusicExternal()
-    {
-        _bandcamp = new Bandcamp();
-        _spotify = new Spotify();
-        _youtube = new YouTube();
-    }
-
     public async Task<Music> GetItem(string url)
     {
+        if (url.Contains(YouTube.UrlIdentifier))
+        {
+            var item = await YouTube.GetYoutubeItem<Music>(url);
+
+            return new Music
+            {
+                Title = item.MusicTitle,
+                Artist = item.Artist,
+                Year = item.Year,
+                Runtime = item.Runtime,
+                ExternalID = item.Link
+            };
+        }
+
         url = HtmlHelper.CleanUrl(url);
 
         if (url.Contains(Bandcamp.UrlIdentifier))
         {
-            return await _bandcamp.GetItem(url);
+            var item = await Bandcamp.GetBandcampItem<Music>(url);
+
+            return new Music
+            {
+                Artist = item.Artist,
+                Title = item.Title,
+                Year = item.Year,
+                Runtime = item.Runtime,
+                ExternalID = item.Link
+            };
         }
 
         if (url.Contains(Spotify.UrlIdentifier))
         {
-            return await _spotify.GetItem(url);
+            return await Spotify.GetItem(url);
         }
 
-        if (url.Contains(YouTube.UrlIdentifier))
+        if (url.Contains(Soundcloud.UrlIdentifier))
         {
-            return await _youtube.GetItem(url);
+            var item = await Soundcloud.GetSoundcloudItem<Music>(url);
+
+            return new Music
+            {
+                Title = item.Title,
+                Artist = item.Artist,
+                Year = item.Year,
+                Runtime = item.Runtime,
+                ExternalID = item.ExternalID
+            };
         }
 
         return new Music();

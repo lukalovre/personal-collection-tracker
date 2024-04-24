@@ -9,6 +9,7 @@ public class Comic : IItem, ICollection
     public int ID { get; set; }
     public string Owner { get; set; }
     public string Title { get; set; }
+    public int? Year { get; set; }
     public int Chapter { get; set; }
     public string Writer { get; set; }
     public string Illustrator { get; set; }

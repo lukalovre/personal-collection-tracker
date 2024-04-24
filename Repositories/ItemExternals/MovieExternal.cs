@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using AvaloniaApplication1.Models;
 using AvaloniaApplication1.Repositories.External;
 using Repositories;
 
@@ -6,12 +7,6 @@ namespace AvaloniaApplication1.Repositories;
 
 public class MovieExternal : IExternal<Movie>
 {
-    private readonly IExternal<Movie> _imdb;
-
-    public MovieExternal()
-    {
-        _imdb = new Imdb();
-    }
 
     public async Task<Movie> GetItem(string url)
     {
@@ -19,7 +14,16 @@ public class MovieExternal : IExternal<Movie>
 
         if (url.Contains(Imdb.UrlIdentifier))
         {
-            return await _imdb.GetItem(url);
+            var item = await Imdb.GetImdbItem<Movie>(url);
+
+            return new Movie
+            {
+                Title = item.Title,
+                Runtime = item.Runtime,
+                Year = item.Year,
+                ExternalID = item.ExternalID,
+                Director = item.Director,
+            };
         }
 
         return new Movie();

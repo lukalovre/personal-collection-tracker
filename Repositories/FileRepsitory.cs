@@ -1,21 +1,21 @@
 using System.IO;
 using Avalonia.Media.Imaging;
+using AvaloniaApplication1.Repositories;
 
 namespace Repositories;
 
 public class FileRepsitory
 {
-    public static bool ImageExists<T>(int itemID)
-        where T : IItem
+    public static bool ImageExists<T>(int itemID) where T : IItem
     {
-        var filePath = Path.Combine(Paths.Images, typeof(T).ToString(), $"{itemID}.png");
+        var filePath = Path.Combine(Paths.Images, Helpers.GetClassName<T>(), $"{itemID}.png");
         return File.Exists(filePath);
     }
 
     public static Bitmap? GetImage<T>(int itemID)
         where T : IItem
     {
-        var filePath = Path.Combine(Paths.Images, typeof(T).ToString(), $"{itemID}.png");
+        var filePath = Path.Combine(Paths.Images, Helpers.GetClassName<T>(), $"{itemID}.png");
 
         if (!File.Exists(filePath))
         {
@@ -25,8 +25,7 @@ public class FileRepsitory
         return new Bitmap(filePath);
     }
 
-    public static Bitmap? GetImageTemp<T>()
-        where T : IItem
+    public static Bitmap? GetImageTemp<T>() where T : IItem
     {
         var filePath = Path.Combine($"{Paths.GetTempPath<T>()}.png");
 

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AvaloniaApplication1.ViewModels.Extensions;
 using HtmlAgilityPack;
@@ -11,71 +11,39 @@ using Repositories;
 
 namespace AvaloniaApplication1.Repositories.External;
 
-public class YouTube : IExternal<TVShow>, IExternal<Song>, IExternal<Music>
+public class YouTube
 {
     public static string UrlIdentifier => "youtube.com";
 
-    public async Task<TVShow> GetItem(string url)
+    public static async Task<YoutubeItem> GetYoutubeItem<T>(string url) where T : IItem
     {
-        using var client = new WebClient();
-        var content = client.DownloadData(url);
-        using var stream = new MemoryStream(content);
-        string result = System.Text.Encoding.UTF8.GetString(stream.ToArray());
+        var htmlDocument = await HtmlHelper.DownloadWebpage(url);
 
-        var htmlDocument = new HtmlDocument();
-        htmlDocument.LoadHtml(result);
-
-        var title = GetTitle(htmlDocument);
-
-        var handle = url.TrimStart("https://www.youtube.com/");
-
-        var posterNode = htmlDocument.DocumentNode.SelectSingleNode(
-            "//meta[contains(@property, 'og:image')]"
-        );
-        var imageLink = posterNode.GetAttributeValue("content", string.Empty).Trim();
-
-        // var destinationFile = Path.Combine(Paths.Posters, $"{handle}");
-        // Web.DownloadPNG(imageLink, destinationFile);
-
-        return new TVShow
+        if (htmlDocument is null)
         {
-            Title = title,
-            Imdb = handle,
-            Year = DateTime.Now.Year,
-            Runtime = 10
-        };
-    }
+            return default!;
+        }
 
-    private static string GetTitle(HtmlDocument htmlDocument)
-    {
-        var node = htmlDocument.DocumentNode.SelectSingleNode(
-            "//meta[contains(@property, 'og:title')]"
-        );
-
-        return node.GetAttributeValue("content", string.Empty).Trim();
-    }
-
-    async Task<Song> IExternal<Song>.GetItem(string url)
-    {
-        using var client = new WebClient();
-        var content = client.DownloadData(url);
-        using var stream = new MemoryStream(content);
-        string result = System.Text.Encoding.UTF8.GetString(stream.ToArray());
-
-        var htmlDocument = new HtmlDocument();
-        htmlDocument.LoadHtml(result);
         var node = htmlDocument.DocumentNode.SelectSingleNode("//title");
         var videoTitle = node.InnerHtml.Trim();
 
         var artist = GetArtist(videoTitle);
-        var title = GetTitle(videoTitle);
+        var musicTitle = GetMusicTitle(videoTitle);
 
-        if (title == "YouTube")
+        if (musicTitle == "YouTube")
         {
-            title = artist;
+            musicTitle = artist;
+            artist = htmlDocument
+            ?.DocumentNode
+            ?.SelectSingleNode("//meta[contains(@property, 'og:video:tag')]")
+            ?.GetAttributeValue("content", string.Empty)
+            ?.Trim()
+            ?? string.Empty;
+        }
 
-            var channelNameNode = htmlDocument.DocumentNode.SelectSingleNode("//meta[contains(@property, 'og:video:tag')]");
-            artist = channelNameNode?.GetAttributeValue("content", string.Empty).Trim();
+        if (htmlDocument is null)
+        {
+            return default!;
         }
 
         var link = GetUrl(url);
@@ -83,17 +51,35 @@ public class YouTube : IExternal<TVShow>, IExternal<Song>, IExternal<Music>
         int runtime = GetRuntime(htmlDocument);
         var imageUrl = GetImageUrl(htmlDocument);
 
-        var destinationFile = Paths.GetTempPath<Song>();
-        HtmlHelper.DownloadPNG(imageUrl, destinationFile);
+        var title = GetTitle(htmlDocument);
+        var author = GetChannelName(htmlDocument);
 
-        return new Song
-        {
-            Artist = WebUtility.HtmlDecode(artist),
-            Title = WebUtility.HtmlDecode(title),
-            Link = link,
-            Year = year,
-            Runtime = runtime
-        };
+        var destinationFile = Paths.GetTempPath<T>();
+        await HtmlHelper.DownloadPNG(imageUrl, destinationFile);
+
+        artist = WebUtility.HtmlDecode(artist) ?? string.Empty;
+        musicTitle = WebUtility.HtmlDecode(musicTitle);
+
+        return new YoutubeItem(
+            musicTitle.Trim(),
+            artist.Trim(),
+            year,
+            runtime,
+            link.Trim(),
+            title.Trim(),
+            author.Trim());
+    }
+
+    private static string GetTitle(HtmlDocument htmlDocument)
+    {
+        var title = htmlDocument
+        ?.DocumentNode
+        ?.SelectSingleNode("//meta[contains(@property, 'og:title')]")
+        ?.GetAttributeValue("content", string.Empty)
+        .Trim()
+        ?? string.Empty;
+
+        return WebUtility.HtmlDecode(title) ?? string.Empty;
     }
 
     private static int GetRuntime(HtmlDocument htmlDocument)
@@ -103,43 +89,52 @@ public class YouTube : IExternal<TVShow>, IExternal<Song>, IExternal<Music>
         );
         var runtimeText = runtimeNode.GetAttributeValue("content", string.Empty).Trim();
         var runtimeSplit = runtimeText.TrimStart("PT").TrimEnd("S").Split('M');
-        var runtimeMinutes = int.Parse(runtimeSplit.FirstOrDefault());
-        var runtimeSeconds = int.Parse(runtimeSplit.LastOrDefault());
+        var runtimeMinutes = Convert.ToInt32(runtimeSplit?.FirstOrDefault() ?? "0");
+        var runtimeSeconds = Convert.ToInt32(runtimeSplit?.LastOrDefault() ?? "0");
         var runtime = runtimeMinutes + (runtimeSeconds > 30 ? 1 : 0);
         return runtime;
     }
 
     private static string GetUrl(string url)
     {
-        url = url.Split(new string[] { "&list=" }, StringSplitOptions.None).FirstOrDefault();
-        return url;
+        return url
+        ?.Split(new string[] { "&list=" }, StringSplitOptions.None)
+        ?.FirstOrDefault()
+        ?? string.Empty;
     }
 
     private static int GetYear(HtmlDocument htmlDocument)
     {
-        var yearNode = htmlDocument.DocumentNode.SelectSingleNode(
-            "//meta[contains(@itemprop, 'datePublished')]"
-        );
+        var yearNode = htmlDocument
+        ?.DocumentNode
+        ?.SelectSingleNode("//meta[contains(@itemprop, 'datePublished')]");
 
         if (yearNode == null)
         {
             return 0;
         }
 
-        var yearText = yearNode.GetAttributeValue("content", string.Empty).Trim();
-        var year = int.Parse(yearText.Split('-').FirstOrDefault());
-        return year;
+        var yearText = yearNode
+        ?.GetAttributeValue("content", string.Empty)
+        ?.Trim()
+        ?.Split('-')
+        ?.FirstOrDefault()
+        ?? string.Empty;
+
+        return Convert.ToInt32(yearText);
     }
 
     private static string GetImageUrl(HtmlDocument htmlDocument)
     {
-        var posterNode = htmlDocument.DocumentNode.SelectSingleNode(
-            "//meta[contains(@property, 'og:image')]"
-        );
-        return posterNode.GetAttributeValue("content", string.Empty).Trim();
+        return htmlDocument
+        ?.DocumentNode
+        ?.SelectSingleNode("//meta[contains(@property, 'og:image')]")
+        ?.GetAttributeValue("content", string.Empty)
+        ?.Trim()
+        ?? string.Empty;
     }
 
-    private static string GetTitle(string videoTitle)
+    private static string GetMusicTitle(string videoTitle)
     {
         var toRemoveList = new List<string>{
             "(Original Mix)",
@@ -150,7 +145,10 @@ public class YouTube : IExternal<TVShow>, IExternal<Song>, IExternal<Music>
             "[HD]",
             "[Official Video]",
             "|HQ|",
-            "(Audio)"};
+            "(Audio)",
+            "[FULL ALBUM]",
+            "HIGH QUALITY",
+            "[Official Music Video]"};
 
         var split = videoTitle.Split(" - ");
 
@@ -171,20 +169,28 @@ public class YouTube : IExternal<TVShow>, IExternal<Song>, IExternal<Music>
 
     private static string GetArtist(string videoTitle)
     {
-        return videoTitle.Split(" - ")[0].Trim();
+        return videoTitle
+        ?.Split(" - ")
+        .FirstOrDefault()
+        ?.Trim()
+        ?? string.Empty;
     }
 
-    async Task<Music> IExternal<Music>.GetItem(string url)
+    private static string GetChannelName(HtmlDocument htmlDocument)
     {
-        var song = (this as IExternal<Song>).GetItem(url).Result;
+        var text = htmlDocument.ParsedText;
+        var match = Regex.Match(text, "\"author\":\"(.*?)\"");
 
-        return new Music
+        if (match.Success)
         {
-            Title = song.Title,
-            Artist = song.Artist,
-            Year = song.Year,
-            // Runtime = song.Runtime,
-            ExternalID = song.Link
-        };
+            var author = match
+            ?.Groups[1]
+            ?.Value
+            ?? string.Empty;
+
+            return WebUtility.HtmlDecode(author);
+        }
+
+        return string.Empty;
     }
 }

@@ -6,65 +6,51 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Repositories;
+using AvaloniaApplication1.ViewModels.Extensions;
 
 namespace AvaloniaApplication1.Repositories.External;
 
-public class Imdb : IExternal<Movie>, IExternal<TVShow>, IExternal<Standup>
+public class Imdb
 {
     private const string API_KEY_FILE_NAME = "omdbapi_key.txt";
 
     public static string UrlIdentifier => "imdb.com";
 
-    async Task<Movie> IExternal<Movie>.GetItem(string url)
+    internal static async Task<ImdbItem> GetImdbItem<T>(string url) where T : IItem
     {
-        string inputImdb = GetImdbID(url);
+        var imdbData = await GetDataFromAPI<T>(url);
 
-        var imdbData = GetDataFromAPI<Movie>(inputImdb);
+        var split = imdbData.Title.Split(':');
 
-        var runtime = GetRuntime(imdbData.Runtime);
-        int year = GetYear(imdbData.Year);
+        string standupPerformer;
+        string standupTitle;
 
-        return new Movie
+        if (split.Length > 1)
         {
-            Title = imdbData.Title,
-            // Runtime = runtime,
-            Year = year,
-            ExternalID = imdbData.imdbID,
-            // Actors = imdbData.Actors,
-            // Country = imdbData.Country,
-            Director = imdbData.Director,
-            // Ganre = imdbData.Genre,
-            // Language = imdbData.Language,
-            // Plot = imdbData.Plot,
-            // Type = imdbData.Type,
-            // Writer = imdbData.Writer
-        };
-    }
-
-    public async Task<TVShow> GetItem(string url)
-    {
-        string inputImdb = GetImdbID(url);
-
-        var imdbData = GetDataFromAPI<TVShow>(inputImdb);
-
-        var runtime = GetRuntime(imdbData.Runtime);
-        int year = GetYear(imdbData.Year);
-
-        return new TVShow
+            standupPerformer = split[0].Trim();
+            standupTitle = split[1].Trim();
+        }
+        else
         {
-            Title = imdbData.Title,
-            Runtime = runtime,
-            Year = year,
-            Imdb = imdbData.imdbID,
-            Actors = imdbData.Actors,
-            Country = imdbData.Country,
-            Director = imdbData.Director,
-            Genre = imdbData.Genre,
-            Language = imdbData.Language,
-            Plot = imdbData.Plot,
-            Type = imdbData.Type,
-            Writer = imdbData.Writer
-        };
+            standupPerformer = imdbData.Writer;
+            standupTitle = imdbData.Title;
+        }
+
+        return new ImdbItem(
+         imdbData.Title.Trim(),
+         GetRuntime(imdbData.Runtime),
+         GetYear(imdbData.Year),
+         imdbData.imdbID.Trim(),
+         imdbData.Actors.Trim(),
+         imdbData.Country.Trim(),
+         imdbData.Director.Trim(),
+         imdbData.Genre.Trim(),
+         imdbData.Language.Trim(),
+         imdbData.Plot.Trim(),
+         imdbData.Type.Trim(),
+         imdbData.Writer.Trim(),
+         standupPerformer.Trim(),
+         standupTitle.Trim());
     }
 
     private static int GetRuntime(string runtimeString)
@@ -74,9 +60,11 @@ public class Imdb : IExternal<Movie>, IExternal<TVShow>, IExternal<Standup>
             return 0;
         }
 
-        return runtimeString == @"\N" || runtimeString == @"N/A"
-            ? 0
-            : int.Parse(runtimeString.TrimEnd(" min".ToArray()));
+        var resultString = runtimeString == @"\N" || runtimeString == @"N/A"
+                    ? "0"
+                    : runtimeString.TrimEnd(" min");
+
+        return int.TryParse(resultString, out var result) ? result : 0;
     }
 
     private static int GetYear(string yearString)
@@ -94,23 +82,27 @@ public class Imdb : IExternal<Movie>, IExternal<TVShow>, IExternal<Standup>
         return 0;
     }
 
-    public static ImdbData GetDataFromAPI<T>(string imdbID)
-        where T : IItem
+    public static async Task<ImdbData> GetDataFromAPI<T>(string url) where T : IItem
     {
+        var imdbID = GetImdbID(url);
+
         using var client = new HttpClient { BaseAddress = new Uri("http://www.omdbapi.com/") };
 
-        client.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue("application/json")
-        );
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         var keyFilePath = Paths.GetAPIKeyFilePath(API_KEY_FILE_NAME);
         var apiKey = File.ReadAllText(keyFilePath);
 
-        var response = client.GetAsync($"?i={imdbID}&apikey={apiKey}").Result;
-        var imdbData = response.Content.ReadFromJsonAsync<ImdbData>().Result;
+        var response = await client.GetAsync($"?i={imdbID}&apikey={apiKey}");
+        var imdbData = await response.Content.ReadFromJsonAsync<ImdbData>();
+
+        if (imdbData is null)
+        {
+            return default!;
+        }
 
         var destinationFile = Paths.GetTempPath<T>();
-        HtmlHelper.DownloadPNG(imdbData.Poster, destinationFile);
+        await HtmlHelper.DownloadPNG(imdbData.Poster, destinationFile);
 
         return imdbData;
     }
@@ -123,46 +115,10 @@ public class Imdb : IExternal<Movie>, IExternal<TVShow>, IExternal<Standup>
 
     private static string GetImdbID(string url)
     {
-        return url.Split('/').FirstOrDefault(i => i.StartsWith("tt"));
-    }
-
-    async Task<Standup> IExternal<Standup>.GetItem(string url)
-    {
-        string inputImdb = GetImdbID(url);
-
-        var imdbData = GetDataFromAPI<Standup>(inputImdb);
-
-        var runtime = GetRuntime(imdbData.Runtime);
-        int year = GetYear(imdbData.Year);
-
-        var split = imdbData.Title.Split(':');
-
-        string performer;
-        string title;
-
-        if (split.Count() > 1)
-        {
-            performer = split[0].Trim();
-            title = split[1].Trim();
-        }
-        else
-        {
-            performer = imdbData.Writer;
-            title = imdbData.Title;
-        }
-
-        return new Standup
-        {
-            Performer = performer,
-            Title = title,
-            Link = url,
-            Country = imdbData.Country,
-            Director = imdbData.Director,
-            Writer = imdbData.Writer,
-            Plot = imdbData.Plot,
-            Runtime = runtime,
-            Year = year
-        };
+        return url
+        ?.Split('/')
+        ?.FirstOrDefault(i => i.StartsWith("tt"))
+        ?? string.Empty;
     }
 
     // 	public static void OpenHyperlink(Movie movie)
@@ -170,32 +126,4 @@ public class Imdb : IExternal<Movie>, IExternal<TVShow>, IExternal<Standup>
     // 	var hyperlink = $"https://www.imdb.com/title/{movie.Imdb}";
     // 	Web.OpenLink(hyperlink);
     // }
-
-    public class ImdbData
-    {
-        public string Actors { get; set; }
-        public string Awards { get; set; }
-        public string BoxOffice { get; set; }
-        public string Country { get; set; }
-        public string Director { get; set; }
-        public string DVD { get; set; }
-        public string Genre { get; set; }
-        public string imdbID { get; set; }
-        public string imdbRating { get; set; }
-        public string imdbVotes { get; set; }
-        public string Language { get; set; }
-        public string Metascore { get; set; }
-        public string Plot { get; set; }
-        public string Poster { get; set; }
-        public string Production { get; set; }
-        public string Rated { get; set; }
-        public string Released { get; set; }
-        public string Response { get; set; }
-        public string Runtime { get; set; }
-        public string Title { get; set; }
-        public string Type { get; set; }
-        public string Website { get; set; }
-        public string Writer { get; set; }
-        public string Year { get; set; }
-    }
 }

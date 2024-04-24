@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using HtmlAgilityPack;
 
 namespace Repositories;
 
@@ -14,7 +16,6 @@ public static class HtmlHelper
     {
         var years = Regex.Matches(str, @"\d{4}");
         var yearList = years.Select(o => Convert.ToInt32(o.Value));
-
         return yearList.FirstOrDefault(o => o > 1900 && o < 2999);
     }
 
@@ -34,9 +35,9 @@ public static class HtmlHelper
         OpenLink(link);
     }
 
-    internal static void DownloadPNG(string webFile, string destinationFile)
+    internal async static Task DownloadPNG(string webFile, string destinationFile)
     {
-        if (string.IsNullOrEmpty(webFile))
+        if (string.IsNullOrWhiteSpace(webFile))
         {
             return;
         }
@@ -50,7 +51,7 @@ public static class HtmlHelper
             return;
         }
 
-        var directory = Path.GetDirectoryName(destinationFile);
+        var directory = Path.GetDirectoryName(destinationFile) ?? string.Empty;
 
         if (!Directory.Exists(directory))
         {
@@ -62,14 +63,36 @@ public static class HtmlHelper
             return;
         }
 
-        using (WebClient client = new WebClient())
-        {
-            client.DownloadFile(new Uri(webFile), destinationFile);
-        }
+        await DownloadFile(webFile, destinationFile);
+    }
+
+    private async static Task DownloadFile(string imageUrl, string imagePath)
+    {
+        using var httpClient = new HttpClient();
+        using var response = await httpClient.GetAsync(imageUrl, HttpCompletionOption.ResponseHeadersRead);
+        response.EnsureSuccessStatusCode();
+        using var ms = await response.Content.ReadAsStreamAsync();
+        using var fs = File.Create(imagePath);
+        await ms.CopyToAsync(fs);
+        fs.Flush();
     }
 
     public static string CleanUrl(string url)
     {
-        return url?.Split('?')?.FirstOrDefault()?.Trim() ?? string.Empty;
+        return url
+        ?.Split('?')
+        ?.FirstOrDefault()
+        ?.Trim()
+        ?? string.Empty;
+    }
+
+    internal async static Task<HtmlDocument> DownloadWebpage(string url)
+    {
+        using var client = new HttpClient();
+        var text = await client.GetStringAsync(url);
+        var htmlDocument = new HtmlDocument();
+        htmlDocument.LoadHtml(text);
+
+        return htmlDocument;
     }
 }

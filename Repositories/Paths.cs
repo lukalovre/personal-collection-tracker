@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using AvaloniaApplication1.Repositories;
 using AvaloniaApplication1.ViewModels;
 
 namespace Repositories;
@@ -12,19 +13,18 @@ public static class Paths
     public static string Data => GetRootPath();
     public static string EventDataPath => Settings.Instance.EventsDatasourcePath;
 
-    public static string GetImagePath<T>(int itemID) =>
-        Path.Combine(Images, typeof(T).ToString(), $"{itemID}.png");
+    public static string GetImagePath<T>(int itemID) => Path.Combine(Images, Helpers.GetClassName<T>(), $"{itemID}.png");
 
     public static string GetTempPath<T>()
     {
-        var path = Path.Combine(GetRootPath(), ".Temp", typeof(T).ToString());
+        var path = Path.Combine(GetRootPath(), ".Temp", Helpers.GetClassName<T>());
         CreatePath(path);
         return path;
     }
 
     public static string GetImagesPath<T>()
     {
-        var path = Path.Combine(Images, typeof(T).ToString());
+        var path = Path.Combine(Images, Helpers.GetClassName<T>());
         CreatePath(path);
         return path;
     }
@@ -51,7 +51,7 @@ public static class Paths
         if (!File.Exists(keyFilePath))
         {
             var directoryPath = Path.GetDirectoryName(keyFilePath);
-            CreatePath(directoryPath);
+            CreatePath(directoryPath ?? string.Empty);
             File.Create(keyFilePath);
         }
 

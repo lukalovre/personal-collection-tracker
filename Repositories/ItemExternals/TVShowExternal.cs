@@ -6,68 +6,44 @@ namespace AvaloniaApplication1.Repositories;
 
 public class TVShowExternal : IExternal<TVShow>
 {
-    private readonly Imdb _imdb;
-    private readonly YouTube _youtube;
-
-    public TVShowExternal()
-    {
-        _imdb = new Imdb();
-        _youtube = new YouTube();
-    }
-
     public async Task<TVShow> GetItem(string url)
     {
+        if (url.Contains(YouTube.UrlIdentifier))
+        {
+            var item = await YouTube.GetYoutubeItem<TVShow>(url);
+
+            return new TVShow
+            {
+                Title = item.Title,
+                ExternalID = item.Link,
+                Year = item.Year,
+                Runtime = item.Runtime
+            };
+        }
+
         url = HtmlHelper.CleanUrl(url);
 
         if (url.Contains(Imdb.UrlIdentifier))
         {
-            return await _imdb.GetItem(url);
-        }
+            var item = await Imdb.GetImdbItem<TVShow>(url);
 
-        if (url.Contains(YouTube.UrlIdentifier))
-        {
-            return await _youtube.GetItem(url);
+            return new TVShow
+            {
+                Title = item.Title,
+                Runtime = item.Runtime,
+                Year = item.Runtime,
+                ExternalID = item.ExternalID,
+                Actors = item.Actors,
+                Country = item.Country,
+                Director = item.Director,
+                Genre = item.Genre,
+                Language = item.Language,
+                Plot = item.Plot,
+                Type = item.Type,
+                Writer = item.Writer
+            };
         }
 
         return new TVShow();
     }
-
-    // public static TVShow GetTVShow(string url)
-    // {
-    //     string inputImdb = Imdb.GetImdbIDFromUrl(url);
-
-    //     if (!string.IsNullOrWhiteSpace(url) && string.IsNullOrWhiteSpace(inputImdb))
-    //     {
-    //         return GetYoutubeChannel(url);
-    //     }
-
-    //     var imdbData = Imdb.GetDataFromAPI(inputImdb);
-
-    //     var runtime = 0;
-
-    //     try
-    //     {
-    //         runtime =
-    //             imdbData.Runtime == @"\N" || imdbData.Runtime == @"N/A"
-    //                 ? 0
-    //                 : int.Parse(imdbData.Runtime.TrimEnd(" min".ToArray()));
-    //     }
-    //     catch { }
-
-    //     return new TVShow
-    //     {
-    //         Title = imdbData.Title,
-    //         Runtime = runtime,
-    //         Year = int.Parse(imdbData.Year.Split('–').FirstOrDefault()),
-    //         Imdb = imdbData.imdbID,
-    //         Actors = imdbData.Actors,
-    //         Country = imdbData.Country,
-    //         Director = imdbData.Director,
-    //         Genre = imdbData.Genre,
-    //         Language = imdbData.Language,
-    //         Plot = imdbData.Plot,
-    //         Type = imdbData.Type,
-    //         Writer = imdbData.Writer
-    //     };
-    // }
 }

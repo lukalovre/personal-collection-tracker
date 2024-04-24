@@ -7,15 +7,28 @@ using SpotifyAPI.Web;
 
 namespace AvaloniaApplication1.Repositories.External;
 
-public class Spotify : IExternal<Music>
+public class Spotify
 {
     private const string API_KEY_FILE_NAME = "spotify_key.txt";
 
     public static string UrlIdentifier => "spotify.com";
 
-    public async Task<Music> GetItem(string url)
+    public static async Task<Music> GetItem(string url)
     {
-        var albumID = url.Split('/').LastOrDefault();
+        if (string.IsNullOrWhiteSpace(url))
+        {
+            return new Music();
+        }
+
+        var albumID = url
+        ?.Split('/')
+        ?.LastOrDefault()
+        ?? null;
+
+        if (string.IsNullOrWhiteSpace(albumID))
+        {
+            return new Music();
+        }
 
         var client = GetClient();
 
@@ -24,26 +37,63 @@ public class Spotify : IExternal<Music>
             return new Music();
         }
 
-        var album = client.Albums.Get(albumID).Result;
+        var album = await client.Albums.Get(albumID);
 
+        if (album is null)
+        {
+            return new Music();
+        }
+
+        var imageUrl = album
+            ?.Images
+            ?.FirstOrDefault()
+            ?.Url
+            ?? string.Empty;
         var destinationFile = Paths.GetTempPath<Music>();
-        HtmlHelper.DownloadPNG(album.Images.FirstOrDefault()?.Url, destinationFile);
+        await HtmlHelper.DownloadPNG(imageUrl, destinationFile);
+
+        var artistArray = album
+        ?.Artists
+        ?.Select(x => x.Name)
+        ?.ToArray()
+        ?? [];
+        var artist = string.Join(" and ", artistArray);
+
+        var title = album?.Name ?? string.Empty;
+
+        var releaseDate = album?.ReleaseDate ?? DateTime.Now.Year.ToString();
+
+        int year = 0;
+
+        if (releaseDate?.Length == "1996"?.Length)
+        {
+            year = Convert.ToInt32(releaseDate);
+        }
+        else
+        {
+            if (DateTime.TryParse(releaseDate, out var parsedDate))
+            {
+                year = parsedDate.Year;
+            }
+        }
+
+        var runtime = album
+        ?.Tracks
+        ?.Items
+        ?.Sum(o => o.DurationMs) / 1000 / 60
+        ?? 0;
 
         return new Music
         {
-            Artist = string.Join(" and ", album.Artists.Select(x => x.Name).ToArray()),
-            Title = album.Name,
-            Year =
-                album.ReleaseDate.Length == "1996".Length
-                    ? int.Parse(album.ReleaseDate)
-                    : DateTime.Parse(album.ReleaseDate).Year,
-            // _1001 = false,
-            // Runtime = album.Tracks.Items.Sum(o => o.DurationMs) / 1000 / 60,
-            ExternalID = url
+            Artist = artist.Trim(),
+            Title = title.Trim(),
+            Year = year,
+            Runtime = runtime,
+            ExternalID = url?.Trim() ?? string.Empty
         };
     }
 
-    private SpotifyClient GetClient()
+    private static SpotifyClient GetClient()
     {
         var config = SpotifyClientConfig.CreateDefault();
 
@@ -53,7 +103,7 @@ public class Spotify : IExternal<Music>
         if (lines.Length == 0)
         {
             // Api keys missing.
-            return null;
+            return null!;
         }
 
         var clientId = lines[0];

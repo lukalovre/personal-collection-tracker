@@ -18,4 +18,5 @@ public class Movie : IItem, ICollection
     public DateTime? Date { get; set; }
     public string ExternalID { get; set; }
     public string Comment { get; set; }
+    public int Runtime { get; set; }
 }
