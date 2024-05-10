@@ -16,9 +16,9 @@ public partial class BooksViewModel(IDatasource datasource, IExternal<Book> exte
             i.Title,
             i.Author,
             i.Year ?? 0,
-            0,
-            0,
-            null
+            i.EminaRating,
+            i.Pages ?? 0,
+            i.Date
         );
     }
 }
