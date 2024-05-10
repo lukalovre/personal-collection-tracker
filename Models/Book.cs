@@ -14,8 +14,6 @@ public class Book : IItem, ICollection
     public string Type { get; set; }
     public bool? _1001 { get; set; }
     public int? EminaRating { get; set; }
-    public bool? EminaRead { get; set; }
-    public bool? LukaRead { get; set; }
     public string ExternalID { get; set; }
     public float? Price { get; set; }
     public float? PriceInRSD { get; set; }

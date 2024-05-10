@@ -39,8 +39,6 @@
                         <TextBox Watermark = "Type" Text="{Binding SelectedItem.Type}" />
                         <TextBox Watermark = "_1001" Text="{Binding SelectedItem._1001}" />
                         <TextBox Watermark = "EminaRating" Text="{Binding SelectedItem.EminaRating}" />
-                        <TextBox Watermark = "EminaRead" Text="{Binding SelectedItem.EminaRead}" />
-                        <TextBox Watermark = "LukaRead" Text="{Binding SelectedItem.LukaRead}" />
                         <TextBox Watermark = "ExternalID" Text="{Binding SelectedItem.ExternalID}" />
                         <TextBox Watermark = "Price" Text="{Binding SelectedItem.Price}" />
                         <TextBox Watermark = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
@@ -65,8 +63,6 @@
                         <TextBox Watermark = "Type" Text="{Binding NewItem.Type}" />
                         <TextBox Watermark = "_1001" Text="{Binding NewItem._1001}" />
                         <TextBox Watermark = "EminaRating" Text="{Binding NewItem.EminaRating}" />
-                        <TextBox Watermark = "EminaRead" Text="{Binding NewItem.EminaRead}" />
-                        <TextBox Watermark = "LukaRead" Text="{Binding NewItem.LukaRead}" />
                         <TextBox Watermark = "ExternalID" Text="{Binding NewItem.ExternalID}" />
                         <TextBox Watermark = "Price" Text="{Binding NewItem.Price}" />
                         <TextBox Watermark = "PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
