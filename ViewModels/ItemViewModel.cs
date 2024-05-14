@@ -79,6 +79,7 @@ where TEventItem : IExternalItem
     }
 
     public ReactiveCommand<Unit, Unit> AddItemClick { get; }
+    public ReactiveCommand<Unit, Unit> IgnoreItemClick { get; }
     public ReactiveCommand<Unit, Unit> AddEventClick { get; }
     public ReactiveCommand<Unit, Unit> Search { get; }
     public ReactiveCommand<Unit, Unit> OpenLink { get; }
@@ -134,6 +135,7 @@ where TEventItem : IExternalItem
         ReloadData();
 
         AddItemClick = ReactiveCommand.Create(AddItemClickAction);
+        IgnoreItemClick = ReactiveCommand.Create(IgnoreItemClickAction);
         Search = ReactiveCommand.Create(SearchAction);
         OpenLink = ReactiveCommand.Create(OpenLinkAction);
 
@@ -188,6 +190,12 @@ where TEventItem : IExternalItem
         NewItem.Date = NewItem.Date ?? DateTime.Now;
         _datasource.Add(NewItem);
 
+        ReloadData();
+        ClearNewItemControls();
+    }
+
+    private void IgnoreItemClickAction()
+    {
         ReloadData();
         ClearNewItemControls();
     }
