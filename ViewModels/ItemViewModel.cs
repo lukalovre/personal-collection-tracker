@@ -70,7 +70,7 @@ where TEventItem : IExternalItem
     public PersonComboBoxItem SelectedPerson { get; set; }
 
     public ObservableCollection<TGridItem> GridItems { get; set; }
-    public ObservableCollection<TGridItem> GridItemsBookmarked { get; set; }
+    public ObservableCollection<TGridItem> GridItemsTodo { get; set; }
 
     public TItem SelectedItem
     {
@@ -131,7 +131,7 @@ where TEventItem : IExternalItem
         _external = external;
 
         GridItems = [];
-        GridItemsBookmarked = [];
+        GridItemsTodo = [];
         ReloadData();
 
         AddItemClick = ReactiveCommand.Create(AddItemClickAction);
@@ -159,15 +159,15 @@ where TEventItem : IExternalItem
 
         if (string.IsNullOrWhiteSpace(SearchText))
         {
-            GridItemsBookmarked.Clear();
-            GridItemsBookmarked.AddRange(LoadData());
+            GridItemsTodo.Clear();
+            GridItemsTodo.AddRange(LoadData());
             return;
         }
 
         // var searchMovie = new Movie { Director = SearchText, Title = SearchText };
 
-        GridItemsBookmarked.Clear();
-        GridItemsBookmarked.AddRange(LoadDataBookmarked());
+        GridItemsTodo.Clear();
+        GridItemsTodo.AddRange(LoadDataTodo());
     }
 
     public async void InputUrlChanged()
@@ -206,9 +206,9 @@ where TEventItem : IExternalItem
         GridItems.AddRange(LoadData());
         GridCountItems = GridItems.Count;
 
-        GridItemsBookmarked.Clear();
-        GridItemsBookmarked.AddRange(LoadDataBookmarked());
-        GridCountItemsBookmarked = GridItemsBookmarked.Count;
+        GridItemsTodo.Clear();
+        GridItemsTodo.AddRange(LoadDataTodo());
+        GridCountItemsBookmarked = GridItemsTodo.Count;
     }
 
     private void ClearNewItemControls()
@@ -228,7 +228,7 @@ where TEventItem : IExternalItem
             .ToList();
     }
 
-    private List<TGridItem> LoadDataBookmarked(int? yearsAgo = null)
+    private List<TGridItem> LoadDataTodo(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<TItem>();
         var doneList = _datasource.GetDoneList<TEventItem>().Select(o => o.ExternalID);

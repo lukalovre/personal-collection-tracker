@@ -18,4 +18,5 @@ public class Book : IItem, ICollection
     public float? Price { get; set; }
     public float? PriceInRSD { get; set; }
     public DateTime? Date { get; set; }
+    public bool? Bookmarked { get; set; }
 }
