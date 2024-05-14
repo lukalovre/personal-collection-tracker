@@ -71,6 +71,7 @@ where TEventItem : IExternalItem
 
     public ObservableCollection<TGridItem> GridItems { get; set; }
     public ObservableCollection<TGridItem> GridItemsTodo { get; set; }
+    public ObservableCollection<TGridItem> GridItemsBookmarked { get; set; }
 
     public TItem SelectedItem
     {
@@ -132,6 +133,7 @@ where TEventItem : IExternalItem
 
         GridItems = [];
         GridItemsTodo = [];
+        GridItemsBookmarked = [];
         ReloadData();
 
         AddItemClick = ReactiveCommand.Create(AddItemClickAction);
@@ -209,6 +211,10 @@ where TEventItem : IExternalItem
         GridItemsTodo.Clear();
         GridItemsTodo.AddRange(LoadDataTodo());
         GridCountItemsBookmarked = GridItemsTodo.Count;
+
+        GridItemsBookmarked.Clear();
+        GridItemsBookmarked.AddRange(LoadDataBookmarked());
+        GridCountItemsBookmarked = GridItemsBookmarked.Count;
     }
 
     private void ClearNewItemControls()
@@ -235,6 +241,18 @@ where TEventItem : IExternalItem
 
         return _itemList
         .Where(o => !doneList.Contains(o.ExternalID))
+            .OrderBy(o => o.Date)
+            .Select((o, i) => Convert(i, o))
+            .ToList();
+    }
+
+    private List<TGridItem> LoadDataBookmarked(int? yearsAgo = null)
+    {
+        _itemList = _datasource.GetList<TItem>();
+        var doneList = _datasource.GetDoneList<TEventItem>().Select(o => o.ExternalID);
+
+        return _itemList
+            .Where(o => !doneList.Contains(o.ExternalID) && ((o as Book)?.Bookmarked ?? true))
             .OrderBy(o => o.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();

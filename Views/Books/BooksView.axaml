@@ -3,7 +3,7 @@
         <TabControl>
             <TabItem Header="★">
                 <DockPanel>
-                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsTodo}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Index}" Header="{Binding GridCountItemsBookmarked}" Width="45" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
