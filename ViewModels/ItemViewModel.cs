@@ -23,6 +23,9 @@ where TEventItem : IExternalItem
     private readonly IExternal<TItem> _external;
     private TGridItem _selectedGridItem;
     private List<TItem> _itemList;
+
+    public IEnumerable<string> DoneList { get; private set; }
+
     private TItem _newItem;
     private Bitmap? _itemImage;
     private Bitmap? _newItemImage;
@@ -243,10 +246,10 @@ where TEventItem : IExternalItem
     private List<TGridItem> LoadDataTodo(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<TItem>();
-        var doneList = _datasource.GetDoneList<TEventItem>().Select(o => o.ExternalID);
+        DoneList = _datasource.GetDoneList<TEventItem>().Select(o => o.ExternalID);
 
         return _itemList
-        .Where(o => !doneList.Contains(o.ExternalID))
+        .Where(o => !DoneList.Contains(o.ExternalID))
             .OrderBy(o => o.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();
@@ -256,7 +259,7 @@ where TEventItem : IExternalItem
     {
         _itemList = _datasource.GetList<TItem>();
         return _itemList
-            .Where(o => (o as Book)?.Bookmarked ?? true)
+            .Where(o => (o as Book)?.Bookmarked ?? false)
             .OrderBy(o => o.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();

@@ -6,11 +6,11 @@
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Index}" Header="{Binding GridCountItemsBookmarked}" Width="45" />
+                            <DataGridTextColumn Binding="{Binding Read}" Header="Read" Width="70" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
                             <DataGridTextColumn Binding="{Binding Author}" Header="Author" Width="150" />
                             <DataGridTextColumn Binding="{Binding Pages}" Header="Pages" Width="70" />
                             <DataGridTextColumn Binding="{Binding Rating}" Header="Rating" Width="70" />
-                            <DataGridTextColumn Binding="{Binding LastDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd}}" Header="Last Date" Width="120" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
@@ -33,6 +33,7 @@
             <TabItem Header="Info">
                 <ScrollViewer>
                     <StackPanel>
+                        <Button Command="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                         <TextBox Watermark = "Title" Text="{Binding SelectedItem.Title}" />
                         <TextBox Watermark = "Author" Text="{Binding SelectedItem.Author}" />
                         <TextBox Watermark = "Year" Text="{Binding SelectedItem.Year}" />
@@ -47,7 +48,6 @@
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
-                        <Button Command="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

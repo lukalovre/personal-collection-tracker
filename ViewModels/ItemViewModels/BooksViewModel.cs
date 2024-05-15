@@ -1,3 +1,4 @@
+using System.Linq;
 using AvaloniaApplication1.Repositories;
 using Repositories;
 
@@ -10,6 +11,7 @@ public partial class BooksViewModel(IDatasource datasource, IExternal<Book> exte
 
     public override BookGridItem Convert(int index, Book i)
     {
+
         return new BookGridItem(
             i.ID,
             index + 1,
@@ -18,7 +20,8 @@ public partial class BooksViewModel(IDatasource datasource, IExternal<Book> exte
             i.Year ?? 0,
             i.EminaRating,
             i.Pages ?? 0,
-            i.Date
+            i.Date,
+            DoneList?.Contains(i.ExternalID) ?? false
         );
     }
 }
