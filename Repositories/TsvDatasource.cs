@@ -88,7 +88,7 @@ internal class TsvDatasource : IDatasource
         var reader = new StringReader(text);
 
         using var csv = new CsvReader(reader, _config);
-        return csv.GetRecords<T>().ToList(); ;
+        return csv.GetRecords<T>().ToList();
     }
 
     public void MakeBackup(string path)
@@ -96,57 +96,12 @@ internal class TsvDatasource : IDatasource
         throw new System.NotImplementedException();
     }
 
-    public void Update<T>(T item)
-        where T : IItem
+    public void Update<T>(T item) where T : IItem
     {
-        var events = string.Empty;
+        var events = GetList<T>();
 
-        // var items = GetList<Game>();
-
-        // foreach (var i in items)
-        // {
-        //     var oldPath = Path.Combine(Paths.Images, typeof(Game).ToString(), $"{i.Igdb}.png");
-        //     ;
-        //     var newPath = Path.Combine(Paths.Images, "Game_fixed", $"{i.ID}.png");
-        //     ;
-
-        //     if (!File.Exists(oldPath))
-        //     {
-        //         continue;
-        //     }
-
-        //     File.Move(oldPath, newPath);
-        // }
-
-        // var bookmarkedItemIDs = new List<int> { 8064, 11221, 16368, 16413, 17480, 17485, 17486 };
-
-        // foreach (var e in events)
-        // {
-        //     if (bookmarkedItemIDs.Contains(e.ItemID))
-        //     {
-        //         e.Bookmakred = true;
-        //     }
-        //     else
-        //     {
-        //         e.Bookmakred = false;
-        //     }
-        // }
-
-        // foreach (var i in GetList<Work>())
-        // {
-        //     var lastEvent = events.Where(o => o.ItemID == i.ID).MaxBy(o => o.DateEnd.Value);
-
-        //     if (!bookmarkedItemIDs.Contains(i.ID))
-        //     {
-        //         lastEvent.Bookmakred = false;
-        //     }
-        // }
-
-        // var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-        // {
-        //     HasHeaderRecord = false,
-        //     Delimiter = "\t"
-        // };
+        // var updateItem = events.First(o => o.ID == item.ID);
+        // updateItem = item;
 
         var itemFilePath = GetEventFilePath<T>();
         using var writer = new StreamWriter(itemFilePath, false, System.Text.Encoding.UTF8);
