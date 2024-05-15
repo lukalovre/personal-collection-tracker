@@ -198,8 +198,14 @@ where TEventItem : IExternalItem
 
     private void IgnoreItemClickAction()
     {
-        ReloadData();
-        ClearNewItemControls();
+
+        if (SelectedItem is Book book)
+        {
+            book.Bookmarked = false;
+            _datasource.Update(book);
+            ReloadData();
+            ClearNewItemControls();
+        }
     }
 
     private void ReloadData()
@@ -249,10 +255,8 @@ where TEventItem : IExternalItem
     private List<TGridItem> LoadDataBookmarked(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<TItem>();
-        var doneList = _datasource.GetDoneList<TEventItem>().Select(o => o.ExternalID);
-
         return _itemList
-            .Where(o => !doneList.Contains(o.ExternalID) && ((o as Book)?.Bookmarked ?? true))
+            .Where(o => (o as Book)?.Bookmarked ?? true)
             .OrderBy(o => o.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();
