@@ -100,12 +100,15 @@ internal class TsvDatasource : IDatasource
     {
         var events = GetList<T>();
 
-        // var updateItem = events.First(o => o.ID == item.ID);
-        // updateItem = item;
+        var updateItem = events.First(o => o.ID == item.ID);
+        events[events.IndexOf(updateItem)] = item;
 
-        var itemFilePath = GetEventFilePath<T>();
+        var itemFilePath = GetFilePath<T>();
         using var writer = new StreamWriter(itemFilePath, false, System.Text.Encoding.UTF8);
         using var csvText = new CsvWriter(writer, _config);
+        var options = new TypeConverterOptions { Formats = ["yyyy-MM-dd HH:mm:ss"] };
+        csvText.Context.TypeConverterOptionsCache.AddOptions<DateTime>(options);
+        csvText.Context.TypeConverterOptionsCache.AddOptions<DateTime?>(options);
         csvText.WriteRecords(events);
         writer.Flush();
     }

@@ -201,7 +201,7 @@ where TEventItem : IExternalItem
 
         if (SelectedItem is Book book)
         {
-            book.Bookmarked = false;
+            book.Bookmarked = null;
             _datasource.Update(book);
             ReloadData();
             ClearNewItemControls();
