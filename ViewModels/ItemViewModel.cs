@@ -84,6 +84,7 @@ where TEventItem : IExternalItem
 
     public ReactiveCommand<Unit, Unit> AddItemClick { get; }
     public ReactiveCommand<Unit, Unit> IgnoreItemClick { get; }
+    public ReactiveCommand<Unit, Unit> UpdateItemClick { get; }
     public ReactiveCommand<Unit, Unit> AddEventClick { get; }
     public ReactiveCommand<Unit, Unit> Search { get; }
     public ReactiveCommand<Unit, Unit> OpenLink { get; }
@@ -141,6 +142,7 @@ where TEventItem : IExternalItem
 
         AddItemClick = ReactiveCommand.Create(AddItemClickAction);
         IgnoreItemClick = ReactiveCommand.Create(IgnoreItemClickAction);
+        UpdateItemClick = ReactiveCommand.Create(UpdateItemClickAction);
         Search = ReactiveCommand.Create(SearchAction);
         OpenLink = ReactiveCommand.Create(OpenLinkAction);
 
@@ -201,7 +203,6 @@ where TEventItem : IExternalItem
 
     private void IgnoreItemClickAction()
     {
-
         if (SelectedItem is Book book)
         {
             book.Bookmarked = null;
@@ -209,6 +210,18 @@ where TEventItem : IExternalItem
             ReloadData();
             ClearNewItemControls();
         }
+    }
+
+    private void UpdateItemClickAction()
+    {
+        if (SelectedItem is null)
+        {
+            return;
+        }
+
+        _datasource.Update(SelectedItem);
+        ReloadData();
+        ClearNewItemControls();
     }
 
     private void ReloadData()

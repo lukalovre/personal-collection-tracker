@@ -28,7 +28,8 @@ public partial class BooksViewModel(IDatasource datasource, IExternal<Book> exte
             i.Pages ?? 0,
             i.Date,
             read,
-            i.Type
+            i.Type,
+            i._1001 ?? false
         );
     }
 }
