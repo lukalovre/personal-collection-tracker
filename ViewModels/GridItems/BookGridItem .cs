@@ -10,5 +10,6 @@ public record BookGridItem(
     int? Rating,
     int Pages,
     DateTime? LastDate,
-    bool Read
+    bool Read,
+    string Type
 ) : IGridItem;
