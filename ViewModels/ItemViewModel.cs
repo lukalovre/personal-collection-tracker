@@ -173,8 +173,7 @@ where TEventItem : IExternalItem
 
         // var searchMovie = new Movie { Director = SearchText, Title = SearchText };
 
-        GridItemsTodo.Clear();
-        GridItemsTodo.AddRange(LoadDataTodo());
+        ReloadData(SearchText);
     }
 
     public async void InputUrlChanged()
@@ -224,7 +223,7 @@ where TEventItem : IExternalItem
         ClearNewItemControls();
     }
 
-    private void ReloadData()
+    private void ReloadData(string searchText = null)
     {
         GridItems.Clear();
         GridItems.AddRange(LoadData());
@@ -235,7 +234,7 @@ where TEventItem : IExternalItem
         GridCountItemsBookmarked = GridItemsTodo.Count;
 
         GridItemsBookmarked.Clear();
-        GridItemsBookmarked.AddRange(LoadDataBookmarked());
+        GridItemsBookmarked.AddRange(LoadDataBookmarked(searchText));
         GridCountItemsBookmarked = GridItemsBookmarked.Count;
     }
 
@@ -268,7 +267,7 @@ where TEventItem : IExternalItem
             .ToList();
     }
 
-    private List<TGridItem> LoadDataBookmarked(int? yearsAgo = null)
+    private List<TGridItem> LoadDataBookmarked(string searchText = null)
     {
         _itemList = _datasource.GetList<TItem>();
         return _itemList
