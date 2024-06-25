@@ -194,6 +194,12 @@ where TEventItem : IExternalItem
     private void AddItemClickAction()
     {
         NewItem.Date = NewItem.Date ?? DateTime.Now;
+
+        if (NewItem is Book)
+        {
+            (NewItem as Book).Bookmarked = true;
+        }
+
         _datasource.Add(NewItem);
 
         ReloadData();
