@@ -10,7 +10,7 @@ public partial class SongsViewModel(IDatasource datasource, IExternal<Song> exte
     {
         return new SongGridItem(
             i.ID,
-            index + 1,
+            GetDoneStatus(i),
             i.Artist,
             i.Title,
             i.Year,

@@ -12,7 +12,7 @@ public partial class ComicsViewModel(IDatasource datasource, IExternal<Comic> ex
     {
         return new ComicGridItem(
             i.ID,
-            index + 1,
+            GetDoneStatus(i),
             i.Title,
             i.Writer,
             i.Chapter,

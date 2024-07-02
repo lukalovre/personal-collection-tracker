@@ -1,5 +1,4 @@
 using System;
-using AvaloniaApplication1.ViewModels.GridItems;
 using Repositories;
 
 namespace AvaloniaApplication1.ViewModels;
@@ -12,7 +11,7 @@ public partial class WorkViewModel(IDatasource datasource)
     {
         return new WorkGridItem(
             i.ID,
-            index + 1,
+            GetDoneStatus(i),
             i.Title,
             i.Type,
             0,

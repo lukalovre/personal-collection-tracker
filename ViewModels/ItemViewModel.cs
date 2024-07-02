@@ -276,6 +276,16 @@ where TEventItem : IExternalItem
             .ToList();
     }
 
+    protected bool GetDoneStatus(TItem item)
+    {
+        if (string.IsNullOrEmpty(item?.ExternalID) || item.ExternalID == "0")
+        {
+            return false;
+        }
+
+        return DoneList?.Contains(item.ExternalID) ?? false;
+    }
+
     public virtual TGridItem Convert(int index, TItem i)
     {
         return default;

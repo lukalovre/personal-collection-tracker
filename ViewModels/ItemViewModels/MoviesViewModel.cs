@@ -10,7 +10,7 @@ public partial class MoviesViewModel(IDatasource datasource, IExternal<Movie> ex
     {
         return new MovieGridItem(
             i.ID,
-            index + 1,
+            GetDoneStatus(i),
             i.Title,
             i.Director,
             i.Year ?? 0,

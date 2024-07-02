@@ -10,7 +10,7 @@ public partial class TVShowsViewModel(IDatasource datasource, IExternal<TVShow> 
     {
         return new TVShowGridItem(
             i.ID,
-            index + 1,
+            GetDoneStatus(i),
             i.Title,
             0,
             0,

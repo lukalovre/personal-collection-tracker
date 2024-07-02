@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using AvaloniaApplication1.Repositories;
-using AvaloniaApplication1.ViewModels.GridItems;
 using Repositories;
 
 namespace AvaloniaApplication1.ViewModels;
@@ -24,7 +23,7 @@ public partial class MusicViewModel(IDatasource datasource, IExternal<Music> ext
     {
         return new MusicGridItem(
             i.ID,
-            index + 1,
+            GetDoneStatus(i),
             i.Artist,
             i.Title,
             i.Year ?? 0,

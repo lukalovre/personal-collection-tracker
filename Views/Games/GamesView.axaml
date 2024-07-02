@@ -3,9 +3,9 @@
         <TabControl>
             <TabItem Header="★">
                 <DockPanel>
-                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsTodo}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Index}" Header="{Binding GridCountItemsBookmarked}" Width="45" />
+                            <DataGridCheckBoxColumn Binding="{Binding Done}" Header="Done" Width="40" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
                             <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
                             <DataGridTextColumn Binding="{Binding Platform}" Header="Platform" Width="70" />
@@ -19,7 +19,6 @@
                 <DockPanel>
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Index}" Header="{Binding GridCountItems}" Width="45" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
                             <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
                             <DataGridTextColumn Binding="{Binding Platform}" Header="Platform" Width="70" />
@@ -34,6 +33,11 @@
             <TabItem Header="Info">
                 <ScrollViewer>
                     <StackPanel>
+                        <Button Content ="{Binding GridCountItemsBookmarked}"></Button>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
+                            <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
+                        </StackPanel>
                         <TextBox Watermark="Title" Text="{Binding SelectedItem.Title}" HorizontalAlignment="Stretch" />
                         <TextBox Watermark="Year" Text="{Binding SelectedItem.Year}" HorizontalAlignment="Stretch" />
                         <TextBox Watermark="Edition" Text="{Binding SelectedItem.Edition}" HorizontalAlignment="Stretch" />

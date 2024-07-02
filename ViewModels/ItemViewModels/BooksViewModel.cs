@@ -11,23 +11,15 @@ public partial class BooksViewModel(IDatasource datasource, IExternal<Book> exte
 
     public override BookGridItem Convert(int index, Book i)
     {
-        var read = DoneList?.Contains(i.ExternalID) ?? false;
-
-        if (i.ExternalID == "0")
-        {
-            read = false;
-        }
-
         return new BookGridItem(
             i.ID,
-            index + 1,
+            GetDoneStatus(i),
             i.Title,
             i.Author,
             i.Year ?? 0,
             i.EminaRating,
             i.Pages ?? 0,
             i.Date,
-            read,
             i.Type,
             i._1001 ?? false
         );

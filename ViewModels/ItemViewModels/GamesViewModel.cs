@@ -10,7 +10,7 @@ public partial class GamesViewModel(IDatasource datasource, IExternal<Game> exte
     {
         return new GameGridItem(
             i.ID,
-            index + 1,
+            GetDoneStatus(i),
             i.Title,
             i.Year,
             i.Platform,
