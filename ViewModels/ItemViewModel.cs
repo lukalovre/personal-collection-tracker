@@ -194,11 +194,7 @@ where TEventItem : IExternalItem
     private void AddItemClickAction()
     {
         NewItem.Date = NewItem.Date ?? DateTime.Now;
-
-        if (NewItem is Book)
-        {
-            (NewItem as Book).Bookmarked = true;
-        }
+        NewItem.Bookmarked = true;
 
         _datasource.Add(NewItem);
 
@@ -208,13 +204,10 @@ where TEventItem : IExternalItem
 
     private void IgnoreItemClickAction()
     {
-        if (SelectedItem is Book book)
-        {
-            book.Bookmarked = null;
-            _datasource.Update(book);
-            ReloadData();
-            ClearNewItemControls();
-        }
+        SelectedItem.Bookmarked = null;
+        _datasource.Update(SelectedItem);
+        ReloadData();
+        ClearNewItemControls();
     }
 
     private void UpdateItemClickAction()
@@ -277,7 +270,7 @@ where TEventItem : IExternalItem
     {
         _itemList = _datasource.GetList<TItem>();
         return _itemList
-            .Where(o => (o as Book)?.Bookmarked ?? false)
+            .Where(o => o.Bookmarked ?? false)
             .OrderBy(o => o.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();

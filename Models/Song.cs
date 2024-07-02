@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 [Table("Songs")]
-public class Song : IItem
+public class Song : IItem, ICollection
 {
     [Key]
     public int ID { get; set; }
@@ -12,6 +12,9 @@ public class Song : IItem
     public int Year { get; set; }
     public int Runtime { get; set; }
     public string Link { get; set; }
-    public string ExternalID { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public DateTime? Date { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public string ExternalID { get; set; }
+    public DateTime? Date { get; set; }
+    public bool? Bookmarked { get; set; }
+    public float? Price { get; set; }
+    public float? PriceInRSD { get; set; }
 }

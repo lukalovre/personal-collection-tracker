@@ -17,4 +17,5 @@ public class Music : IItem, ICollection
     public DateTime? Date { get; set; }
     public string ExternalID { get; set; }
     public int Runtime { get; set; }
+    public bool? Bookmarked { get; set; }
 }

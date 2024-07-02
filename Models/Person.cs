@@ -15,6 +15,7 @@ public class Person : IItem
     public string Postcode { get; set; }
     public string Birthday { get; set; }
     public string Nickname { get; set; }
-    public string ExternalID { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public DateTime? Date { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public string ExternalID { get; set; }
+    public DateTime? Date { get; set; }
+    public bool? Bookmarked { get; set; }
 }

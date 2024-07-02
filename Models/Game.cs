@@ -22,4 +22,5 @@ public class Game : IItem, ICollection
     public int HLTB { get; set; }
     public string Owner { get; set; }
     public string ExternalID { get; set; }
+    public bool? Bookmarked { get; set; }
 }

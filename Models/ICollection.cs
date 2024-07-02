@@ -2,7 +2,7 @@ using System;
 
 public interface ICollection
 {
-    DateTime? Date { get; set; }
-    float? Price { get; set; }
-    float? PriceInRSD { get; set; }
+    public DateTime? Date { get; set; }
+    public float? Price { get; set; }
+    public float? PriceInRSD { get; set; }
 }

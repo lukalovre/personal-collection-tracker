@@ -19,4 +19,5 @@ public class Work : IItem, ICollection
     public string ExternalID { get; set; }
     public float? Price { get; set; }
     public float? PriceInRSD { get; set; }
+    public bool? Bookmarked { get; set; }
 }

@@ -15,4 +15,5 @@ public record Clip : IItem
     public int Year { get; set; }
     public int Runtime { get; set; }
     public DateTime? Date { get; set; }
+    public bool? Bookmarked { get; set; }
 }
