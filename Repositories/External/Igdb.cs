@@ -51,16 +51,28 @@ public class Igdb
         );
     }
 
-    // public async Task<string> GetUrlFromAPIAsync(int igdbID)
-    // {
-    //     var client = GetClient();
+    public static async Task<string> GetUrlFromAPIAsync(int igdbID)
+    {
+        var keyFilePath = Paths.GetAPIKeyFilePath(API_KEY_FILE_NAME);
+        var lines = File.ReadAllLines(keyFilePath);
 
-    //     var games = await client.QueryAsync<IGDB.Models.Game>(
-    //         IGDBClient.Endpoints.Games,
-    //         $"fields name, url, summary, first_release_date, id, involved_companies, cover.image_id; where id = {igdbID};"
-    //     );
-    //     var game = games.FirstOrDefault();
+        if (lines.Length == 0)
+        {
+            // Api keys missing.
+            return null!;
+        }
 
-    //     return game.Url;
-    // }
+        var clientId = lines[0];
+        var clientSecret = lines[1];
+
+        var client = new IGDBClient(clientId, clientSecret);
+
+        var games = await client.QueryAsync<IGDB.Models.Game>(
+            IGDBClient.Endpoints.Games,
+            $"fields name, url, summary, first_release_date, id, involved_companies, cover.image_id; where id = {igdbID};"
+        );
+        var game = games.FirstOrDefault();
+
+        return game?.Url ?? string.Empty;
+    }
 }

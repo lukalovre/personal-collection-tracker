@@ -4,9 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using AvaloniaApplication1.Models;
 using AvaloniaApplication1.Repositories;
+using AvaloniaApplication1.Repositories.External;
 using DynamicData;
 using ReactiveUI;
 using Repositories;
@@ -160,14 +162,14 @@ where TEventItem : IExternalItem
         HtmlHelper.OpenLink(SelectedItem.ExternalID, OpenLinkAlternativeParameters());
     }
 
-    private void SearchAction()
+    private async void SearchAction()
     {
         SearchText = SearchText.Trim();
 
         if (string.IsNullOrWhiteSpace(SearchText))
         {
             GridItemsTodo.Clear();
-            GridItemsTodo.AddRange(LoadData());
+            GridItemsTodo.AddRange(await LoadData());
             return;
         }
 
@@ -222,10 +224,10 @@ where TEventItem : IExternalItem
         ClearNewItemControls();
     }
 
-    private void ReloadData(string searchText = null)
+    private async Task ReloadData(string searchText = null)
     {
         GridItems.Clear();
-        GridItems.AddRange(LoadData());
+        GridItems.AddRange(await LoadData());
         GridCountItems = GridItems.Count;
 
         GridItemsTodo.Clear();
@@ -244,9 +246,57 @@ where TEventItem : IExternalItem
         SelectedPerson = default;
     }
 
-    private List<TGridItem> LoadData()
+    private async Task<List<TGridItem>> LoadData()
     {
         _itemList = _datasource.GetList<TItem>();
+
+        // foreach (var item in _itemList)
+        // {
+        //     if (string.IsNullOrWhiteSpace(item.ExternalID) || item.ExternalID == "0")
+        //     {
+        //         continue;
+        //     }
+
+        //     if (FileRepsitory.ImageExists<TItem>(item.ID))
+        //     {
+        //         continue;
+        //     }
+
+        //     var ex = item.ExternalID;
+
+        //     if (item is Movie)
+        //     {
+        //         continue;
+        //     }
+
+        //     if (item is Book || item is Comic)
+        //     {
+
+        //         ex = $"https://www.goodreads.com/book/show/{item.ExternalID}";
+        //     }
+
+        //     if (item is Game)
+        //     {
+        //         continue;
+        //     }
+
+        //     if (item is Work)
+        //     {
+        //         continue;
+        //     }
+
+        //     if (item is Music)
+        //     {
+        //         ex = item.ExternalID;
+        //     }
+
+        //     var r = await _external.GetItem(ex);
+
+        //     if (!FileRepsitory.ImageExists<TItem>(item.ID))
+        //     {
+        //         FileRepsitory.MoveTempImage<TItem>(item.ID);
+        //     }
+        // }
 
         return _itemList
             .OrderBy(o => o.Date)
