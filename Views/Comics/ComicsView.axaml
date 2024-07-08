@@ -43,7 +43,7 @@
                         <TextBox Watermark = "Illustrator" Text="{Binding SelectedItem.Illustrator}" />
                         <TextBox Watermark = "Language" Text="{Binding SelectedItem.Language}" />
                         <TextBox Watermark = "ExternalID" Text="{Binding SelectedItem.ExternalID}" />
-                        <TextBox Watermark = "Date" Text="{Binding SelectedItem.Date}" />
+                        <TextBox Watermark = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
                         <TextBox Watermark = "Price" Text="{Binding SelectedItem.Price}" />
                         <TextBox Watermark = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
                         <Button>

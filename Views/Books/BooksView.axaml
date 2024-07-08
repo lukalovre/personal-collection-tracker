@@ -52,7 +52,7 @@
                         <TextBox Watermark = "ExternalID" Text="{Binding SelectedItem.ExternalID}" />
                         <TextBox Watermark = "Price" Text="{Binding SelectedItem.Price}" />
                         <TextBox Watermark = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
-                        <TextBox Watermark = "Date" Text="{Binding SelectedItem.Date}" />
+                        <TextBox Watermark = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>

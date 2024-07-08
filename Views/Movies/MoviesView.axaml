@@ -48,7 +48,7 @@
                         <TextBox Text="{Binding SelectedItem.Region}" />
                         <TextBox Text="{Binding SelectedItem.Price}" />
                         <TextBox Text="{Binding SelectedItem.PriceInRSD}" />
-                        <TextBox Text="{Binding SelectedItem.Date}" />
+                        <TextBox Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
                         <TextBox Text="{Binding SelectedItem.ExternalID}" />
                         <TextBox Text="{Binding SelectedItem.Comment}" />
                         <Button>
