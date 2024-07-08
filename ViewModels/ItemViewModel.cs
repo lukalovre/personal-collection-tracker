@@ -299,7 +299,7 @@ where TEventItem : IExternalItem
         // }
 
         return _itemList
-            .OrderBy(o => o.Date)
+            .OrderByDescending(o => o.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();
     }
@@ -311,7 +311,7 @@ where TEventItem : IExternalItem
 
         return _itemList
         .Where(o => !DoneList.Contains(o.ExternalID))
-            .OrderBy(o => o.Date)
+            .OrderByDescending(o => o.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();
     }
@@ -321,7 +321,7 @@ where TEventItem : IExternalItem
         _itemList = _datasource.GetList<TItem>();
         return _itemList
             .Where(o => o.Bookmarked ?? false)
-            .OrderBy(o => o.Date)
+            .OrderByDescending(o => o.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();
     }
