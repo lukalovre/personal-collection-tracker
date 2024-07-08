@@ -8,4 +8,5 @@ public record MovieGridItem(int ID, bool Done, string Title, string Director, in
 public record MusicGridItem(int ID, bool Done, string Artist, string Title, int Year, int Minutes, bool Bookmarked, int Played) : IGridItem;
 public record SongGridItem(int ID, bool Done, string Artist, string Title, int Year, int Times, bool Bookmarked) : IGridItem;
 public record TVShowGridItem(int ID, bool Done, string Title, int Season, int Episode, DateTime? LastDate, int DaysAgo) : IGridItem;
+public record StandupGridItem(int ID, bool Done, string Title, int Season, int Episode, DateTime? LastDate, int DaysAgo) : IGridItem;
 public record WorkGridItem(int ID, bool Done, string Title, string Type, int Minutes, DateTime LastDate) : IGridItem;

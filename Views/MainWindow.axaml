@@ -29,6 +29,9 @@
                     <TabItem Header="Comics">
                         <v:ComicsView DataContext="{Binding ComicsViewModel}" />
                     </TabItem>
+                    <TabItem Header="Standup">
+                        <v:StandupView DataContext="{Binding StandupViewModel}" />
+                    </TabItem>
                 </TabControl>
             </TabItem>
             <TabItem Header="My">

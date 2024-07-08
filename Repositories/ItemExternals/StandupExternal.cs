@@ -16,13 +16,8 @@ public class StandupExternal : IExternal<Standup>
 
             return new Standup
             {
-                Performer = item.StandupPerformer,
                 Title = item.StandupTitle,
-                Link = item.ExternalID,
-                Country = item.Country,
                 Director = item.Director,
-                Writer = item.Writer,
-                Plot = item.Plot,
                 Runtime = item.Runtime,
                 Year = item.Year
             };
