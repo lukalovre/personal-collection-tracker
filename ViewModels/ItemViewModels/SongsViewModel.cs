@@ -13,7 +13,7 @@ public partial class SongsViewModel(IDatasource datasource, IExternal<Song> exte
             GetDoneStatus(i),
             i.Artist,
             i.Title,
-            i.Year,
+            i.Year ?? 0,
             0,
             false);
     }

@@ -15,7 +15,7 @@ public class SongExternal : IExternal<Song>
             {
                 Artist = item.Artist,
                 Title = item.MusicTitle,
-                Link = item.Link,
+                ExternalID = item.Link,
                 Year = item.Year,
                 Runtime = item.Runtime
             };
@@ -31,7 +31,7 @@ public class SongExternal : IExternal<Song>
                 Artist = item.Artist,
                 Year = item.Year,
                 Runtime = item.Runtime,
-                Link = item.Link
+                ExternalID = item.Link
             };
         }
 
@@ -45,7 +45,7 @@ public class SongExternal : IExternal<Song>
                 Artist = item.Artist,
                 Year = item.Year,
                 Runtime = item.Runtime,
-                Link = item.ExternalID
+                ExternalID = item.ExternalID
             };
         }
 
