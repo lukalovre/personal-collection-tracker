@@ -1,7 +1,22 @@
 <UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:AvaloniaApplication1.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:AvaloniaApplication1.Views;assembly=AvaloniaApplication1" mc:Ignorable="d" x:DataType="vm:MusicViewModel" x:Class="AvaloniaApplication1.Views.MusicView" xmlns:view="using:AvaloniaApplication1.Views">
     <DockPanel>
         <TabControl>
-            <TabItem Header="Info">
+            <TabItem Header="★">
+                <DockPanel>
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Binding="{Binding Done}" Header="Done" Width="40" />
+                            <DataGridTextColumn Binding="{Binding Artist}" Header="Artist" Width="150" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="150" />
+                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="65" />
+                            <DataGridTextColumn Binding="{Binding Minutes}" Header="Min" Width="65" />
+                            <DataGridTextColumn Binding="{Binding Played}" Header="#" Width="60" />
+                            <DataGridCheckBoxColumn Binding="{Binding Bookmarked}" Header="★" Width="60" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="All">
                 <DockPanel>
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                         <TextBox Text="{Binding SearchText}" Watermark="Filter" DockPanel.Dock="Top" Width="150" />
@@ -11,21 +26,6 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Artist}" Header="Artist" Width="150" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
-                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="65" />
-                            <DataGridTextColumn Binding="{Binding Minutes}" Header="Min" Width="65" />
-                            <DataGridTextColumn Binding="{Binding Played}" Header="#" Width="60" />
-                            <DataGridCheckBoxColumn Binding="{Binding Bookmarked}" Header="★" Width="60" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </DockPanel>
-            </TabItem>
-            <TabItem Header="★">
-                <DockPanel>
-                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
-                        <DataGrid.Columns>
-                            <DataGridCheckBoxColumn Binding="{Binding Done}" Header="Done" Width="40" />
-                            <DataGridTextColumn Binding="{Binding Artist}" Header="Artist" Width="150" />
-                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="150" />
                             <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="65" />
                             <DataGridTextColumn Binding="{Binding Minutes}" Header="Min" Width="65" />
                             <DataGridTextColumn Binding="{Binding Played}" Header="#" Width="60" />

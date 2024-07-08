@@ -8,17 +8,17 @@
         <TabControl Margin="5">
             <TabItem Header="Main">
                 <TabControl TabStripPlacement="Left">
+                    <TabItem Header="Books">
+                        <v:BooksView DataContext="{Binding BooksViewModel}" />
+                    </TabItem>
+                    <TabItem Header="Games">
+                        <v:GamesView DataContext="{Binding GamesViewModel}" />
+                    </TabItem>
                     <TabItem Header="Music" Width="150">
                         <v:MusicView DataContext="{Binding MusicViewModel}" />
                     </TabItem>
                     <TabItem Header="Songs">
                         <v:SongsView DataContext="{Binding SongsViewModel}" />
-                    </TabItem>
-                    <TabItem Header="Games">
-                        <v:GamesView DataContext="{Binding GamesViewModel}" />
-                    </TabItem>
-                    <TabItem Header="Books">
-                        <v:BooksView DataContext="{Binding BooksViewModel}" />
                     </TabItem>
                     <TabItem Header="TV Shows">
                         <v:TVShowsView DataContext="{Binding TVShowsViewModel}" />
