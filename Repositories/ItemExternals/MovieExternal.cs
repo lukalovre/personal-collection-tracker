@@ -22,7 +22,7 @@ public class MovieExternal : IExternal<Movie>
                 Runtime = item.Runtime,
                 Year = item.Year,
                 ExternalID = item.ExternalID,
-                Director = item.Director,
+                Director = item.Director
             };
         }
 

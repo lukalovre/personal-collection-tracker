@@ -56,10 +56,6 @@
                             <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Imdb" />
-                            <TextBox Text="{Binding NewItem.Imdb}" HorizontalAlignment="Stretch" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Title" />
                             <TextBox Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
                         </StackPanel>

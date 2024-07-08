@@ -33,14 +33,7 @@ public class TVShowExternal : IExternal<TVShow>
                 Runtime = item.Runtime,
                 Year = item.Runtime,
                 ExternalID = item.ExternalID,
-                Actors = item.Actors,
-                Country = item.Country,
-                Director = item.Director,
-                Genre = item.Genre,
-                Language = item.Language,
-                Plot = item.Plot,
-                Type = item.Type,
-                Writer = item.Writer
+                Director = item.Director
             };
         }
 
