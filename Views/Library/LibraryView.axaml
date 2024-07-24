@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:AvaloniaApplication1.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:AvaloniaApplication1.Views;assembly=AvaloniaApplication1" mc:Ignorable="d" x:DataType="vm:LibraryViewModel" x:Class="AvaloniaApplication1.Views.LibraryView" xmlns:view="using:AvaloniaApplication1.Views">
+    <DockPanel>
+        <TabControl>
+            <TabItem Header="All">
+                <DockPanel>
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="*" />
+                            <DataGridTextColumn Binding="{Binding LentTo}" Header="LentTo" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Perosn}" Header="Perosn" Width="*" />
+                            <DataGridTextColumn Binding="{Binding LentDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm}}" Header="Last Date" Width="200" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+        <TabControl Margin="5">
+            <TabItem Header="Info">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
+                            <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
+                        </StackPanel>
+                        <TextBlock Text="{Binding SelectedItem.Title}" FontSize="20" FontWeight="Bold" />
+                        <Button>
+                            <Image Source="{Binding Image}" Width="430" Height="430" />
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="New">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Watermark="Artist" Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Edit">
+                <TextBlock Text="Event" />
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</UserControl>

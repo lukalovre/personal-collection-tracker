@@ -73,22 +73,6 @@ internal class TsvDatasource : IDatasource
         return tableName;
     }
 
-    public List<T> GetList<T>() where T : IItem
-    {
-        var itemFilePath = GetFilePath<T>();
-
-        if (!File.Exists(itemFilePath))
-        {
-            return [];
-        }
-
-        var text = File.ReadAllText(itemFilePath);
-        var reader = new StringReader(text);
-
-        using var csv = new CsvReader(reader, _config);
-        return csv.GetRecords<T>().ToList();
-    }
-
     public void MakeBackup(string path)
     {
         throw new System.NotImplementedException();
@@ -111,10 +95,26 @@ internal class TsvDatasource : IDatasource
         writer.Flush();
     }
 
+    public List<T> GetList<T>() where T : IItem
+    {
+        var itemFilePath = GetFilePath<T>();
+        return GetItems<T>(itemFilePath);
+    }
+
     public List<T> GetDoneList<T>() where T : IExternalItem
     {
         var itemFilePath = GetEventFilePath<T>();
+        return GetItems<T>(itemFilePath);
+    }
 
+    public List<T> GetEventItemList<T>()
+    {
+        var itemFilePath = GetEventFilePath<T>();
+        return GetItems<T>(itemFilePath);
+    }
+
+    private List<T> GetItems<T>(string itemFilePath)
+    {
         if (!File.Exists(itemFilePath))
         {
             return [];
@@ -122,8 +122,7 @@ internal class TsvDatasource : IDatasource
 
         var text = File.ReadAllText(itemFilePath);
         var reader = new StringReader(text);
-
-        using var csv = new CsvReader(reader, _config);
+        var csv = new CsvReader(reader, _config);
         return csv.GetRecords<T>().ToList();
     }
 }

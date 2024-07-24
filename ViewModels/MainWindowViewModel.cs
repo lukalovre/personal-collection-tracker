@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using AvaloniaApplication1.Repositories;
+﻿using AvaloniaApplication1.Repositories;
 using Repositories;
 
 namespace AvaloniaApplication1.ViewModels;
@@ -15,11 +14,5 @@ public class MainWindowViewModel : ViewModelBase
     public TVShowsViewModel TVShowsViewModel { get; } = new TVShowsViewModel(new TsvDatasource(), new TVShowExternal());
     public StandupViewModel StandupViewModel { get; } = new StandupViewModel(new TsvDatasource(), new StandupExternal());
     public SongsViewModel SongsViewModel { get; } = new SongsViewModel(new TsvDatasource(), new SongExternal());
-
-    public List<MusicGridItem> Music { get; set; }
-    public List<ComicGridItem> Comics { get; set; }
-
-    public MainWindowViewModel()
-    {
-    }
+    public LibraryViewModel LibraryViewModel { get; } = new LibraryViewModel(new TsvDatasource());
 }

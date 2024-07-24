@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using AvaloniaApplication1.Models;
 using AvaloniaApplication1.ViewModels.Extensions;
 using Repositories;
 
@@ -14,7 +15,7 @@ public class PeopleManager
     private PeopleManager(IDatasource datasource)
     {
         _datasource = datasource;
-        _peopleList = _datasource.GetList<Person>();
+        _peopleList = _datasource.GetEventItemList<Person>();
     }
 
     public static PeopleManager Instance

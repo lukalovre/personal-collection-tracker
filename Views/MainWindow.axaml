@@ -45,7 +45,7 @@
             <TabItem Header="Library">
                 <TabControl TabStripPlacement="Left">
                     <TabItem Header="Main" Width="150">
-                        <v:WorkView DataContext="{Binding WorkViewModel}" />
+                        <v:LibraryView DataContext="{Binding LibraryViewModel}" />
                     </TabItem>
                     <TabItem Header="Stats" Width="150">
                         <v:WorkView DataContext="{Binding WorkViewModel}" />

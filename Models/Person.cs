@@ -1,21 +1,23 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+namespace AvaloniaApplication1.Models;
+
 [Table("People")]
-public class Person : IItem
+public record Person
 {
     [Key]
     public int ID { get; set; }
-
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Address { get; set; }
-    public string City { get; set; }
-    public string Postcode { get; set; }
-    public string Birthday { get; set; }
-    public string Nickname { get; set; }
-    public string ExternalID { get; set; }
-    public DateTime? Date { get; set; }
-    public bool? Bookmarked { get; set; }
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
+    public string City { get; set; } = string.Empty;
+    public string Country { get; set; } = string.Empty;
+    public string Postcode { get; set; } = string.Empty;
+    public string Birthday { get; set; } = string.Empty;
+    public string Nickname { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
+    public int? LocationID { get; set; }
+    public string Title { get; set; } = string.Empty;
 }

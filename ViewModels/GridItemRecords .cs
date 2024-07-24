@@ -10,3 +10,4 @@ public record SongGridItem(int ID, bool Done, string Artist, string Title, int Y
 public record TVShowGridItem(int ID, bool Done, string Title, int Season, int Episode, DateTime? LastDate, int DaysAgo) : IGridItem;
 public record StandupGridItem(int ID, bool Done, string Title, int Season, int Episode, DateTime? LastDate, int DaysAgo) : IGridItem;
 public record WorkGridItem(int ID, bool Done, string Title, string Type, int Minutes, DateTime LastDate) : IGridItem;
+public record LibraryGridItem(int ID, string Title, string Type, string LentTo, string Perosn, DateTime LentDate) : IGridItem;
