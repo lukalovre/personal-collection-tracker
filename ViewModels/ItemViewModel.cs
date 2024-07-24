@@ -247,7 +247,7 @@ where TEventItem : IExternalItem
         ClearNewItemControls();
     }
 
-    private async Task ReloadData(string searchText = null)
+    protected virtual async Task ReloadData(string searchText = null)
     {
         GridItems.Clear();
         GridItems.AddRange(await LoadData());

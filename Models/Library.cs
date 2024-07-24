@@ -13,7 +13,6 @@ public class Library : IItem
     public int ItemID { get; set; }
     public string Title { get; set; } = string.Empty;
     public string Type { get; set; } = string.Empty;
-    public string LentTo { get; set; } = string.Empty;
     public int PersonID { get; set; }
     public DateTime LentDate { get; set; }
     public DateTime? ReturnDate { get; set; }
