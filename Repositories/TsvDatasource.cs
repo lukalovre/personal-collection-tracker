@@ -19,8 +19,7 @@ internal class TsvDatasource : IDatasource
         BadDataFound = null
     };
 
-    public void Add<T>(T item)
-        where T : IItem
+    public void Add<T>(T item) where T : IItem
     {
         var items = GetList<T>();
         var options = new TypeConverterOptions { Formats = ["yyyy-MM-dd HH:mm:ss"] };
@@ -74,8 +73,7 @@ internal class TsvDatasource : IDatasource
         return tableName;
     }
 
-    public List<T> GetList<T>()
-        where T : IItem
+    public List<T> GetList<T>() where T : IItem
     {
         var itemFilePath = GetFilePath<T>();
 

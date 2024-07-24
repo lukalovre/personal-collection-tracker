@@ -8,14 +8,14 @@ public class FileRepsitory
 {
     public static bool ImageExists<T>(int itemID) where T : IItem
     {
-        var filePath = Path.Combine(Paths.Images, Helpers.GetClassName<T>(), $"{itemID}.png");
+        var filePath = GetImagePath<T>(itemID);
         return File.Exists(filePath);
     }
 
     public static Bitmap? GetImage<T>(int itemID)
         where T : IItem
     {
-        var filePath = Path.Combine(Paths.Images, Helpers.GetClassName<T>(), $"{itemID}.png");
+        var filePath = GetImagePath<T>(itemID);
 
         if (!File.Exists(filePath))
         {
@@ -23,6 +23,11 @@ public class FileRepsitory
         }
 
         return new Bitmap(filePath);
+    }
+
+    public static string GetImagePath<T>(int itemID) where T : IItem
+    {
+        return Path.Combine(Paths.Images, Helpers.GetClassName<T>(), $"{itemID}.png");
     }
 
     public static Bitmap? GetImageTemp<T>() where T : IItem

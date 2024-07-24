@@ -35,10 +35,12 @@
                             <Button Content ="{Binding GridCountItemsBookmarked}" Margin="15"></Button>
                             <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                             <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
+                            <Button Command ="{Binding DuplicateClick}" Margin="15">Duplicate</Button>
+
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBox Watermark = "Title" Text="{Binding SelectedItem.Title}" />
-                            <TextBox Watermark = "Chapter" Text="{Binding SelectedItem.Chapter}" />
+                            <NumericUpDown Value="{Binding SelectedItem.Chapter}" FormatString="0" Minimum="1" Maximum="999"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBox Watermark = "Writer" Text="{Binding SelectedItem.Writer}" />
@@ -71,7 +73,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBox Watermark = "Title" Text="{Binding NewItem.Title}" />
-                            <TextBox Watermark = "Chapter" Text="{Binding NewItem.Chapter}" />
+                            <NumericUpDown Value="{Binding NewItem.Chapter}" FormatString="0" Minimum="1" Maximum="999"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBox Watermark = "Writer" Text="{Binding NewItem.Writer}" />

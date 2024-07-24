@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -8,7 +9,6 @@ using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using AvaloniaApplication1.Models;
 using AvaloniaApplication1.Repositories;
-using AvaloniaApplication1.Repositories.External;
 using DynamicData;
 using ReactiveUI;
 using Repositories;
@@ -87,6 +87,7 @@ where TEventItem : IExternalItem
     public ReactiveCommand<Unit, Unit> AddItemClick { get; }
     public ReactiveCommand<Unit, Unit> IgnoreItemClick { get; }
     public ReactiveCommand<Unit, Unit> UpdateItemClick { get; }
+    public ReactiveCommand<Unit, Unit> DuplicateClick { get; }
     public ReactiveCommand<Unit, Unit> AddEventClick { get; }
     public ReactiveCommand<Unit, Unit> Search { get; }
     public ReactiveCommand<Unit, Unit> OpenLink { get; }
@@ -145,11 +146,33 @@ where TEventItem : IExternalItem
         AddItemClick = ReactiveCommand.Create(AddItemClickAction);
         IgnoreItemClick = ReactiveCommand.Create(IgnoreItemClickAction);
         UpdateItemClick = ReactiveCommand.Create(UpdateItemClickAction);
+        DuplicateClick = ReactiveCommand.Create(DuplicateClickAction);
         Search = ReactiveCommand.Create(SearchAction);
         OpenLink = ReactiveCommand.Create(OpenLinkAction);
 
         SelectedGridItem = GridItems.LastOrDefault();
         NewItem = (TItem)Activator.CreateInstance(typeof(TItem));
+    }
+
+    private void DuplicateClickAction()
+    {
+        NewItem = SelectedItem;
+        var selectedItemID = SelectedItem.ID;
+        NewItem.Date = null;
+        NewItem.ID = 0;
+
+        if (!FileRepsitory.ImageExists<TItem>(selectedItemID))
+        {
+            return;
+        }
+
+        var tempDestinationFile = Paths.GetTempPath<TItem>();
+        tempDestinationFile = $"{tempDestinationFile}.png";
+
+        var imagePath = FileRepsitory.GetImagePath<TItem>(selectedItemID);
+
+        File.Copy(imagePath, tempDestinationFile);
+        NewImage = FileRepsitory.GetImageTemp<TItem>();
     }
 
     public virtual List<string> OpenLinkAlternativeParameters()
