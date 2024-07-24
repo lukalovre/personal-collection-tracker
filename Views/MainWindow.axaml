@@ -34,15 +34,24 @@
                     </TabItem>
                 </TabControl>
             </TabItem>
-            <TabItem Header="My">
+            <TabItem Header="My Work">
                 <TabControl TabStripPlacement="Left">
                     <TabItem Header="Work" Width="150">
                         <v:WorkView DataContext="{Binding WorkViewModel}" />
                     </TabItem>
-                    <TabItem Header="D&amp;D" />
                 </TabControl>
             </TabItem>
             <TabItem Header="Stats" />
+            <TabItem Header="Library">
+                <TabControl TabStripPlacement="Left">
+                    <TabItem Header="Main" Width="150">
+                        <v:WorkView DataContext="{Binding WorkViewModel}" />
+                    </TabItem>
+                    <TabItem Header="Stats" Width="150">
+                        <v:WorkView DataContext="{Binding WorkViewModel}" />
+                    </TabItem>
+                </TabControl>
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>
