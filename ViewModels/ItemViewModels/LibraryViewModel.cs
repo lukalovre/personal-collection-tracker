@@ -61,7 +61,21 @@ public partial class LibraryViewModel : ViewModelBase
 
     private void SelectedItemChanged()
     {
-        throw new NotImplementedException();
+        Image = null;
+
+        if (SelectedGridItem == null)
+        {
+            return;
+        }
+
+        SelectedItem = _itemList.First(o => o.ID == SelectedGridItem.ID);
+        Image = GetItemImage(SelectedGridItem);
+    }
+
+    public Library SelectedItem
+    {
+        get => _selectedItem;
+        set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
     }
 
     private void ReturnedClickAction()
@@ -77,6 +91,7 @@ public partial class LibraryViewModel : ViewModelBase
     private LibraryGridItem _selectedGridItem;
     private Bitmap? _itemImage;
     private Library _newItem;
+    private Library _selectedItem;
 
     public object ReturnedClick { get; private set; }
     public ReactiveCommand<Unit, Unit> LendItemClick { get; private set; }
