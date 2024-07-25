@@ -6,6 +6,7 @@ using System.Reactive;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using DynamicData;
+using Newtonsoft.Json;
 using ReactiveUI;
 using Repositories;
 
@@ -28,13 +29,20 @@ public partial class LibraryViewModel : ViewModelBase
 
     private void SearchAction()
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrWhiteSpace(SearchText))
+        {
+            return;
+        }
+
+        ReloadSearchData();
     }
 
     private void LendItemClickAction()
     {
-        throw new NotImplementedException();
+        NewItem.LentDate = DateTime.Now;
+        _datasource.Add(NewItem);
     }
+
     public LibraryGridItem SelectedGridItem
     {
         get => _selectedGridItem;
@@ -99,7 +107,16 @@ public partial class LibraryViewModel : ViewModelBase
 
     private void SelectedSearchGridItemChanged()
     {
-        throw new NotImplementedException();
+        if (SelectedSearchGridItem is null)
+        {
+            return;
+        }
+
+        NewItem = new Library
+        {
+            ItemID = SelectedSearchGridItem.ID,
+            Type = SelectedSearchGridItem.Type
+        };
     }
 
     public List<Tuple<string, IItem>> ItemList { get; set; } = [];
@@ -125,11 +142,19 @@ public partial class LibraryViewModel : ViewModelBase
 
         LibraryGridItems.Clear();
         LibraryGridItems.AddRange(await LoadData());
+    }
 
+    private void ReloadSearchData()
+    {
         SearchItems.Clear();
 
         foreach (var item in ItemList)
         {
+            if (!JsonConvert.SerializeObject(item.Item2).Contains(SearchText, StringComparison.InvariantCultureIgnoreCase))
+            {
+                continue;
+            }
+
             var title = item.Item2.Title ?? string.Empty;
 
             if (item.Item2 is Comic comic)

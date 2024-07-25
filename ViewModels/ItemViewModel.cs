@@ -130,7 +130,7 @@ where TEventItem : IExternalItem
         }
     }
 
-    public string SearchText { get; set; }
+    public string SearchText { get; set; } = string.Empty;
 
     public ItemViewModel(IDatasource datasource, IExternal<TItem> external = null!)
     {
