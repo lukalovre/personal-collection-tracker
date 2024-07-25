@@ -2,26 +2,47 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using DynamicData;
+using ReactiveUI;
 using Repositories;
 
 namespace AvaloniaApplication1.ViewModels;
 
-public partial class LibraryViewModel(IDatasource datasource) : ItemViewModel<Library, LibraryGridItem, MusicItem>(datasource)
+public partial class LibraryViewModel : ItemViewModel<Library, LibraryGridItem, MusicItem>
 {
+
+    public LibraryViewModel(IDatasource datasource) : base(datasource)
+    {
+        ReturnedClick = ReactiveCommand.Create(ReturnedClickAction);
+        LendItemClick = ReactiveCommand.Create(LendItemClickAction);
+    }
+
+    private void LendItemClickAction()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void ReturnedClickAction()
+    {
+        throw new NotImplementedException();
+    }
 
     public ObservableCollection<LibraryGridItem> LibraryGridItems { get; set; } = [];
     public List<Tuple<string, IItem>> ItemList { get; set; } = [];
+
+    public object ReturnedClick { get; private set; }
+    public ReactiveCommand<Unit, Unit> LendItemClick { get; private set; }
 
     protected override async Task ReloadData(string searchText = null)
     {
         ItemList.Clear();
 
-        ItemList.AddRange(datasource.GetList<Book>().Select(o => new Tuple<string, IItem>(typeof(Book).Name, o)));
-        ItemList.AddRange(datasource.GetList<Comic>().Select(o => new Tuple<string, IItem>(typeof(Comic).Name, o)));
-        ItemList.AddRange(datasource.GetList<Game>().Select(o => new Tuple<string, IItem>(typeof(Game).Name, o)));
+        ItemList.AddRange(_datasource.GetList<Book>().Select(o => new Tuple<string, IItem>(typeof(Book).Name, o)));
+        ItemList.AddRange(_datasource.GetList<Comic>().Select(o => new Tuple<string, IItem>(typeof(Comic).Name, o)));
+        ItemList.AddRange(_datasource.GetList<Game>().Select(o => new Tuple<string, IItem>(typeof(Game).Name, o)));
 
         LibraryGridItems.Clear();
         LibraryGridItems.AddRange(await LoadData());
@@ -31,7 +52,7 @@ public partial class LibraryViewModel(IDatasource datasource) : ItemViewModel<Li
 
     private async Task<List<LibraryGridItem>> LoadData()
     {
-        _itemList = datasource.GetList<Library>();
+        _itemList = _datasource.GetList<Library>();
 
         return _itemList
             .Where(o => o.ReturnDate is null)

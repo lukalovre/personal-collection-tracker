@@ -21,7 +21,7 @@ where TGridItem : IGridItem
 where TEventItem : IExternalItem
 {
     public virtual float AmountToMinutesModifier => 1f;
-    private readonly IDatasource _datasource;
+    protected readonly IDatasource _datasource;
     private readonly IExternal<TItem> _external;
     private TGridItem _selectedGridItem;
     protected List<TItem> _itemList;

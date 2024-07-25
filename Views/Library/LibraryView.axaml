@@ -19,9 +19,8 @@
                 <ScrollViewer>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
+                            <Button Command ="{Binding ReturnedClick}" Margin="15">Returned</Button>
                         </StackPanel>
-                        <TextBlock Text="{Binding SelectedItem.Title}" FontSize="20" FontWeight="Bold" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
@@ -32,10 +31,23 @@
                 <ScrollViewer>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
+                            <Button Command="{Binding LendItemClick}" Margin="15">Lend</Button>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark="Artist" Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
+                            <TextBox Watermark="ItemID" Text="{Binding NewItem.ItemID}" HorizontalAlignment="Stretch" />
+                            <TextBox Watermark="Type" Text="{Binding NewItem.Type}" HorizontalAlignment="Stretch" />
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                                <TextBox Text="{Binding SearchText}" Watermark="Filter" DockPanel.Dock="Top" Width="150" />
+                                <Button Command="{Binding Search}" HotKey="Enter">Search</Button>
+                                <DataGrid Margin="1" Width="570" ItemsSource="{Binding LibraryGridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Person}" Header="Person" Width="*" />
+                                        <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="70" />
+                                        <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="300" />
+                                        <DataGridTextColumn Binding="{Binding LentDate, Converter={StaticResource DaysAgoToStringConverter}}" Header="Ago" Width="100" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
