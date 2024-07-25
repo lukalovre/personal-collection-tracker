@@ -11,16 +11,55 @@ using Repositories;
 
 namespace AvaloniaApplication1.ViewModels;
 
-public partial class LibraryViewModel : ItemViewModel<Library, LibraryGridItem, MusicItem>
+public partial class LibraryViewModel : ViewModelBase
 {
-
-    public LibraryViewModel(IDatasource datasource) : base(datasource)
+    public LibraryViewModel(IDatasource datasource)
     {
+        _datasource = datasource;
+
         ReturnedClick = ReactiveCommand.Create(ReturnedClickAction);
         LendItemClick = ReactiveCommand.Create(LendItemClickAction);
+        Search = ReactiveCommand.Create(SearchAction);
+
+        ReloadData();
+    }
+
+    public ReactiveCommand<Unit, Unit> Search { get; }
+
+    private void SearchAction()
+    {
+        throw new NotImplementedException();
     }
 
     private void LendItemClickAction()
+    {
+        throw new NotImplementedException();
+    }
+    public LibraryGridItem SelectedGridItem
+    {
+        get => _selectedGridItem;
+        set
+        {
+            _selectedGridItem = value;
+            SelectedItemChanged();
+        }
+    }
+
+    public Bitmap? Image
+    {
+        get => _itemImage;
+        private set => this.RaiseAndSetIfChanged(ref _itemImage, value);
+    }
+
+    public string SearchText { get; set; }
+
+    public Library NewItem
+    {
+        get => _newItem;
+        set => this.RaiseAndSetIfChanged(ref _newItem, value);
+    }
+
+    private void SelectedItemChanged()
     {
         throw new NotImplementedException();
     }
@@ -33,10 +72,16 @@ public partial class LibraryViewModel : ItemViewModel<Library, LibraryGridItem, 
     public ObservableCollection<LibraryGridItem> LibraryGridItems { get; set; } = [];
     public List<Tuple<string, IItem>> ItemList { get; set; } = [];
 
+    private readonly IDatasource _datasource;
+    private List<Library> _itemList = [];
+    private LibraryGridItem _selectedGridItem;
+    private Bitmap? _itemImage;
+    private Library _newItem;
+
     public object ReturnedClick { get; private set; }
     public ReactiveCommand<Unit, Unit> LendItemClick { get; private set; }
 
-    protected override async Task ReloadData(string searchText = null)
+    private async Task ReloadData(string searchText = null)
     {
         ItemList.Clear();
 
@@ -47,7 +92,6 @@ public partial class LibraryViewModel : ItemViewModel<Library, LibraryGridItem, 
         LibraryGridItems.Clear();
         LibraryGridItems.AddRange(await LoadData());
 
-        await base.ReloadData(searchText);
     }
 
     private async Task<List<LibraryGridItem>> LoadData()
@@ -61,7 +105,7 @@ public partial class LibraryViewModel : ItemViewModel<Library, LibraryGridItem, 
             .ToList();
     }
 
-    public override LibraryGridItem Convert(int index, Library i)
+    public LibraryGridItem Convert(int index, Library i)
     {
         var tuple = ItemList.FirstOrDefault(o => o.Item1 == i.Type && o.Item2.ID == i.ItemID);
 
@@ -85,7 +129,7 @@ public partial class LibraryViewModel : ItemViewModel<Library, LibraryGridItem, 
             i.LentDate);
     }
 
-    protected override Bitmap? GetItemImage(LibraryGridItem selectedGridItem)
+    protected Bitmap? GetItemImage(LibraryGridItem selectedGridItem)
     {
         var libraryItem = _itemList.First(o => o.ID == selectedGridItem.ID);
         var item = ItemList.First(o => o.Item1 == libraryItem.Type && o.Item2.ID == libraryItem.ItemID).Item2;
