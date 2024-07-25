@@ -84,6 +84,24 @@ public partial class LibraryViewModel : ViewModelBase
     }
 
     public ObservableCollection<LibraryGridItem> LibraryGridItems { get; set; } = [];
+
+    public ObservableCollection<LibrarySearchGridItem> SearchItems { get; set; } = [];
+
+    public LibrarySearchGridItem SelectedSearchGridItem
+    {
+        get => _selectedSearchGridItem;
+        set
+        {
+            _selectedSearchGridItem = value;
+            SelectedSearchGridItemChanged();
+        }
+    }
+
+    private void SelectedSearchGridItemChanged()
+    {
+        throw new NotImplementedException();
+    }
+
     public List<Tuple<string, IItem>> ItemList { get; set; } = [];
 
     private readonly IDatasource _datasource;
@@ -92,6 +110,7 @@ public partial class LibraryViewModel : ViewModelBase
     private Bitmap? _itemImage;
     private Library _newItem;
     private Library _selectedItem;
+    private LibrarySearchGridItem _selectedSearchGridItem;
 
     public object ReturnedClick { get; private set; }
     public ReactiveCommand<Unit, Unit> LendItemClick { get; private set; }
@@ -107,6 +126,20 @@ public partial class LibraryViewModel : ViewModelBase
         LibraryGridItems.Clear();
         LibraryGridItems.AddRange(await LoadData());
 
+        SearchItems.Clear();
+
+        foreach (var item in ItemList)
+        {
+            var title = item.Item2.Title ?? string.Empty;
+
+            if (item.Item2 is Comic comic)
+            {
+                title = $"{title} {comic.Chapter}";
+            }
+
+            var gridItem = new LibrarySearchGridItem(item.Item2.ID, item.Item1, title);
+            SearchItems.Add(gridItem);
+        }
     }
 
     private async Task<List<LibraryGridItem>> LoadData()
