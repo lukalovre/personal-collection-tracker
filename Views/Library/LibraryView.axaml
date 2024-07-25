@@ -3,11 +3,11 @@
         <TabControl>
             <TabItem Header="All">
                 <DockPanel>
-                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding LibraryGridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedItem}">
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding LibraryGridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="300" />
-                            <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="70" />
                             <DataGridTextColumn Binding="{Binding Person}" Header="Person" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="300" />
                             <DataGridTextColumn Binding="{Binding LentDate, Converter={StaticResource DaysAgoToStringConverter}}" Header="Ago" Width="100" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -19,7 +19,6 @@
                 <ScrollViewer>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                             <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
                         </StackPanel>
                         <TextBlock Text="{Binding SelectedItem.Title}" FontSize="20" FontWeight="Bold" />

@@ -24,7 +24,7 @@ where TEventItem : IExternalItem
     private readonly IDatasource _datasource;
     private readonly IExternal<TItem> _external;
     private TGridItem _selectedGridItem;
-    private List<TItem> _itemList;
+    protected List<TItem> _itemList;
 
     public IEnumerable<string> DoneList { get; private set; }
 
@@ -69,8 +69,7 @@ where TEventItem : IExternalItem
                 .Select(v => v.ToString())
         );
 
-    public static ObservableCollection<PersonComboBoxItem> PeopleList =>
-        new(PeopleManager.Instance.GetComboboxList());
+    public static ObservableCollection<PersonComboBoxItem> PeopleList => new(PeopleManager.Instance.GetComboboxList());
 
     public PersonComboBoxItem SelectedPerson { get; set; }
 
@@ -374,8 +373,12 @@ where TEventItem : IExternalItem
         }
 
         SelectedItem = _itemList.First(o => o.ID == SelectedGridItem.ID);
+        Image = GetItemImage(SelectedGridItem);
+    }
 
-        var item = _itemList.First(o => o.ID == SelectedItem.ID);
-        Image = FileRepsitory.GetImage<TItem>(item.ID);
+    protected virtual Bitmap? GetItemImage(TGridItem selectedGridItem)
+    {
+        var item = _itemList.First(o => o.ID == selectedGridItem.ID);
+        return FileRepsitory.GetImage<TItem>(item.ID);
     }
 }
