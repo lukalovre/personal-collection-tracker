@@ -34,20 +34,28 @@
                             <Button Command="{Binding LendItemClick}" Margin="15">Lend</Button>
                         </StackPanel>
                         <StackPanel>
-                            <TextBox Watermark="ItemID" Text="{Binding NewItem.ItemID}" HorizontalAlignment="Stretch" />
-                            <TextBox Watermark="Type" Text="{Binding NewItem.Type}" HorizontalAlignment="Stretch" />
-                            <TextBox Watermark="Date" Text="{Binding NewDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" HorizontalAlignment="Stretch" />
-                            <view:PeopleSelectionView DataContext="{Binding People}" />
                             <StackPanel Orientation="Horizontal">
-                                <TextBox Text="{Binding SearchText}" Watermark="Filter" DockPanel.Dock="Top" Width="150" Margin="5" />
-                                <Button Command="{Binding Search}" HotKey="Enter" Margin="5">Search</Button>
+                                <StackPanel>
+                                    <TextBox Watermark="ItemID" Text="{Binding NewItem.ItemID}" Width="150" />
+                                    <TextBox Watermark="Type" Text="{Binding NewItem.Type}" Width="150" />
+                                    <TextBox Watermark="Date" Text="{Binding NewDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" Width="150" />
+                                </StackPanel>
+                                <TextBlock Text="    " />
+                                <view:PeopleSelectionView DataContext="{Binding People}" />
                             </StackPanel>
-                            <DataGrid Margin="1" Width="300" Height="500" ItemsSource="{Binding SearchItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedSearchGridItem}">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="70" />
-                                    <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
-                                </DataGrid.Columns>
-                            </DataGrid>
+                            <StackPanel>
+                                <TextBlock Text="    " />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox Text="{Binding SearchText}" Watermark="Filter" DockPanel.Dock="Top" Width="150" Margin="5" />
+                                    <Button Command="{Binding Search}" HotKey="Enter" Margin="5">Search</Button>
+                                </StackPanel>
+                                <DataGrid Margin="1" Width="300" Height="500" ItemsSource="{Binding SearchItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedSearchGridItem}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="70" />
+                                        <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
