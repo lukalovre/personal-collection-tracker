@@ -6,12 +6,9 @@
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding Done}" Header="Done" Width="40" />
-                            <DataGridTextColumn Binding="{Binding Artist}" Header="Artist" Width="150" />
-                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="150" />
-                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="65" />
-                            <DataGridTextColumn Binding="{Binding Minutes}" Header="Min" Width="65" />
-                            <DataGridTextColumn Binding="{Binding Played}" Header="#" Width="60" />
-                            <DataGridCheckBoxColumn Binding="{Binding Bookmarked}" Header="★" Width="60" />
+                            <DataGridTextColumn Binding="{Binding Artist}" Header="Artist" Width="200" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
@@ -24,12 +21,9 @@
                     </StackPanel>
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Artist}" Header="Artist" Width="150" />
+                            <DataGridTextColumn Binding="{Binding Artist}" Header="Artist" Width="200" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
-                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="65" />
-                            <DataGridTextColumn Binding="{Binding Minutes}" Header="Min" Width="65" />
-                            <DataGridTextColumn Binding="{Binding Played}" Header="#" Width="60" />
-                            <DataGridCheckBoxColumn Binding="{Binding Bookmarked}" Header="★" Width="60" />
+                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
