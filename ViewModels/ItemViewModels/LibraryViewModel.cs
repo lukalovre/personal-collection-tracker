@@ -36,11 +36,17 @@ public partial class LibraryViewModel : ViewModelBase
 
         ReloadSearchData();
     }
+    public PeopleSelectionViewModel People { get; } = new PeopleSelectionViewModel();
+
+    public DateTime? NewDate { get; set; }
 
     private void LendItemClickAction()
     {
-        NewItem.LentDate = DateTime.Now;
+        NewItem.LentDate = NewDate ?? DateTime.Now;
+        NewItem.PersonID = int.Parse(People.GetPeople());
         _datasource.Add(NewItem);
+
+        ReloadData();
     }
 
     public LibraryGridItem SelectedGridItem
@@ -88,7 +94,10 @@ public partial class LibraryViewModel : ViewModelBase
 
     private void ReturnedClickAction()
     {
-        throw new NotImplementedException();
+        SelectedItem.ReturnDate = DateTime.Now;
+        _datasource.Update(SelectedItem);
+
+        ReloadData();
     }
 
     public ObservableCollection<LibraryGridItem> LibraryGridItems { get; set; } = [];
@@ -173,7 +182,7 @@ public partial class LibraryViewModel : ViewModelBase
 
         return _itemList
             .Where(o => o.ReturnDate is null)
-            .OrderByDescending(o => o.Date)
+            .OrderByDescending(o => o.LentDate)
             .Select((o, i) => Convert(i, o))
             .ToList();
     }
