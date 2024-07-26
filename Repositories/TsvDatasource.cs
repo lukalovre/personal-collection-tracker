@@ -36,11 +36,11 @@ internal class TsvDatasource : IDatasource
             csvItem.Context.TypeConverterOptionsCache.AddOptions<DateTime>(options);
             csvItem.Context.TypeConverterOptionsCache.AddOptions<DateTime?>(options);
 
-            // if (item.ID == 1)
-            // {
-            //     // Start of file, write header first
-            //     csvItem.WriteHeader<T>();
-            // }
+            if (item.ID == 1)
+            {
+                // Start of file, write header first
+                csvItem.WriteHeader<T>();
+            }
 
             csvItem.NextRecord();
             csvItem.WriteRecord(item);

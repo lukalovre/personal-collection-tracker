@@ -12,3 +12,4 @@ public record StandupGridItem(int ID, bool Done, string Title, int Season, int E
 public record WorkGridItem(int ID, bool Done, string Title, string Type, int Minutes, DateTime LastDate) : IGridItem;
 public record LibraryGridItem(int ID, string Title, string Type, string Person, DateTime LentDate) : IGridItem;
 public record LibrarySearchGridItem(int ID, string Type, string Title) : IGridItem;
+public record MagazineGridItem(int ID, bool Done, string Title, int Issue, DateTime? LastDate) : IGridItem;

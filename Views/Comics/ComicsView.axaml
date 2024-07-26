@@ -36,7 +36,6 @@
                             <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                             <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
                             <Button Command ="{Binding DuplicateClick}" Margin="15">Duplicate</Button>
-
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBox Watermark = "Title" Text="{Binding SelectedItem.Title}" />

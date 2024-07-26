@@ -1,0 +1,79 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:AvaloniaApplication1.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:AvaloniaApplication1.Views;assembly=AvaloniaApplication1" mc:Ignorable="d" x:DataType="vm:MagazinesViewModel" x:Class="AvaloniaApplication1.Views.MagazinesView" xmlns:view="using:AvaloniaApplication1.Views">
+    <DockPanel>
+        <TabControl>
+            <TabItem Header="★">
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <TextBox Text="{Binding SearchText}" Watermark="Filter" DockPanel.Dock="Top" Width="150" />
+                        <Button Command="{Binding Search}" HotKey="Enter">Search</Button>
+                    </StackPanel>
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Binding="{Binding Done}" Header="Done" Width="40" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Issue}" Header="Issue" Width="70" />
+                            <DataGridTextColumn Binding="{Binding LastDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd}}" Header="Last Date" Width="120" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="All">
+                <DockPanel>
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Issue}" Header="Issue" Width="70" />
+                            <DataGridTextColumn Binding="{Binding LastDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd}}" Header="Last Date" Width="120" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+        <TabControl Margin="5">
+            <TabItem Header="Info">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content ="{Binding GridCountItemsBookmarked}" Margin="15"></Button>
+                            <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
+                            <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
+                            <Button Command ="{Binding DuplicateClick}" Margin="15">Duplicate</Button>
+                        </StackPanel>
+                        <TextBox Watermark = "Title" Text="{Binding SelectedItem.Title}" />
+                        <TextBox Watermark = "Year" Text="{Binding SelectedItem.Year}" />
+                        <TextBox Watermark = "Issue" Text="{Binding SelectedItem.Issue}" />
+                        <TextBox Watermark = "ExternalID" Text="{Binding SelectedItem.ExternalID}" />
+                        <TextBox Watermark = "Price" Text="{Binding SelectedItem.Price}" />
+                        <TextBox Watermark = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox Watermark = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
+                        <Button>
+                            <Image Source="{Binding Image}" Width="430" Height="430" />
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="New">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
+                        </StackPanel>
+                        <TextBox Watermark = "Title" Text="{Binding NewItem.Title}" />
+                        <TextBox Watermark = "Year" Text="{Binding NewItem.Year}" />
+                        <TextBox Watermark = "Issue" Text="{Binding NewItem.Issue}" />
+                        <TextBox Watermark = "ExternalID" Text="{Binding NewItem.ExternalID}" />
+                        <TextBox Watermark = "Price" Text="{Binding NewItem.Price}" />
+                        <TextBox Watermark = "PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
+                        <TextBox Watermark = "Date" Text="{Binding NewItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
+                        <Button>
+                            <Image Source="{Binding NewImage}" Width="430" Height="430" />
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Edit">
+                <TextBlock Text="Event" />
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</UserControl>
