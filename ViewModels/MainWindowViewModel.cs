@@ -16,5 +16,5 @@ public class MainWindowViewModel : ViewModelBase
     public StandupViewModel StandupViewModel { get; } = new StandupViewModel(new TsvDatasource(), new StandupExternal());
     public SongsViewModel SongsViewModel { get; } = new SongsViewModel(new TsvDatasource(), new SongExternal());
     public LibraryViewModel LibraryViewModel { get; } = new LibraryViewModel(new TsvDatasource());
-    public StatsViewModel StatsViewModel { get; } = new StatsViewModel();
+    public StatsViewModel StatsViewModel { get; } = new StatsViewModel(new TsvDatasource());
 }
