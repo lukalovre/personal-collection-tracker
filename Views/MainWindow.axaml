@@ -14,7 +14,7 @@
                     <TabItem Header="Games">
                         <v:GamesView DataContext="{Binding GamesViewModel}" />
                     </TabItem>
-                    <TabItem Header="Music" Width="150">
+                    <TabItem Header="Music">
                         <v:MusicView DataContext="{Binding MusicViewModel}" />
                     </TabItem>
                     <TabItem Header="Songs">
