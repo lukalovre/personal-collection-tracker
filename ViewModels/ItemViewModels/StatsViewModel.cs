@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DynamicData;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
@@ -13,19 +12,21 @@ namespace AvaloniaApplication1.ViewModels;
 public partial class StatsViewModel : ViewModelBase
 {
     private readonly IDatasource _datasource;
+    private readonly List<string> _yearLabels;
 
-    public List<Axis> XAxes { get; set; } = [];
+    public List<Axis> BooksXAxes { get; set; } = [];
 
-    public List<BarChartInfo> Books { get; }
-    public List<BarChartInfo> Games { get; }
-    public List<BarChartInfo> Music { get; }
-    public List<BarChartInfo> Songs { get; }
-    public List<BarChartInfo> TVShows { get; }
-    public List<BarChartInfo> Movies { get; }
-    public List<BarChartInfo> Comics { get; }
-    public List<BarChartInfo> Standup { get; }
-    public List<BarChartInfo> Magazine { get; }
-    public List<BarChartInfo> Works { get; }
+    public List<ISeries> Books { get; set; } = [];
+
+    public List<int> Games { get; }
+    public List<int> Music { get; }
+    public List<int> Songs { get; }
+    public List<int> TVShows { get; }
+    public List<int> Movies { get; }
+    public List<int> Comics { get; }
+    public List<int> Standup { get; }
+    public List<int> Magazine { get; }
+    public List<int> Works { get; }
 
     public StatsViewModel(IDatasource datasource)
     {
@@ -33,12 +34,27 @@ public partial class StatsViewModel : ViewModelBase
 
         var startYear = 2010;
         var endYear = DateTime.Now.Year;
-        var yearLabels = Enumerable.Range(startYear, endYear - startYear + 1).Select(o => o.ToString()).ToList();
+        _yearLabels = Enumerable.Range(startYear, endYear - startYear + 1).Select(o => o.ToString()).ToList();
 
-        XAxes.Add(
+        FillData<Book>(Books, BooksXAxes);
+
+        Games = GetInfo<Game>();
+        Music = GetInfo<Music>();
+        Songs = GetInfo<Song>();
+        TVShows = GetInfo<TVShow>();
+        Movies = GetInfo<Movie>();
+        Comics = GetInfo<Comic>();
+        Standup = GetInfo<Standup>();
+        Magazine = GetInfo<Magazine>();
+        Works = GetInfo<Work>();
+    }
+
+    private void FillData<T>(List<ISeries> series, List<Axis> xAxes) where T : ICollection, IItem
+    {
+        xAxes.Add(
             new Axis
             {
-                Labels = ["Category 1", "Category 2", "Category 3"],
+                Labels = _yearLabels,
                 LabelsRotation = 0,
                 SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
                 SeparatorsAtCenter = false,
@@ -51,26 +67,17 @@ public partial class StatsViewModel : ViewModelBase
                 MinStep = 1
             });
 
-        Books = GetInfo<Book>();
-        Games = GetInfo<Game>();
-        Music = GetInfo<Music>();
-        Songs = GetInfo<Song>();
-        TVShows = GetInfo<TVShow>();
-        Movies = GetInfo<Movie>();
-        Comics = GetInfo<Comic>();
-        Standup = GetInfo<Standup>();
-        Magazine = GetInfo<Magazine>();
-        Works = GetInfo<Work>();
+        series.Add(new ColumnSeries<int> { Values = GetInfo<T>() });
     }
 
-    private List<BarChartInfo> GetInfo<T>() where T : ICollection, IItem
+    private List<int> GetInfo<T>() where T : ICollection, IItem
     {
         var items = _datasource.GetList<T>();
 
         var startYear = 2010;
         var endYear = DateTime.Now.Year;
 
-        var result = new List<BarChartInfo>();
+        var result = new List<int>();
 
         for (int i = startYear; i <= endYear; i++)
         {
@@ -81,30 +88,9 @@ public partial class StatsViewModel : ViewModelBase
                 .Sum(o => o.PriceInRSD)
                 / 117f;
 
-            var barChartInfo = new BarChartInfo
-            {
-                Year = year,
-                Value = (int)totalPrice!
-            };
-
-            result.Add(barChartInfo);
+            result.Add((int)totalPrice!);
         }
 
         return result;
     }
-
-    public class BarChartInfo
-    {
-        public int Year { get; set; }
-        public int Value { get; set; }
-    }
-
-    public ISeries[] Series { get; set; } =
-     [
-            new ColumnSeries<double>
-            {
-                Values = [2, 1, 3, 5, 3, 4, 6]
-            }
-     ];
-
 }
