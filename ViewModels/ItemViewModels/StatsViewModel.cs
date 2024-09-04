@@ -15,18 +15,26 @@ public partial class StatsViewModel : ViewModelBase
     private readonly List<string> _yearLabels;
 
     public List<Axis> BooksXAxes { get; set; } = [];
+    public List<Axis> GamesXAxes { get; set; } = [];
+    public List<Axis> MusicXAxes { get; set; } = [];
+    public List<Axis> SongsXAxes { get; set; } = [];
+    public List<Axis> TVShowsXAxes { get; set; } = [];
+    public List<Axis> MoviesXAxes { get; set; } = [];
+    public List<Axis> ComicsXAxes { get; set; } = [];
+    public List<Axis> StandupXAxes { get; set; } = [];
+    public List<Axis> MagazineXAxes { get; set; } = [];
+    public List<Axis> WorksXAxes { get; set; } = [];
 
     public List<ISeries> Books { get; set; } = [];
-
-    public List<int> Games { get; }
-    public List<int> Music { get; }
-    public List<int> Songs { get; }
-    public List<int> TVShows { get; }
-    public List<int> Movies { get; }
-    public List<int> Comics { get; }
-    public List<int> Standup { get; }
-    public List<int> Magazine { get; }
-    public List<int> Works { get; }
+    public List<ISeries> Games { get; } = [];
+    public List<ISeries> Music { get; } = [];
+    public List<ISeries> Songs { get; } = [];
+    public List<ISeries> TVShows { get; } = [];
+    public List<ISeries> Movies { get; } = [];
+    public List<ISeries> Comics { get; } = [];
+    public List<ISeries> Standup { get; } = [];
+    public List<ISeries> Magazine { get; } = [];
+    public List<ISeries> Works { get; } = [];
 
     public StatsViewModel(IDatasource datasource)
     {
@@ -37,16 +45,15 @@ public partial class StatsViewModel : ViewModelBase
         _yearLabels = Enumerable.Range(startYear, endYear - startYear + 1).Select(o => o.ToString()).ToList();
 
         FillData<Book>(Books, BooksXAxes);
-
-        Games = GetInfo<Game>();
-        Music = GetInfo<Music>();
-        Songs = GetInfo<Song>();
-        TVShows = GetInfo<TVShow>();
-        Movies = GetInfo<Movie>();
-        Comics = GetInfo<Comic>();
-        Standup = GetInfo<Standup>();
-        Magazine = GetInfo<Magazine>();
-        Works = GetInfo<Work>();
+        FillData<Game>(Games, GamesXAxes);
+        FillData<Music>(Music, MusicXAxes);
+        FillData<Song>(Songs, SongsXAxes);
+        FillData<TVShow>(TVShows, TVShowsXAxes);
+        FillData<Movie>(Movies, MoviesXAxes);
+        FillData<Comic>(Comics, ComicsXAxes);
+        FillData<Standup>(Standup, StandupXAxes);
+        FillData<Magazine>(Magazine, MagazineXAxes);
+        FillData<Work>(Works, WorksXAxes);
     }
 
     private void FillData<T>(List<ISeries> series, List<Axis> xAxes) where T : ICollection, IItem
@@ -60,11 +67,6 @@ public partial class StatsViewModel : ViewModelBase
                 SeparatorsAtCenter = false,
                 TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
                 TicksAtCenter = true,
-                // By default the axis tries to optimize the number of 
-                // labels to fit the available space, 
-                // when you need to force the axis to show all the labels then you must: 
-                ForceStepToMin = true,
-                MinStep = 1
             });
 
         series.Add(new ColumnSeries<int> { Values = GetInfo<T>() });
