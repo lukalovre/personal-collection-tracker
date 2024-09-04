@@ -12,7 +12,8 @@ namespace AvaloniaApplication1.ViewModels;
 public partial class StatsViewModel : ViewModelBase
 {
     private readonly IDatasource _datasource;
-    private readonly List<string> _yearLabels;
+    private readonly List<int> _yearLabels;
+    private Dictionary<int, int> _all = [];
 
     public List<Axis> BooksXAxes { get; set; } = [];
     public List<Axis> GamesXAxes { get; set; } = [];
@@ -36,40 +37,80 @@ public partial class StatsViewModel : ViewModelBase
     public List<ISeries> Magazine { get; } = [];
     public List<ISeries> Works { get; } = [];
 
+    public List<Axis> AllXAxes { get; set; } = [];
+    public List<ISeries> All { get; } = [];
+
     public StatsViewModel(IDatasource datasource)
     {
         _datasource = datasource;
 
         var startYear = 2010;
         var endYear = DateTime.Now.Year;
-        _yearLabels = Enumerable.Range(startYear, endYear - startYear + 1).Select(o => o.ToString()).ToList();
+        _yearLabels = Enumerable.Range(startYear, endYear - startYear + 1).ToList();
+
+        foreach (var item in _yearLabels)
+        {
+            _all.Add(item, 0);
+        }
 
         FillData<Book>(Books, BooksXAxes);
         FillData<Game>(Games, GamesXAxes);
         FillData<Music>(Music, MusicXAxes);
+
         FillData<Song>(Songs, SongsXAxes);
         FillData<TVShow>(TVShows, TVShowsXAxes);
         FillData<Movie>(Movies, MoviesXAxes);
+
         FillData<Comic>(Comics, ComicsXAxes);
         FillData<Standup>(Standup, StandupXAxes);
         FillData<Magazine>(Magazine, MagazineXAxes);
-        FillData<Work>(Works, WorksXAxes);
-    }
 
-    private void FillData<T>(List<ISeries> series, List<Axis> xAxes) where T : ICollection, IItem
-    {
-        xAxes.Add(
+        FillData<Work>(Works, WorksXAxes);
+
+        var color = ChartColors.GetColor("All");
+
+        AllXAxes.Add(
             new Axis
             {
-                Labels = _yearLabels,
+                Labels = _yearLabels.Select(o => o.ToString()).ToList(),
                 LabelsRotation = 0,
                 SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
                 SeparatorsAtCenter = false,
                 TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
-                TicksAtCenter = true,
+                TicksAtCenter = true
             });
 
-        series.Add(new ColumnSeries<int> { Values = GetInfo<T>() });
+        All.Add(
+            new ColumnSeries<int>
+            {
+                Values = _all.Select(o => o.Value),
+                // Stroke = new SolidColorPaint(new SKColor(color.R, color.G, color.B)),
+                Fill = new SolidColorPaint(new SKColor(color.R, color.G, color.B))
+            });
+    }
+
+    private void FillData<T>(List<ISeries> series, List<Axis> xAxes) where T : ICollection, IItem
+    {
+        var color = ChartColors.GetColor(typeof(T).Name);
+
+        xAxes.Add(
+            new Axis
+            {
+                Labels = _yearLabels.Select(o => o.ToString()).ToList(),
+                LabelsRotation = 0,
+                SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
+                SeparatorsAtCenter = false,
+                TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
+                TicksAtCenter = true
+            });
+
+        series.Add(
+            new ColumnSeries<int>
+            {
+                Values = GetInfo<T>(),
+                // Stroke = new SolidColorPaint(new SKColor(color.R, color.G, color.B)),
+                Fill = new SolidColorPaint(new SKColor(color.R, color.G, color.B))
+            });
     }
 
     private List<int> GetInfo<T>() where T : ICollection, IItem
@@ -90,7 +131,11 @@ public partial class StatsViewModel : ViewModelBase
                 .Sum(o => o.PriceInRSD)
                 / 117f;
 
-            result.Add((int)totalPrice!);
+            var totalPriceInt = (int)totalPrice!;
+
+            result.Add(totalPriceInt);
+
+            _all[year] += totalPriceInt;
         }
 
         return result;
