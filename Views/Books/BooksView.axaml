@@ -93,7 +93,7 @@
                         <TextBox Text="{Binding BookTypesCount.Beletristika}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Strucne" />
+                        <TextBlock Text="Stručne" />
                         <TextBox Text="{Binding BookTypesCount.Strucna}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
@@ -101,7 +101,7 @@
                         <TextBox Text="{Binding BookTypesCount.Ostalo}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Decija" />
+                        <TextBlock Text="Dečije" />
                         <TextBox Text="{Binding BookTypesCount.Decija}" />
                     </StackPanel>
                 </StackPanel>
