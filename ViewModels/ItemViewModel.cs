@@ -272,54 +272,6 @@ where TEventItem : IExternalItem
     {
         _itemList = _datasource.GetList<TItem>();
 
-        // foreach (var item in _itemList)
-        // {
-        //     if (string.IsNullOrWhiteSpace(item.ExternalID) || item.ExternalID == "0")
-        //     {
-        //         continue;
-        //     }
-
-        //     if (FileRepsitory.ImageExists<TItem>(item.ID))
-        //     {
-        //         continue;
-        //     }
-
-        //     var ex = item.ExternalID;
-
-        //     if (item is Movie)
-        //     {
-        //         continue;
-        //     }
-
-        //     if (item is Book || item is Comic)
-        //     {
-
-        //         ex = $"https://www.goodreads.com/book/show/{item.ExternalID}";
-        //     }
-
-        //     if (item is Game)
-        //     {
-        //         continue;
-        //     }
-
-        //     if (item is Work)
-        //     {
-        //         continue;
-        //     }
-
-        //     if (item is Music)
-        //     {
-        //         ex = item.ExternalID;
-        //     }
-
-        //     var r = await _external.GetItem(ex);
-
-        //     if (!FileRepsitory.ImageExists<TItem>(item.ID))
-        //     {
-        //         FileRepsitory.MoveTempImage<TItem>(item.ID);
-        //     }
-        // }
-
         return _itemList
             .OrderByDescending(o => o.Date)
             .Select((o, i) => Convert(i, o))
