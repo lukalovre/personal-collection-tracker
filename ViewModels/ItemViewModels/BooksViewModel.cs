@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using AvaloniaApplication1.Repositories;
 using Repositories;
@@ -8,6 +9,27 @@ public partial class BooksViewModel(IDatasource datasource, IExternal<Book> exte
 : ItemViewModel<Book, BookGridItem, BookItem>(datasource, external)
 {
     public override float AmountToMinutesModifier => 2f;
+
+    public BookTypes BookTypesCount => GetDoneStatus();
+
+    public record BookTypes
+    {
+        public int Strucna { get; set; }
+        public int Beletristika { get; set; }
+        public int Decija { get; set; }
+        public int Ostalo { get; set; }
+    }
+
+    private BookTypes GetDoneStatus()
+    {
+        return new BookTypes
+        {
+            Beletristika = _itemList.ToList().Count(o => o.Type == "Beletristika"),
+            Strucna = _itemList.ToList().Count(o => o.Type == "Stručna"),
+            Decija = _itemList.ToList().Count(o => o.Type == "Dečija"),
+            Ostalo = _itemList.ToList().Count(o => o.Type == "Ostalo"),
+        };
+    }
 
     public override BookGridItem Convert(int index, Book i)
     {
