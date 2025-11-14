@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using ReactiveUI;
 using Repositories;
 
-namespace AvaloniaApplication1.ViewModels;
+namespace CollectionTracker.ViewModels;
 
 public partial class LibraryViewModel : ViewModelBase
 {

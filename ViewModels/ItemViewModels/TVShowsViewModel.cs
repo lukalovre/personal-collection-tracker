@@ -1,7 +1,7 @@
-using AvaloniaApplication1.Repositories;
+using CollectionTracker.Repositories;
 using Repositories;
 
-namespace AvaloniaApplication1.ViewModels;
+namespace CollectionTracker.ViewModels;
 
 public partial class TVShowsViewModel(IDatasource datasource, IExternal<TVShow> external)
 : ItemViewModel<TVShow, TVShowGridItem, MusicItem>(datasource, external)

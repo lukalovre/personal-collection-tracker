@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using AvaloniaApplication1.Repositories;
+using CollectionTracker.Repositories;
 using Repositories;
 
-namespace AvaloniaApplication1.ViewModels;
+namespace CollectionTracker.ViewModels;
 
 public partial class MusicViewModel(IDatasource datasource, IExternal<Music> external)
 : ItemViewModel<Music, MusicGridItem, MusicItem>(datasource, external)

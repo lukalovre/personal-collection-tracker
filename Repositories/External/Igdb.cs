@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using IGDB;
 using Repositories;
 
-namespace AvaloniaApplication1.Repositories.External;
+namespace CollectionTracker.Repositories.External;
 
 public class Igdb
 {

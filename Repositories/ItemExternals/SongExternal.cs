@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using AvaloniaApplication1.Repositories.External;
+using CollectionTracker.Repositories.External;
 
-namespace AvaloniaApplication1.Repositories;
+namespace CollectionTracker.Repositories;
 
 public class SongExternal : IExternal<Song>
 {

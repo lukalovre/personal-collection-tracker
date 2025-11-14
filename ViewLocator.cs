@@ -1,9 +1,9 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using AvaloniaApplication1.ViewModels;
+using CollectionTracker.ViewModels;
 using System;
 
-namespace AvaloniaApplication1;
+namespace CollectionTracker;
 
 public class ViewLocator : IDataTemplate
 {

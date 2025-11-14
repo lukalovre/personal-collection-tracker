@@ -1,4 +1,4 @@
-namespace AvaloniaApplication1.Repositories;
+namespace CollectionTracker.Repositories;
 
 public static class Helpers
 {

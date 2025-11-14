@@ -1,4 +1,4 @@
-namespace AvaloniaApplication1.Repositories.External;
+namespace CollectionTracker.Repositories.External;
 
 public record ImdbData(
     string Actors,

@@ -2,7 +2,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Repositories;
 
-namespace AvaloniaApplication1.ViewModels;
+namespace CollectionTracker.ViewModels;
 
 public class Settings
 {

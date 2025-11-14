@@ -7,7 +7,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using Repositories;
 using SkiaSharp;
 
-namespace AvaloniaApplication1.ViewModels;
+namespace CollectionTracker.ViewModels;
 
 public partial class StatsViewModel : ViewModelBase
 {

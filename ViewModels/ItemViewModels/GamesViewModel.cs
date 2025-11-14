@@ -1,7 +1,7 @@
-using AvaloniaApplication1.Repositories;
+using CollectionTracker.Repositories;
 using Repositories;
 
-namespace AvaloniaApplication1.ViewModels;
+namespace CollectionTracker.ViewModels;
 
 public partial class GamesViewModel(IDatasource datasource, IExternal<Game> external)
 : ItemViewModel<Game, GameGridItem, GameItem>(datasource, external)

@@ -6,9 +6,9 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Repositories;
-using AvaloniaApplication1.ViewModels.Extensions;
+using CollectionTracker.ViewModels.Extensions;
 
-namespace AvaloniaApplication1.Repositories.External;
+namespace CollectionTracker.Repositories.External;
 
 public class Imdb
 {

@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using AvaloniaApplication1.Models;
-using AvaloniaApplication1.Repositories.External;
+using CollectionTracker.Models;
+using CollectionTracker.Repositories.External;
 
-namespace AvaloniaApplication1.Repositories;
+namespace CollectionTracker.Repositories;
 
 public class ClipsExternal : IExternal<Clip>
 {

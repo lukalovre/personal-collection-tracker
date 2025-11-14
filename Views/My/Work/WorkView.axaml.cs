@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaApplication1.Views;
+namespace CollectionTracker.Views;
 
 public partial class WorkView : UserControl
 {

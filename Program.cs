@@ -2,7 +2,7 @@
 using Avalonia.ReactiveUI;
 using System;
 
-namespace AvaloniaApplication1;
+namespace CollectionTracker;
 
 internal sealed class Program
 {

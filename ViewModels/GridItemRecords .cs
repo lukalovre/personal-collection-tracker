@@ -1,5 +1,5 @@
 using System;
-using AvaloniaApplication1.Models;
+using CollectionTracker.Models;
 
 public record BookGridItem(int ID, bool Done, string Title, string Author, int Year, int? Rating, int Pages, DateTime? LastDate, string Type, bool? _1001) : IGridItem;
 public record ComicGridItem(int ID, bool Done, string Title, string Writer, int? Chapter, int Pages, int? Rating) : IGridItem;

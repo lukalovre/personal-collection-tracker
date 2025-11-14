@@ -7,13 +7,13 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
-using AvaloniaApplication1.Models;
-using AvaloniaApplication1.Repositories;
+using CollectionTracker.Models;
+using CollectionTracker.Repositories;
 using DynamicData;
 using ReactiveUI;
 using Repositories;
 
-namespace AvaloniaApplication1.ViewModels;
+namespace CollectionTracker.ViewModels;
 
 public class ItemViewModel<TItem, TGridItem, TEventItem> : ViewModelBase
 where TItem : IItem

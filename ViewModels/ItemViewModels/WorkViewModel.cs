@@ -1,7 +1,7 @@
 using System;
 using Repositories;
 
-namespace AvaloniaApplication1.ViewModels;
+namespace CollectionTracker.ViewModels;
 
 public partial class WorkViewModel(IDatasource datasource)
 : ItemViewModel<Work, WorkGridItem, WorkItem>(datasource)

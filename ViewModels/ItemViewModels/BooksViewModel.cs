@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
-using AvaloniaApplication1.Repositories;
+using CollectionTracker.Repositories;
 using Repositories;
 
-namespace AvaloniaApplication1.ViewModels;
+namespace CollectionTracker.ViewModels;
 
 public partial class BooksViewModel(IDatasource datasource, IExternal<Book> external)
 : ItemViewModel<Book, BookGridItem, BookItem>(datasource, external)

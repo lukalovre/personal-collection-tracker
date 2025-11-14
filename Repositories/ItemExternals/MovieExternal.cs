@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using AvaloniaApplication1.Repositories.External;
+using CollectionTracker.Repositories.External;
 using Repositories;
 
-namespace AvaloniaApplication1.Repositories;
+namespace CollectionTracker.Repositories;
 
 public class MovieExternal : IExternal<Movie>
 {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Repositories;
 using SpotifyAPI.Web;
 
-namespace AvaloniaApplication1.Repositories.External;
+namespace CollectionTracker.Repositories.External;
 
 public class Spotify
 {

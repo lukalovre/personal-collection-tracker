@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Repositories;
 
-namespace AvaloniaApplication1.Repositories.External;
+namespace CollectionTracker.Repositories.External;
 
 public class Bandcamp
 {

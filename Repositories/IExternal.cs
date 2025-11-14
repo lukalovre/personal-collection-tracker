@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace AvaloniaApplication1.Repositories;
+namespace CollectionTracker.Repositories;
 
 public interface IExternal<T>
     where T : IItem

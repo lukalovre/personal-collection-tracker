@@ -1,4 +1,4 @@
-namespace AvaloniaApplication1.Models;
+namespace CollectionTracker.Models;
 
 public interface IGridItem
 {

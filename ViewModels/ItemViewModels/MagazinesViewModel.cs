@@ -1,6 +1,6 @@
 using Repositories;
 
-namespace AvaloniaApplication1.ViewModels;
+namespace CollectionTracker.ViewModels;
 
 public partial class MagazinesViewModel(IDatasource datasource) : ItemViewModel<Magazine, MagazineGridItem, MagazineItem>(datasource)
 {
