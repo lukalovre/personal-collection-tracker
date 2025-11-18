@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
@@ -13,7 +14,7 @@ public partial class StatsViewModel : ViewModelBase
 {
     private readonly IDatasource _datasource;
     private readonly List<int> _yearLabels;
-    private Dictionary<int, int> _all = [];
+    private readonly Dictionary<int, int> _all = [];
 
     public List<Axis> BooksXAxes { get; set; } = [];
     public List<Axis> GamesXAxes { get; set; } = [];
@@ -83,7 +84,7 @@ public partial class StatsViewModel : ViewModelBase
         All.Add(
             new ColumnSeries<int>
             {
-                Values = _all.Select(o => o.Value),
+                Values = new ReadOnlyCollection<int>(_all.Select(o => o.Value).ToList()),
                 // Stroke = new SolidColorPaint(new SKColor(color.R, color.G, color.B)),
                 Fill = new SolidColorPaint(new SKColor(color.R, color.G, color.B))
             });
