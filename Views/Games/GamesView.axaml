@@ -10,7 +10,7 @@
                             <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
                             <DataGridTextColumn Binding="{Binding Platform}" Header="Platform" Width="70" />
                             <DataGridTextColumn Binding="{Binding HLTB}" Header="HLTB" Width="80" />
-                            <DataGridTextColumn Binding="{Binding Purchased}" Header="Purchased" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Purchased, StringFormat='{}{0:yyyy-MM-dd}'}" Header="Purchased" Width="130" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
@@ -23,7 +23,7 @@
                             <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
                             <DataGridTextColumn Binding="{Binding Platform}" Header="Platform" Width="70" />
                             <DataGridTextColumn Binding="{Binding HLTB}" Header="HLTB" Width="80" />
-                            <DataGridTextColumn Binding="{Binding Purchased}" Header="Purchased" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Purchased, StringFormat='{}{0:yyyy-MM-dd}'}" Header="Purchased" Width="130" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
