@@ -14,7 +14,7 @@ public class Comic : IItem, ICollection
     public string Writer { get; set; }
     public string Illustrator { get; set; }
     public string Language { get; set; }
-    public string ExternalID { get; set; }
+    public string ExternalID { get; set; } = string.Empty;
     public DateTime? Date { get; set; }
     public float? Price { get; set; }
     public float? PriceInRSD { get; set; }
