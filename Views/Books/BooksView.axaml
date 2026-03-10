@@ -41,6 +41,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                             <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
+                            <Button Command="{Binding OpenLink}">Open Link</Button>
                         </StackPanel>
                         <TextBox Watermark = "Title" Text="{Binding SelectedItem.Title}" />
                         <TextBox Watermark = "Author" Text="{Binding SelectedItem.Author}" />
