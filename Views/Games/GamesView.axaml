@@ -40,6 +40,7 @@
                             <Button Command="{Binding OpenLink}">Open Link</Button>
                         </StackPanel>
                         <TextBox Watermark="Title" Text="{Binding SelectedItem.Title}" HorizontalAlignment="Stretch" />
+                        <TextBox Watermark="Developer" Text="{Binding SelectedItem.Developer}" HorizontalAlignment="Stretch" />
                         <TextBox Watermark="Year" Text="{Binding SelectedItem.Year}" HorizontalAlignment="Stretch" />
                         <TextBox Watermark="Edition" Text="{Binding SelectedItem.Edition}" HorizontalAlignment="Stretch" />
                         <TextBox Watermark="Platform" Text="{Binding SelectedItem.Platform}" HorizontalAlignment="Stretch" />
@@ -68,6 +69,7 @@
                             <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
                         <TextBox Watermark="Title" Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
+                        <TextBox Watermark="Developer" Text="{Binding NewItem.Developer}" HorizontalAlignment="Stretch" />
                         <TextBox Watermark="Year" Text="{Binding NewItem.Year}" HorizontalAlignment="Stretch" />
                         <TextBox Watermark="Edition" Text="{Binding NewItem.Edition}" HorizontalAlignment="Stretch" />
                         <TextBox Watermark="Platform" Text="{Binding NewItem.Platform}" HorizontalAlignment="Stretch" />
