@@ -132,6 +132,9 @@ where TEventItem : IExternalItem
 
     public string SearchText { get; set; } = string.Empty;
 
+    public ObservableCollection<string> PlatformTypes { get; set; }
+    public ObservableCollection<string> ClientTypes { get; set; }
+
     public ItemViewModel(IDatasource datasource, IExternal<TItem> external = null!)
     {
         _datasource = datasource;
@@ -151,6 +154,32 @@ where TEventItem : IExternalItem
 
         SelectedGridItem = GridItems.LastOrDefault();
         NewItem = (TItem)Activator.CreateInstance(typeof(TItem));
+
+        var itemTypeName = typeof(TItem).Name;
+        PlatformTypes = ConvertPlatformTypes(itemTypeName);
+        ClientTypes = ConvertClientTypes(itemTypeName);
+    }
+
+    private static ObservableCollection<string> ConvertPlatformTypes(string itemTypeName)
+    {
+        return itemTypeName switch
+        {
+            "Game" => new(Enum.GetValues(typeof(eGamePlatformTypes)).Cast<eGamePlatformTypes>().Select(v => v.ToString())),
+            "Music" => new(Enum.GetValues(typeof(eMusicPlatformType)).Cast<eMusicPlatformType>().Select(v => v.ToString())),
+            "Song" => new(Enum.GetValues(typeof(eMusicPlatformType)).Cast<eMusicPlatformType>().Select(v => v.ToString())),
+            _ => []
+        };
+    }
+
+    private static ObservableCollection<string> ConvertClientTypes(string itemTypeName)
+    {
+        return itemTypeName switch
+        {
+            "Game" => new(Enum.GetValues(typeof(eGameClientTypes)).Cast<eGameClientTypes>().Select(v => v.ToString())),
+            "Music" => new(Enum.GetValues(typeof(eMusicPlatformType)).Cast<eMusicPlatformType>().Select(v => v.ToString())),
+            "Song" => new(Enum.GetValues(typeof(eMusicPlatformType)).Cast<eMusicPlatformType>().Select(v => v.ToString())),
+            _ => []
+        };
     }
 
     private void DuplicateClickAction()

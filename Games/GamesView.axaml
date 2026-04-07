@@ -72,8 +72,8 @@
                         <TextBox Watermark="Developer" Text="{Binding NewItem.Developer}" HorizontalAlignment="Stretch" />
                         <TextBox Watermark="Year" Text="{Binding NewItem.Year}" HorizontalAlignment="Stretch" />
                         <TextBox Watermark="Edition" Text="{Binding NewItem.Edition}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Platform" Text="{Binding NewItem.Platform}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Client" Text="{Binding NewItem.Client}" HorizontalAlignment="Stretch" />
+                        <ComboBox ItemsSource="{Binding PlatformTypes}" SelectedItem="{Binding NewItem.Platform}" />
+                        <ComboBox ItemsSource="{Binding ClientTypes}" SelectedItem="{Binding NewItem.Client}" />
                         <TextBox Watermark="Price" Text="{Binding NewItem.Price}" HorizontalAlignment="Stretch" />
                         <TextBox Watermark="PriceInRSD" Text="{Binding NewItem.PriceInRSD}" HorizontalAlignment="Stretch" />
                         <TextBox Watermark="HLTB" Text="{Binding NewItem.HLTB}" HorizontalAlignment="Stretch" />
