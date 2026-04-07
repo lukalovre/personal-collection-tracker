@@ -18,6 +18,7 @@ public class GameExtetrnal : IExternal<Game>
             {
                 ExternalID = item.ExternalID.ToString(),
                 Title = item.Title,
+                Developer = item.Developer,
                 Year = item.Year
             };
         }
