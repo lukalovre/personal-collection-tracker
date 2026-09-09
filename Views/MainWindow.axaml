@@ -35,6 +35,9 @@
                     <TabItem Header="Magazines">
                         <v:MagazinesView DataContext="{Binding MagazinesViewModel}" />
                     </TabItem>
+                    <TabItem Header="Music Videos">
+                        <v:MusicVideosView DataContext="{Binding MusicVideosViewModel}" />
+                    </TabItem>
                 </TabControl>
             </TabItem>
             <TabItem Header="My Work">
