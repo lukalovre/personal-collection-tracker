@@ -4,7 +4,7 @@ using Repositories;
 
 namespace CollectionTracker.Repositories;
 
-public class GameExtetrnal : IExternal<Game>
+public class GameExternal : IExternal<Game>
 {
     public async Task<Game> GetItem(string url)
     {

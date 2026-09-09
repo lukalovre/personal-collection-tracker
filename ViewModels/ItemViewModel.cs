@@ -189,7 +189,7 @@ where TEventItem : IExternalItem
         NewItem.Date = null;
         NewItem.ID = 0;
 
-        if (!FileRepsitory.ImageExists<TItem>(selectedItemID))
+        if (!FileRepository.ImageExists<TItem>(selectedItemID))
         {
             return;
         }
@@ -197,10 +197,10 @@ where TEventItem : IExternalItem
         var tempDestinationFile = Paths.GetTempPath<TItem>();
         tempDestinationFile = $"{tempDestinationFile}.png";
 
-        var imagePath = FileRepsitory.GetImagePath<TItem>(selectedItemID);
+        var imagePath = FileRepository.GetImagePath<TItem>(selectedItemID);
 
         File.Copy(imagePath, tempDestinationFile);
-        NewImage = FileRepsitory.GetImageTemp<TItem>();
+        NewImage = FileRepository.GetImageTemp<TItem>();
     }
 
     public virtual List<string> OpenLinkAlternativeParameters()
@@ -232,7 +232,7 @@ where TEventItem : IExternalItem
     public async void InputUrlChanged()
     {
         NewItem = await _external.GetItem(InputUrl);
-        NewImage = FileRepsitory.GetImageTemp<TItem>();
+        NewImage = FileRepository.GetImageTemp<TItem>();
 
         _inputUrl = string.Empty;
     }
@@ -360,6 +360,6 @@ where TEventItem : IExternalItem
     protected virtual Bitmap? GetItemImage(TGridItem selectedGridItem)
     {
         var item = _itemList.First(o => o.ID == selectedGridItem.ID);
-        return FileRepsitory.GetImage<TItem>(item.ID);
+        return FileRepository.GetImage<TItem>(item.ID);
     }
 }

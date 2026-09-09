@@ -218,9 +218,9 @@ public partial class LibraryViewModel : ViewModelBase
 
         return selectedGridItem.Type switch
         {
-            nameof(Book) => FileRepsitory.GetImage<Book>(item.ID),
-            nameof(Comic) => FileRepsitory.GetImage<Comic>(item.ID),
-            nameof(Game) => FileRepsitory.GetImage<Game>(item.ID),
+            nameof(Book) => FileRepository.GetImage<Book>(item.ID),
+            nameof(Comic) => FileRepository.GetImage<Comic>(item.ID),
+            nameof(Game) => FileRepository.GetImage<Game>(item.ID),
             _ => null,
         };
     }

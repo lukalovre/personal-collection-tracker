@@ -4,7 +4,7 @@ using CollectionTracker.Repositories;
 
 namespace Repositories;
 
-public class FileRepsitory
+public class FileRepository
 {
     public static bool ImageExists<T>(int itemID) where T : IItem
     {

@@ -4,7 +4,7 @@ using Repositories;
 
 namespace CollectionTracker.Repositories;
 
-public class ComicExtetrnal : IExternal<Comic>
+public class ComicExternal : IExternal<Comic>
 {
     public async Task<Comic> GetItem(string url)
     {

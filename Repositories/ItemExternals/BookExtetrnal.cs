@@ -4,7 +4,7 @@ using Repositories;
 
 namespace CollectionTracker.Repositories;
 
-public class BookExtetrnal : IExternal<Book>
+public class BookExternal : IExternal<Book>
 {
     public async Task<Book> GetItem(string url)
     {

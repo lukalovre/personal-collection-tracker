@@ -14,7 +14,7 @@
 - Preserve the existing paired naming: `SomethingView.axaml`/`.axaml.cs` and `SomethingViewModel`.
 - Use ReactiveUI patterns already present in the project for observable properties and commands.
 - Keep new persistence and external-service behavior behind the existing interfaces rather than constructing provider-specific logic in views.
-- Preserve public APIs and existing spellings unless a rename is explicitly required; several misspelled names are already referenced (`FileRepsitory`, `BookExtetrnal`, `ComicExtetrnal`, and `GameExtetrnal`).
+- Preserve public APIs and existing spellings unless a rename is explicitly required;
 - Follow the surrounding namespace and formatting style in the file being changed. Avoid unrelated cleanup.
 - Treat `bin/` and `obj/` output as generated artifacts; current source targets `net10.0` and Avalonia 12.
 
