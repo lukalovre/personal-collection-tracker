@@ -21,6 +21,7 @@ where TGridItem : IGridItem
 where TEventItem : IExternalItem
 {
     public virtual float AmountToMinutesModifier => 1f;
+    protected virtual bool UsesDoneList => true;
     protected readonly IDatasource _datasource;
     private readonly IExternal<TItem> _external;
     private TGridItem _selectedGridItem = default!;
@@ -310,7 +311,9 @@ where TEventItem : IExternalItem
     private List<TGridItem> LoadDataTodo(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<TItem>();
-        DoneList = _datasource.GetDoneList<TEventItem>().Select(o => o.ExternalID);
+        DoneList = UsesDoneList
+            ? _datasource.GetDoneList<TEventItem>().Select(o => o.ExternalID)
+            : [];
 
         return _itemList
         .Where(o => !DoneList.Contains(o.ExternalID))

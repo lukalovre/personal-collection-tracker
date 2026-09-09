@@ -38,6 +38,9 @@
                     <TabItem Header="Music Videos">
                         <v:MusicVideosView DataContext="{Binding MusicVideosViewModel}" />
                     </TabItem>
+                    <TabItem Header="Clips">
+                        <v:ClipsView DataContext="{Binding ClipsViewModel}" />
+                    </TabItem>
                 </TabControl>
             </TabItem>
             <TabItem Header="My Work">

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CollectionTracker.Models;
 
 [Table("Clips")]
-public record Clip : IItem
+public record Clip : IItem, IExternalItem
 {
     [Key]
     public int ID { get; set; }
