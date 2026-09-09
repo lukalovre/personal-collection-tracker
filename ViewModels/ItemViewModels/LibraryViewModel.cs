@@ -65,7 +65,7 @@ public partial class LibraryViewModel : ViewModelBase
         private set => this.RaiseAndSetIfChanged(ref _itemImage, value);
     }
 
-    public string SearchText { get; set; }
+    public string SearchText { get; set; } = string.Empty;
 
     public Library NewItem
     {
@@ -132,11 +132,11 @@ public partial class LibraryViewModel : ViewModelBase
 
     private readonly IDatasource _datasource;
     private List<Library> _itemList = [];
-    private LibraryGridItem _selectedGridItem;
+    private LibraryGridItem _selectedGridItem = null!;
     private Bitmap? _itemImage;
-    private Library _newItem;
-    private Library _selectedItem;
-    private LibrarySearchGridItem _selectedSearchGridItem;
+    private Library _newItem = null!;
+    private Library _selectedItem = null!;
+    private LibrarySearchGridItem _selectedSearchGridItem = null!;
 
     public object ReturnedClick { get; private set; }
     public ReactiveCommand<Unit, Unit> LendItemClick { get; private set; }

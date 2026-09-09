@@ -6,5 +6,5 @@ public class MovieItem : IExternalItem
 {
     [Key]
     public int ID { get; set; }
-    public string ExternalID { get; set; }
+    public string ExternalID { get; set; } = string.Empty;
 }

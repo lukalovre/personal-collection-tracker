@@ -10,7 +10,7 @@ public class Magazine : IItem, ICollection
     public string Title { get; set; } = string.Empty;
     public int Year { get; set; }
     public int Issue { get; set; }
-    public string ExternalID { get; set; }
+    public string ExternalID { get; set; } = string.Empty;
     public DateTime? Date { get; set; }
     public bool? Bookmarked { get; set; }
     public float? Price { get; set; }

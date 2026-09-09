@@ -23,22 +23,22 @@ where TEventItem : IExternalItem
     public virtual float AmountToMinutesModifier => 1f;
     protected readonly IDatasource _datasource;
     private readonly IExternal<TItem> _external;
-    private TGridItem _selectedGridItem;
-    protected List<TItem> _itemList;
+    private TGridItem _selectedGridItem = default!;
+    protected List<TItem> _itemList = [];
 
-    public IEnumerable<string> DoneList { get; private set; }
+    public IEnumerable<string> DoneList { get; private set; } = [];
 
-    private TItem _newItem;
+    private TItem _newItem = default!;
     private Bitmap? _itemImage;
     private Bitmap? _newItemImage;
 
-    private TItem _selectedItem;
+    private TItem _selectedItem = default!;
     private int _gridCountItems;
 
     private int _gridCountItemsBookmarked;
     private int _addAmount;
-    private string _addAmountString;
-    private string _inputUrl;
+    private string _addAmountString = string.Empty;
+    private string _inputUrl = string.Empty;
 
     public int AddAmount
     {
@@ -71,7 +71,7 @@ where TEventItem : IExternalItem
 
     public static ObservableCollection<PersonComboBoxItem> PeopleList => new(PeopleManager.Instance.GetComboboxList());
 
-    public PersonComboBoxItem SelectedPerson { get; set; }
+    public PersonComboBoxItem SelectedPerson { get; set; } = null!;
 
     public ObservableCollection<TGridItem> GridItems { get; set; }
     public ObservableCollection<TGridItem> GridItemsTodo { get; set; }
@@ -87,7 +87,7 @@ where TEventItem : IExternalItem
     public ReactiveCommand<Unit, Unit> IgnoreItemClick { get; }
     public ReactiveCommand<Unit, Unit> UpdateItemClick { get; }
     public ReactiveCommand<Unit, Unit> DuplicateClick { get; }
-    public ReactiveCommand<Unit, Unit> AddEventClick { get; }
+    public ReactiveCommand<Unit, Unit> AddEventClick { get; } = null!;
     public ReactiveCommand<Unit, Unit> Search { get; }
     public ReactiveCommand<Unit, Unit> OpenLink { get; }
 

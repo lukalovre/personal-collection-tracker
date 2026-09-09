@@ -6,11 +6,9 @@ using Repositories;
 
 public class PeopleManager
 {
-    private static PeopleManager _instance;
-    private readonly IDatasource _datasource;
-    private readonly List<Person> _peopleList;
-
-    private PeopleManager() { }
+    private static PeopleManager _instance = null!;
+    private readonly IDatasource _datasource = null!;
+    private readonly List<Person> _peopleList = [];
 
     private PeopleManager(IDatasource datasource)
     {
