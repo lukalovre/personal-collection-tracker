@@ -53,7 +53,7 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
-                            <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
+                            <TextBox PlaceholderText="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Artist  " />

@@ -39,24 +39,24 @@
                             <Button Command="{Binding OpenLink}">Open Link</Button>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark = "Title" Text="{Binding SelectedItem.Title}" />
+                            <TextBox PlaceholderText = "Title" Text="{Binding SelectedItem.Title}" />
                             <NumericUpDown Value="{Binding SelectedItem.Chapter}" FormatString="0" Minimum="1" Maximum="999"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark = "Writer" Text="{Binding SelectedItem.Writer}" />
-                            <TextBox Watermark = "Illustrator" Text="{Binding SelectedItem.Illustrator}" />
+                            <TextBox PlaceholderText = "Writer" Text="{Binding SelectedItem.Writer}" />
+                            <TextBox PlaceholderText = "Illustrator" Text="{Binding SelectedItem.Illustrator}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark = "Owner" Text="{Binding SelectedItem.Owner}" Width="50"/>
-                            <TextBox Watermark = "Language" Text="{Binding SelectedItem.Language}" Width="50"/>
-                            <TextBox Watermark = "ExternalID" Text="{Binding SelectedItem.ExternalID}" Width="150"/>
+                            <TextBox PlaceholderText = "Owner" Text="{Binding SelectedItem.Owner}" Width="50"/>
+                            <TextBox PlaceholderText = "Language" Text="{Binding SelectedItem.Language}" Width="50"/>
+                            <TextBox PlaceholderText = "ExternalID" Text="{Binding SelectedItem.ExternalID}" Width="150"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" Width="175"/>
+                            <TextBox PlaceholderText = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" Width="175"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark = "Price" Text="{Binding SelectedItem.Price}" />
-                            <TextBox Watermark = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                            <TextBox PlaceholderText = "Price" Text="{Binding SelectedItem.Price}" />
+                            <TextBox PlaceholderText = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
                         </StackPanel>
                         <Button>
                             <Image Source="{Binding Image}" Width="500" Height="500" />
@@ -69,27 +69,27 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
-                            <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
+                            <TextBox PlaceholderText="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark = "Title" Text="{Binding NewItem.Title}" />
+                            <TextBox PlaceholderText = "Title" Text="{Binding NewItem.Title}" />
                             <NumericUpDown Value="{Binding NewItem.Chapter}" FormatString="0" Minimum="1" Maximum="999"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark = "Writer" Text="{Binding NewItem.Writer}" />
-                            <TextBox Watermark = "Illustrator" Text="{Binding NewItem.Illustrator}" />
+                            <TextBox PlaceholderText = "Writer" Text="{Binding NewItem.Writer}" />
+                            <TextBox PlaceholderText = "Illustrator" Text="{Binding NewItem.Illustrator}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark = "Owner" Text="{Binding NewItem.Owner}" Width="50"/>
-                            <TextBox Watermark = "Language" Text="{Binding NewItem.Language}" Width="50"/>
-                            <TextBox Watermark = "ExternalID" Text="{Binding NewItem.ExternalID}" Width="150"/>
+                            <TextBox PlaceholderText = "Owner" Text="{Binding NewItem.Owner}" Width="50"/>
+                            <TextBox PlaceholderText = "Language" Text="{Binding NewItem.Language}" Width="50"/>
+                            <TextBox PlaceholderText = "ExternalID" Text="{Binding NewItem.ExternalID}" Width="150"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark = "Date" Text="{Binding NewItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" Width="175"/>
+                            <TextBox PlaceholderText = "Date" Text="{Binding NewItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" Width="175"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark = "Price" Text="{Binding NewItem.Price}" />
-                            <TextBox Watermark = "PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
+                            <TextBox PlaceholderText = "Price" Text="{Binding NewItem.Price}" />
+                            <TextBox PlaceholderText = "PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
                         </StackPanel>
                         <Button>
                             <Image Source="{Binding NewImage}" Width="500" Height="500" />

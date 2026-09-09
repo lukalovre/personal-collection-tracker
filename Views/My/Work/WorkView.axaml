@@ -46,7 +46,7 @@
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Watermark="Artist" Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
+                            <TextBox PlaceholderText="Artist" Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>

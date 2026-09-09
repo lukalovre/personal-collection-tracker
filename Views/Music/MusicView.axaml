@@ -16,7 +16,7 @@
             <TabItem Header="All">
                 <DockPanel>
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                        <TextBox Text="{Binding SearchText}" Watermark="Filter" DockPanel.Dock="Top" Width="150" />
+                        <TextBox Text="{Binding SearchText}" PlaceholderText="Filter" DockPanel.Dock="Top" Width="150" />
                         <Button Command="{Binding Search}" HotKey="Enter">Search</Button>
                     </StackPanel>
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
@@ -38,15 +38,15 @@
                             <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                             <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
                         </StackPanel>
-                        <TextBox Watermark="Owner" Text="{Binding SelectedItem.Owner}" />
-                        <TextBox Watermark="Artist" Text="{Binding SelectedItem.Artist}" />
-                        <TextBox Watermark="Title" Text="{Binding SelectedItem.Title}" />
-                        <TextBox Watermark="Year" Text="{Binding SelectedItem.Year}" />
-                        <TextBox Watermark="Format" Text="{Binding SelectedItem.Format}" />
-                        <TextBox Watermark="Price" Text="{Binding SelectedItem.Price}" />
-                        <TextBox Watermark="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
-                        <TextBox Watermark="Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
-                        <TextBox Watermark="ExternalID" Text="{Binding SelectedItem.ExternalID}" />
+                        <TextBox PlaceholderText="Owner" Text="{Binding SelectedItem.Owner}" />
+                        <TextBox PlaceholderText="Artist" Text="{Binding SelectedItem.Artist}" />
+                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" />
+                        <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" />
+                        <TextBox PlaceholderText="Format" Text="{Binding SelectedItem.Format}" />
+                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox PlaceholderText="Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
@@ -58,17 +58,17 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
-                            <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
+                            <TextBox PlaceholderText="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
-                        <TextBox Watermark="Owner" Text="{Binding NewItem.Owner}" />
-                        <TextBox Watermark="Artist" Text="{Binding NewItem.Artist}" />
-                        <TextBox Watermark="Title" Text="{Binding NewItem.Title}" />
-                        <TextBox Watermark="Year" Text="{Binding NewItem.Year}" />
-                        <TextBox Watermark="Format" Text="{Binding NewItem.Format}" />
-                        <TextBox Watermark="Price" Text="{Binding NewItem.Price}" />
-                        <TextBox Watermark="PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
-                        <TextBox Watermark="Date" Text="{Binding NewItem.Date}" />
-                        <TextBox Watermark="ExternalID" Text="{Binding NewItem.ExternalID}" />
+                        <TextBox PlaceholderText="Owner" Text="{Binding NewItem.Owner}" />
+                        <TextBox PlaceholderText="Artist" Text="{Binding NewItem.Artist}" />
+                        <TextBox PlaceholderText="Title" Text="{Binding NewItem.Title}" />
+                        <TextBox PlaceholderText="Year" Text="{Binding NewItem.Year}" />
+                        <TextBox PlaceholderText="Format" Text="{Binding NewItem.Format}" />
+                        <TextBox PlaceholderText="Price" Text="{Binding NewItem.Price}" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
+                        <TextBox PlaceholderText="Date" Text="{Binding NewItem.Date}" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding NewItem.ExternalID}" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

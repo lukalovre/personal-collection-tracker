@@ -4,7 +4,7 @@
             <TabItem Header="★">
                 <DockPanel>
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                        <TextBox Text="{Binding SearchText}" Watermark="Filter" DockPanel.Dock="Top" Width="150" />
+                        <TextBox Text="{Binding SearchText}" PlaceholderText="Filter" DockPanel.Dock="Top" Width="150" />
                         <Button Command="{Binding Search}" HotKey="Enter">Search</Button>
                     </StackPanel>
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
@@ -43,17 +43,17 @@
                             <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
                             <Button Command="{Binding OpenLink}">Open Link</Button>
                         </StackPanel>
-                        <TextBox Watermark = "Title" Text="{Binding SelectedItem.Title}" />
-                        <TextBox Watermark = "Author" Text="{Binding SelectedItem.Author}" />
-                        <TextBox Watermark = "Year" Text="{Binding SelectedItem.Year}" />
-                        <TextBox Watermark = "Pages" Text="{Binding SelectedItem.Pages}" />
-                        <TextBox Watermark = "Type" Text="{Binding SelectedItem.Type}" />
-                        <TextBox Watermark = "_1001" Text="{Binding SelectedItem._1001}" />
-                        <TextBox Watermark = "EminaRating" Text="{Binding SelectedItem.EminaRating}" />
-                        <TextBox Watermark = "ExternalID" Text="{Binding SelectedItem.ExternalID}" />
-                        <TextBox Watermark = "Price" Text="{Binding SelectedItem.Price}" />
-                        <TextBox Watermark = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
-                        <TextBox Watermark = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
+                        <TextBox PlaceholderText = "Title" Text="{Binding SelectedItem.Title}" />
+                        <TextBox PlaceholderText = "Author" Text="{Binding SelectedItem.Author}" />
+                        <TextBox PlaceholderText = "Year" Text="{Binding SelectedItem.Year}" />
+                        <TextBox PlaceholderText = "Pages" Text="{Binding SelectedItem.Pages}" />
+                        <TextBox PlaceholderText = "Type" Text="{Binding SelectedItem.Type}" />
+                        <TextBox PlaceholderText = "_1001" Text="{Binding SelectedItem._1001}" />
+                        <TextBox PlaceholderText = "EminaRating" Text="{Binding SelectedItem.EminaRating}" />
+                        <TextBox PlaceholderText = "ExternalID" Text="{Binding SelectedItem.ExternalID}" />
+                        <TextBox PlaceholderText = "Price" Text="{Binding SelectedItem.Price}" />
+                        <TextBox PlaceholderText = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox PlaceholderText = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
@@ -65,19 +65,19 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
-                            <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
+                            <TextBox PlaceholderText="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
-                        <TextBox Watermark = "Title" Text="{Binding NewItem.Title}" />
-                        <TextBox Watermark = "Author" Text="{Binding NewItem.Author}" />
-                        <TextBox Watermark = "Year" Text="{Binding NewItem.Year}" />
-                        <TextBox Watermark = "Pages" Text="{Binding NewItem.Pages}" />
-                        <TextBox Watermark = "Type" Text="{Binding NewItem.Type}" />
-                        <TextBox Watermark = "_1001" Text="{Binding NewItem._1001}" />
-                        <TextBox Watermark = "EminaRating" Text="{Binding NewItem.EminaRating}" />
-                        <TextBox Watermark = "ExternalID" Text="{Binding NewItem.ExternalID}" />
-                        <TextBox Watermark = "Price" Text="{Binding NewItem.Price}" />
-                        <TextBox Watermark = "PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
-                        <TextBox Watermark = "Date" Text="{Binding NewItem.Date}" />
+                        <TextBox PlaceholderText = "Title" Text="{Binding NewItem.Title}" />
+                        <TextBox PlaceholderText = "Author" Text="{Binding NewItem.Author}" />
+                        <TextBox PlaceholderText = "Year" Text="{Binding NewItem.Year}" />
+                        <TextBox PlaceholderText = "Pages" Text="{Binding NewItem.Pages}" />
+                        <TextBox PlaceholderText = "Type" Text="{Binding NewItem.Type}" />
+                        <TextBox PlaceholderText = "_1001" Text="{Binding NewItem._1001}" />
+                        <TextBox PlaceholderText = "EminaRating" Text="{Binding NewItem.EminaRating}" />
+                        <TextBox PlaceholderText = "ExternalID" Text="{Binding NewItem.ExternalID}" />
+                        <TextBox PlaceholderText = "Price" Text="{Binding NewItem.Price}" />
+                        <TextBox PlaceholderText = "PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
+                        <TextBox PlaceholderText = "Date" Text="{Binding NewItem.Date}" />
                         <Button>
                             <Image Source="{Binding NewImage}" Width="430" Height="430" />
                         </Button>

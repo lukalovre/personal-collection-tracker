@@ -39,18 +39,18 @@
                             <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
                             <Button Command="{Binding OpenLink}">Open Link</Button>
                         </StackPanel>
-                        <TextBox Watermark="Title" Text="{Binding SelectedItem.Title}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Developer" Text="{Binding SelectedItem.Developer}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Year" Text="{Binding SelectedItem.Year}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Edition" Text="{Binding SelectedItem.Edition}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Platform" Text="{Binding SelectedItem.Platform}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Client" Text="{Binding SelectedItem.Client}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Price" Text="{Binding SelectedItem.Price}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="HLTB" Text="{Binding SelectedItem.HLTB}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Owner" Text="{Binding SelectedItem.Owner}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="ExternalID" Text="{Binding SelectedItem.ExternalID}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Developer" Text="{Binding SelectedItem.Developer}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Edition" Text="{Binding SelectedItem.Edition}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Platform" Text="{Binding SelectedItem.Platform}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Client" Text="{Binding SelectedItem.Client}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="HLTB" Text="{Binding SelectedItem.HLTB}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Owner" Text="{Binding SelectedItem.Owner}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" HorizontalAlignment="Stretch" />
                         <StackPanel Orientation="Horizontal">
                             <CheckBox IsChecked="{Binding SelectedItem.Expansion}">Expansion </CheckBox>
                             <CheckBox IsChecked="{Binding SelectedItem.New}">New </CheckBox>
@@ -66,19 +66,19 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
-                            <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
+                            <TextBox PlaceholderText="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
-                        <TextBox Watermark="Title" Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Developer" Text="{Binding NewItem.Developer}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Year" Text="{Binding NewItem.Year}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Edition" Text="{Binding NewItem.Edition}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Title" Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Developer" Text="{Binding NewItem.Developer}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Year" Text="{Binding NewItem.Year}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Edition" Text="{Binding NewItem.Edition}" HorizontalAlignment="Stretch" />
                         <ComboBox ItemsSource="{Binding PlatformTypes}" SelectedItem="{Binding NewItem.Platform}" />
                         <ComboBox ItemsSource="{Binding ClientTypes}" SelectedItem="{Binding NewItem.Client}" />
-                        <TextBox Watermark="Price" Text="{Binding NewItem.Price}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="PriceInRSD" Text="{Binding NewItem.PriceInRSD}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="HLTB" Text="{Binding NewItem.HLTB}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="Owner" Text="{Binding NewItem.Owner}" HorizontalAlignment="Stretch" />
-                        <TextBox Watermark="ExternalID" Text="{Binding NewItem.ExternalID}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Price" Text="{Binding NewItem.Price}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding NewItem.PriceInRSD}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="HLTB" Text="{Binding NewItem.HLTB}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Owner" Text="{Binding NewItem.Owner}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding NewItem.ExternalID}" HorizontalAlignment="Stretch" />
                         <StackPanel Orientation="Horizontal">
                             <CheckBox IsChecked="{Binding NewItem.Expansion}">Expansion </CheckBox>
                             <CheckBox IsChecked="{Binding NewItem.New}">New </CheckBox>

@@ -4,7 +4,7 @@
             <TabItem Header="★">
                 <DockPanel>
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                        <TextBox Text="{Binding SearchText}" Watermark="Filter" DockPanel.Dock="Top" Width="150" />
+                        <TextBox Text="{Binding SearchText}" PlaceholderText="Filter" DockPanel.Dock="Top" Width="150" />
                         <Button Command="{Binding Search}" HotKey="Enter">Search</Button>
                     </StackPanel>
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
@@ -62,7 +62,7 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
-                            <TextBox Watermark="Paste url" Text="{Binding InputUrl}" Margin="15" />
+                            <TextBox PlaceholderText="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
                         <TextBox Text="{Binding NewItem.Owner}" />
                         <TextBox Text="{Binding NewItem.Director}" />

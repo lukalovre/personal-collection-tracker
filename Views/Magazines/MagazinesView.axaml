@@ -4,7 +4,7 @@
             <TabItem Header="★">
                 <DockPanel>
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                        <TextBox Text="{Binding SearchText}" Watermark="Filter" DockPanel.Dock="Top" Width="150" />
+                        <TextBox Text="{Binding SearchText}" PlaceholderText="Filter" DockPanel.Dock="Top" Width="150" />
                         <Button Command="{Binding Search}" HotKey="Enter">Search</Button>
                     </StackPanel>
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
@@ -39,13 +39,13 @@
                             <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
                             <Button Command ="{Binding DuplicateClick}" Margin="15">Duplicate</Button>
                         </StackPanel>
-                        <TextBox Watermark = "Title" Text="{Binding SelectedItem.Title}" />
-                        <TextBox Watermark = "Year" Text="{Binding SelectedItem.Year}" />
-                        <TextBox Watermark = "Issue" Text="{Binding SelectedItem.Issue}" />
-                        <TextBox Watermark = "ExternalID" Text="{Binding SelectedItem.ExternalID}" />
-                        <TextBox Watermark = "Price" Text="{Binding SelectedItem.Price}" />
-                        <TextBox Watermark = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
-                        <TextBox Watermark = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
+                        <TextBox PlaceholderText = "Title" Text="{Binding SelectedItem.Title}" />
+                        <TextBox PlaceholderText = "Year" Text="{Binding SelectedItem.Year}" />
+                        <TextBox PlaceholderText = "Issue" Text="{Binding SelectedItem.Issue}" />
+                        <TextBox PlaceholderText = "ExternalID" Text="{Binding SelectedItem.ExternalID}" />
+                        <TextBox PlaceholderText = "Price" Text="{Binding SelectedItem.Price}" />
+                        <TextBox PlaceholderText = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox PlaceholderText = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
@@ -58,13 +58,13 @@
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
                         </StackPanel>
-                        <TextBox Watermark = "Title" Text="{Binding NewItem.Title}" />
-                        <TextBox Watermark = "Year" Text="{Binding NewItem.Year}" />
-                        <TextBox Watermark = "Issue" Text="{Binding NewItem.Issue}" />
-                        <TextBox Watermark = "ExternalID" Text="{Binding NewItem.ExternalID}" />
-                        <TextBox Watermark = "Price" Text="{Binding NewItem.Price}" />
-                        <TextBox Watermark = "PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
-                        <TextBox Watermark = "Date" Text="{Binding NewItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
+                        <TextBox PlaceholderText = "Title" Text="{Binding NewItem.Title}" />
+                        <TextBox PlaceholderText = "Year" Text="{Binding NewItem.Year}" />
+                        <TextBox PlaceholderText = "Issue" Text="{Binding NewItem.Issue}" />
+                        <TextBox PlaceholderText = "ExternalID" Text="{Binding NewItem.ExternalID}" />
+                        <TextBox PlaceholderText = "Price" Text="{Binding NewItem.Price}" />
+                        <TextBox PlaceholderText = "PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
+                        <TextBox PlaceholderText = "Date" Text="{Binding NewItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
                         <Button>
                             <Image Source="{Binding NewImage}" Width="430" Height="430" />
                         </Button>
