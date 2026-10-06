@@ -240,9 +240,26 @@ where TEventItem : IExternalItem
 
     public async void InputUrlChanged()
     {
+        var requestedUrl = InputUrl;
+        if (string.IsNullOrWhiteSpace(requestedUrl))
+        {
+            return;
+        }
+
         try
         {
-            NewItem = await _external.GetItem(InputUrl);
+            await Task.Delay(350);
+            if (!string.Equals(requestedUrl, InputUrl, StringComparison.Ordinal))
+            {
+                return;
+            }
+
+            NewItem = await _external.GetItem(requestedUrl);
+            if (!string.Equals(requestedUrl, InputUrl, StringComparison.Ordinal))
+            {
+                return;
+            }
+
             NewImage = FileRepository.GetImageTemp<TItem>();
         }
         catch (HttpRequestException)
@@ -251,7 +268,10 @@ where TEventItem : IExternalItem
         }
         finally
         {
-            _inputUrl = string.Empty;
+            if (string.Equals(requestedUrl, InputUrl, StringComparison.Ordinal))
+            {
+                this.RaiseAndSetIfChanged(ref _inputUrl, string.Empty);
+            }
         }
     }
 

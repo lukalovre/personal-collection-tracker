@@ -55,7 +55,7 @@ public class YouTube
         var author = GetChannelName(htmlDocument);
 
         var destinationFile = Paths.GetTempPath<T>();
-        await HtmlHelper.DownloadPNG(imageUrl, destinationFile);
+        await HtmlHelper.DownloadPNG(imageUrl, destinationFile, htmlDocument);
 
         artist = WebUtility.HtmlDecode(artist) ?? string.Empty;
         musicTitle = WebUtility.HtmlDecode(musicTitle);

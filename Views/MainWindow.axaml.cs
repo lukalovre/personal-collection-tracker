@@ -1,8 +1,10 @@
+using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using CollectionTracker.ViewModels;
-using System.Linq;
+using Repositories;
 
 namespace CollectionTracker.Views;
 
@@ -11,7 +13,26 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        HtmlHelper.LocalHtmlFilePicker = OpenLocalHtmlFileAsync;
         AddHandler(Button.ClickEvent, OnButtonClick, RoutingStrategies.Bubble);
+    }
+
+    private async Task<string?> OpenLocalHtmlFileAsync()
+    {
+        var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            Title = "Open downloaded webpage",
+            AllowMultiple = false,
+            FileTypeFilter =
+            [
+                new FilePickerFileType("HTML files")
+                {
+                    Patterns = ["*.html", "*.htm"]
+                }
+            ]
+        });
+
+        return files.FirstOrDefault()?.Path.LocalPath;
     }
 
     private async void OnButtonClick(object? sender, RoutedEventArgs e)

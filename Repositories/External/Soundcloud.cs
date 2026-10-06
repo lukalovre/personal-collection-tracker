@@ -22,7 +22,7 @@ public class Soundcloud
         var imageUrl = GetImageUrl(htmlDocument);
 
         string destinationFile = Paths.GetTempPath<T>();
-        await HtmlHelper.DownloadPNG(imageUrl, destinationFile);
+        await HtmlHelper.DownloadPNG(imageUrl, destinationFile, htmlDocument);
 
         return new SoundcloudItem(
             title.Trim(),
