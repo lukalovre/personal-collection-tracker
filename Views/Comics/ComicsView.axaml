@@ -92,7 +92,7 @@
                             <TextBox PlaceholderText = "PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
                         </StackPanel>
                         <Button>
-                            <Image Source="{Binding NewImage}" Width="500" Height="500" />
+                            <Image Name="NewItemImage" Source="{Binding NewImage}" Width="500" Height="500" />
                         </Button>
                     </StackPanel>
                 </ScrollViewer>

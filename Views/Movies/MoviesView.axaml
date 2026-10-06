@@ -76,7 +76,7 @@
                         <TextBox Text="{Binding NewItem.ExternalID}" />
                         <TextBox Text="{Binding NewItem.Comment}" />
                         <Button>
-                            <Image Source="{Binding NewImage}" Width="430" Height="430" />
+                            <Image Name="NewItemImage" Source="{Binding NewImage}" Width="430" Height="430" />
                         </Button>
                     </StackPanel>
                 </ScrollViewer>

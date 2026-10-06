@@ -66,7 +66,7 @@
                         <TextBox PlaceholderText = "PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
                         <TextBox PlaceholderText = "Date" Text="{Binding NewItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
                         <Button>
-                            <Image Source="{Binding NewImage}" Width="430" Height="430" />
+                            <Image Name="NewItemImage" Source="{Binding NewImage}" Width="430" Height="430" />
                         </Button>
                     </StackPanel>
                 </ScrollViewer>

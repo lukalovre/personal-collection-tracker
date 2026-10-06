@@ -15,7 +15,14 @@ using Repositories;
 
 namespace CollectionTracker.ViewModels;
 
+public interface IImageImportTarget
+{
+    bool CanImportImage(bool isNewItem);
+    void ImportImage(string sourcePath, bool isNewItem);
+}
+
 public class ItemViewModel<TItem, TGridItem, TEventItem> : ViewModelBase
+    , IImageImportTarget
 where TItem : IItem
 where TGridItem : IGridItem
 where TEventItem : IExternalItem
@@ -364,5 +371,30 @@ where TEventItem : IExternalItem
     {
         var item = _itemList.First(o => o.ID == selectedGridItem.ID);
         return FileRepository.GetImage<TItem>(item.ID);
+    }
+
+    public bool CanImportImage(bool isNewItem)
+    {
+        return isNewItem
+            ? NewItem is not null
+            : SelectedItem is not null && SelectedItem.ID > 0;
+    }
+
+    public void ImportImage(string sourcePath, bool isNewItem)
+    {
+        if (!CanImportImage(isNewItem))
+        {
+            return;
+        }
+
+        if (isNewItem)
+        {
+            FileRepository.ImportTempImage<TItem>(sourcePath);
+            NewImage = FileRepository.GetImageTemp<TItem>();
+            return;
+        }
+
+        FileRepository.ImportImage<TItem>(sourcePath, SelectedItem.ID);
+        Image = FileRepository.GetImage<TItem>(SelectedItem.ID);
     }
 }

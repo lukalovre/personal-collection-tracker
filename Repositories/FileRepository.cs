@@ -30,6 +30,25 @@ public class FileRepository
         return Path.Combine(Paths.Images, Helpers.GetClassName<T>(), $"{itemID}.png");
     }
 
+    public static void ImportImage<T>(string sourcePath, int itemID) where T : IItem
+    {
+        var destinationPath = Path.Combine(Paths.GetImagesPath<T>(), $"{itemID}.png");
+        SaveAsPng(sourcePath, destinationPath);
+    }
+
+    public static void ImportTempImage<T>(string sourcePath) where T : IItem
+    {
+        var destinationPath = $"{Paths.GetTempPath<T>()}.png";
+        SaveAsPng(sourcePath, destinationPath);
+    }
+
+    private static void SaveAsPng(string sourcePath, string destinationPath)
+    {
+        using var bitmap = new Bitmap(sourcePath);
+        using var destination = File.Create(destinationPath);
+        bitmap.Save(destination);
+    }
+
     public static Bitmap? GetImageTemp<T>() where T : IItem
     {
         var filePath = Path.Combine($"{Paths.GetTempPath<T>()}.png");
