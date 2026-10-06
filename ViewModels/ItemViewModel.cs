@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -239,10 +240,19 @@ where TEventItem : IExternalItem
 
     public async void InputUrlChanged()
     {
-        NewItem = await _external.GetItem(InputUrl);
-        NewImage = FileRepository.GetImageTemp<TItem>();
-
-        _inputUrl = string.Empty;
+        try
+        {
+            NewItem = await _external.GetItem(InputUrl);
+            NewImage = FileRepository.GetImageTemp<TItem>();
+        }
+        catch (HttpRequestException)
+        {
+            // Keep the current draft when the external source rejects the request.
+        }
+        finally
+        {
+            _inputUrl = string.Empty;
+        }
     }
 
     private int SetAmount(int value)
