@@ -1,0 +1,104 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:CollectionTracker.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:CollectionTracker.Views;assembly=CollectionTracker" mc:Ignorable="d" x:DataType="vm:ConsolesViewModel" x:Class="CollectionTracker.Views.ConsolesView" xmlns:view="using:CollectionTracker.Views">
+    <DockPanel>
+        <TabControl>
+            <TabItem Header="★">
+                <DockPanel>
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
+                    <DataGrid Margin="1" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Generation}" Header="Generation" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Condition}" Header="Condition" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Date, StringFormat='{}{0:yyyy-MM-dd}'}" Header="Date" Width="120" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="All">
+                <DockPanel>
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
+                    <DataGrid Margin="1" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Condition}" Header="Condition" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Generation}" Header="Generation" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Controllers}" Header="Controllers" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Games}" Header="Games" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Date, StringFormat='{}{0:yyyy-MM-dd}'}" Header="Date" Width="120" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+        <TabControl Margin="5">
+            <TabItem Header="Info">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="{Binding GridCountItemsBookmarked}" Margin="15" />
+                            <Button Command="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
+                            <Button Command="{Binding DuplicateClick}" Margin="15">Duplicate</Button>
+                        </StackPanel>
+                        <TextBox PlaceholderText="ID" Text="{Binding SelectedItem.ID}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Condition" Text="{Binding SelectedItem.Condition}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Type" Text="{Binding SelectedItem.Type}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Generation" Text="{Binding SelectedItem.Generation}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Controllers" Text="{Binding SelectedItem.Controllers}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Games" Text="{Binding SelectedItem.Games}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" IsReadOnly="True" AcceptsReturn="True" />
+                        <Button>
+                            <Image Source="{Binding Image}" Width="300" />
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="New">
+                <ScrollViewer>
+                    <StackPanel>
+                        <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
+                        <TextBox PlaceholderText="Title" Text="{Binding NewItem.Title}" />
+                        <TextBox PlaceholderText="Year" Text="{Binding NewItem.Year}" />
+                        <TextBox PlaceholderText="Condition" Text="{Binding NewItem.Condition}" />
+                        <TextBox PlaceholderText="Type" Text="{Binding NewItem.Type}" />
+                        <TextBox PlaceholderText="Generation" Text="{Binding NewItem.Generation}" />
+                        <TextBox PlaceholderText="Controllers" Text="{Binding NewItem.Controllers}" />
+                        <TextBox PlaceholderText="Games" Text="{Binding NewItem.Games}" />
+                        <TextBox PlaceholderText="Date (yyyy-MM-dd HH:mm:ss)" Text="{Binding NewItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" />
+                        <TextBox PlaceholderText="Price" Text="{Binding NewItem.Price}" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding NewItem.Comment}" AcceptsReturn="True" />
+                        <Button>
+                            <Image Name="NewItemImage" Source="{Binding NewImage}" Width="250" />
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Edit">
+                <ScrollViewer>
+                    <StackPanel>
+                        <Button Command="{Binding UpdateItemClick}" Margin="15">Update</Button>
+                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" />
+                        <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" />
+                        <TextBox PlaceholderText="Condition" Text="{Binding SelectedItem.Condition}" />
+                        <TextBox PlaceholderText="Type" Text="{Binding SelectedItem.Type}" />
+                        <TextBox PlaceholderText="Generation" Text="{Binding SelectedItem.Generation}" />
+                        <TextBox PlaceholderText="Controllers" Text="{Binding SelectedItem.Controllers}" />
+                        <TextBox PlaceholderText="Games" Text="{Binding SelectedItem.Games}" />
+                        <TextBox PlaceholderText="Date (yyyy-MM-dd HH:mm:ss)" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" />
+                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" AcceptsReturn="True" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</UserControl>
