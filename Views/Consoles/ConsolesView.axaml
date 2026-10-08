@@ -1,6 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:CollectionTracker.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:CollectionTracker.Views;assembly=CollectionTracker" mc:Ignorable="d" x:DataType="vm:ConsolesViewModel" x:Class="CollectionTracker.Views.ConsolesView" xmlns:view="using:CollectionTracker.Views">
-    <DockPanel>
-        <TabControl>
+    <Grid ColumnDefinitions="2*,*">
+        <TabControl Grid.Column="0">
             <TabItem Header="★">
                 <DockPanel>
                     <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
@@ -33,7 +33,7 @@
                 </DockPanel>
             </TabItem>
         </TabControl>
-        <TabControl Margin="5">
+        <TabControl Grid.Column="1" Margin="5">
             <TabItem Header="Info">
                 <ScrollViewer>
                     <StackPanel>
@@ -53,6 +53,7 @@
                         <TextBox PlaceholderText="Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" IsReadOnly="True" />
                         <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" IsReadOnly="True" AcceptsReturn="True" />
                         <Button>
                             <Image Source="{Binding Image}" Width="300" />
@@ -74,6 +75,7 @@
                         <TextBox PlaceholderText="Date (yyyy-MM-dd HH:mm:ss)" Text="{Binding NewItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" />
                         <TextBox PlaceholderText="Price" Text="{Binding NewItem.Price}" />
                         <TextBox PlaceholderText="PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding NewItem.ExternalID}" />
                         <TextBox PlaceholderText="Comment" Text="{Binding NewItem.Comment}" AcceptsReturn="True" />
                         <Button>
                             <Image Name="NewItemImage" Source="{Binding NewImage}" Width="250" />
@@ -95,10 +97,11 @@
                         <TextBox PlaceholderText="Date (yyyy-MM-dd HH:mm:ss)" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" />
                         <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" />
                         <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" />
                         <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" AcceptsReturn="True" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
         </TabControl>
-    </DockPanel>
+    </Grid>
 </UserControl>
