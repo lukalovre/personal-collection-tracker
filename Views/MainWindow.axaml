@@ -14,12 +14,6 @@
                     <TabItem Header="Games">
                         <v:GamesView DataContext="{Binding GamesViewModel}" />
                     </TabItem>
-                    <TabItem Header="Consoles">
-                        <v:ConsolesView DataContext="{Binding ConsolesViewModel}" />
-                    </TabItem>
-                    <TabItem Header="Donations">
-                        <v:DonationsView DataContext="{Binding DonationsViewModel}" />
-                    </TabItem>
                     <TabItem Header="Music">
                         <v:MusicView DataContext="{Binding MusicViewModel}" />
                     </TabItem>
@@ -46,6 +40,12 @@
                     </TabItem>
                     <TabItem Header="Clips">
                         <v:ClipsView DataContext="{Binding ClipsViewModel}" />
+                    </TabItem>
+                    <TabItem Header="Consoles">
+                        <v:ConsolesView DataContext="{Binding ConsolesViewModel}" />
+                    </TabItem>
+                    <TabItem Header="Donations">
+                        <v:DonationsView DataContext="{Binding DonationsViewModel}" />
                     </TabItem>
                 </TabControl>
             </TabItem>
