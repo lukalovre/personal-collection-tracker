@@ -8,7 +8,6 @@ public class Comic : IItem, ICollection
     [Key]
     public int ID { get; set; }
     public string Owner { get; set; } = string.Empty;
-    public string Comment { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public int? Year { get; set; }
     public int Chapter { get; set; }
@@ -20,4 +19,5 @@ public class Comic : IItem, ICollection
     public float? Price { get; set; }
     public float? PriceInRSD { get; set; }
     public bool? Bookmarked { get; set; }
+    public string Comment { get; set; } = string.Empty;
 }
