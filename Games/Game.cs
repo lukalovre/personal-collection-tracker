@@ -23,5 +23,6 @@ public class Game : IItem, ICollection
     public int HLTB { get; set; }
     public string Owner { get; set; } = string.Empty;
     public string ExternalID { get; set; } = string.Empty;
+    public string Comment { get; set; } = string.Empty;
     public bool? Bookmarked { get; set; }
 }

@@ -17,6 +17,7 @@ public class Work : IItem, ICollection
     public bool Finished { get; set; }
     public bool? Main { get; set; }
     public string ExternalID { get; set; } = string.Empty;
+    public string Comment { get; set; } = string.Empty;
     public float? Price { get; set; }
     public float? PriceInRSD { get; set; }
     public bool? Bookmarked { get; set; }

@@ -9,6 +9,7 @@ public class Library : IItem
     public int ID { get; set; }
     public int ItemID { get; set; }
     public string Type { get; set; } = string.Empty;
+    public string Comment { get; set; } = string.Empty;
     public int PersonID { get; set; }
     public DateTime LentDate { get; set; }
     public DateTime? ReturnDate { get; set; }
