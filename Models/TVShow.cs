@@ -17,7 +17,7 @@ public class TVShow : IItem, ICollection
     public float? PriceInRSD { get; set; }
     public DateTime? Date { get; set; }
     public string ExternalID { get; set; } = string.Empty;
-    public string Comment { get; set; } = string.Empty;
     public int Runtime { get; set; }
     public bool? Bookmarked { get; set; }
+    public string Comment { get; set; } = string.Empty;
 }

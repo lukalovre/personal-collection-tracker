@@ -8,7 +8,6 @@ public class Book : IItem, ICollection
     [Key]
     public int ID { get; set; }
     public string Title { get; set; } = string.Empty;
-    public string Comment { get; set; } = string.Empty;
     public string Author { get; set; } = string.Empty;
     public int? Year { get; set; }
     public int? Pages { get; set; }
@@ -20,4 +19,5 @@ public class Book : IItem, ICollection
     public float? PriceInRSD { get; set; }
     public DateTime? Date { get; set; }
     public bool? Bookmarked { get; set; }
+    public string Comment { get; set; } = string.Empty;
 }

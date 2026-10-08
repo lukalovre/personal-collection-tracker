@@ -9,7 +9,6 @@ public class Library : IItem
     public int ID { get; set; }
     public int ItemID { get; set; }
     public string Type { get; set; } = string.Empty;
-    public string Comment { get; set; } = string.Empty;
     public int PersonID { get; set; }
     public DateTime LentDate { get; set; }
     public DateTime? ReturnDate { get; set; }
@@ -17,4 +16,5 @@ public class Library : IItem
     public DateTime? Date { get; set; }
     public bool? Bookmarked { get; set; }
     public string Title { get; set; } = string.Empty;
+    public string Comment { get; set; } = string.Empty;
 }
