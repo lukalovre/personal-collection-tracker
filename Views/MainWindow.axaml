@@ -17,6 +17,9 @@
                     <TabItem Header="Consoles">
                         <v:ConsolesView DataContext="{Binding ConsolesViewModel}" />
                     </TabItem>
+                    <TabItem Header="Donations">
+                        <v:DonationsView DataContext="{Binding DonationsViewModel}" />
+                    </TabItem>
                     <TabItem Header="Music">
                         <v:MusicView DataContext="{Binding MusicViewModel}" />
                     </TabItem>

@@ -13,6 +13,7 @@ public class MainWindowViewModel : ViewModelBase
     public ComicsViewModel ComicsViewModel { get; } = new ComicsViewModel(new TsvDatasource(), new ComicExternal());
     public GamesViewModel GamesViewModel { get; } = new GamesViewModel(new TsvDatasource(), new GameExternal());
     public ConsolesViewModel ConsolesViewModel { get; } = new ConsolesViewModel(new TsvDatasource());
+    public DonationsViewModel DonationsViewModel { get; } = new DonationsViewModel(new TsvDatasource());
     public TVShowsViewModel TVShowsViewModel { get; } = new TVShowsViewModel(new TsvDatasource(), new TVShowExternal());
     public StandupViewModel StandupViewModel { get; } = new StandupViewModel(new TsvDatasource(), new StandupExternal());
     public SongsViewModel SongsViewModel { get; } = new SongsViewModel(new TsvDatasource(), new SongExternal());

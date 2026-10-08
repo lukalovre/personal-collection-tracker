@@ -16,3 +16,4 @@ public record LibraryGridItem(int ID, string Title, string Type, string Person, 
 public record LibrarySearchGridItem(int ID, string Type, string Title) : IGridItem;
 public record MagazineGridItem(int ID, bool Done, string Title, int Issue, DateTime? LastDate) : IGridItem;
 public record ConsoleGridItem(int ID, bool Done, string Title, int? Year, string Condition, string Type, string Generation, string Controllers, string Games, DateTime? Date) : IGridItem;
+public record DonationGridItem(int ID, string Link, string Title, float? PriceInRSD, string Currency, float? Price, string Comment, string ExternalID, bool? Bookmarked) : IGridItem;

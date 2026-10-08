@@ -1,0 +1,97 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:CollectionTracker.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:CollectionTracker.Views;assembly=CollectionTracker" mc:Ignorable="d" x:DataType="vm:DonationsViewModel" x:Class="CollectionTracker.Views.DonationsView" xmlns:view="using:CollectionTracker.Views">
+    <DockPanel>
+        <TabControl>
+            <TabItem Header="★">
+                <DockPanel>
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
+                    <DataGrid Margin="1" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Link}" Header="Link" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding PriceInRSD}" Header="PriceInRSD" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Currency}" Header="Currency" Width="90" />
+                            <DataGridTextColumn Binding="{Binding Price}" Header="Price" Width="90" />
+                            <DataGridTextColumn Binding="{Binding Comment}" Header="Comment" Width="*" />
+                            <DataGridTextColumn Binding="{Binding ExternalID}" Header="ExternalID" Width="120" />
+                            <DataGridCheckBoxColumn Binding="{Binding Bookmarked}" Header="Bookmarked" Width="100" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="All">
+                <DockPanel>
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
+                    <DataGrid Margin="1" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Link}" Header="Link" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding PriceInRSD}" Header="PriceInRSD" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Currency}" Header="Currency" Width="90" />
+                            <DataGridTextColumn Binding="{Binding Price}" Header="Price" Width="90" />
+                            <DataGridTextColumn Binding="{Binding Comment}" Header="Comment" Width="*" />
+                            <DataGridTextColumn Binding="{Binding ExternalID}" Header="ExternalID" Width="120" />
+                            <DataGridCheckBoxColumn Binding="{Binding Bookmarked}" Header="Bookmarked" Width="100" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+        <TabControl Margin="5">
+            <TabItem Header="Info">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="{Binding GridCountItemsBookmarked}" Margin="15" />
+                            <Button Command="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
+                            <Button Command="{Binding DuplicateClick}" Margin="15">Duplicate</Button>
+                        </StackPanel>
+                        <TextBox PlaceholderText="ID" Text="{Binding SelectedItem.ID}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Link" Text="{Binding SelectedItem.Link}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Currency" Text="{Binding SelectedItem.Currency}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" IsReadOnly="True" AcceptsReturn="True" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
+                        <CheckBox IsChecked="{Binding SelectedItem.Bookmarked}" IsEnabled="False">Bookmarked</CheckBox>
+                        <Button>
+                            <Image Source="{Binding Image}" Width="300" />
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="New">
+                <ScrollViewer>
+                    <StackPanel>
+                        <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
+                        <TextBox PlaceholderText="Link" Text="{Binding NewItem.Link}" />
+                        <TextBox PlaceholderText="Title" Text="{Binding NewItem.Title}" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
+                        <TextBox PlaceholderText="Currency" Text="{Binding NewItem.Currency}" />
+                        <TextBox PlaceholderText="Price" Text="{Binding NewItem.Price}" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding NewItem.Comment}" AcceptsReturn="True" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding NewItem.ExternalID}" />
+                        <Button>
+                            <Image Name="NewItemImage" Source="{Binding NewImage}" Width="250" />
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Edit">
+                <ScrollViewer>
+                    <StackPanel>
+                        <Button Command="{Binding UpdateItemClick}" Margin="15">Update</Button>
+                        <TextBox PlaceholderText="Link" Text="{Binding SelectedItem.Link}" />
+                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox PlaceholderText="Currency" Text="{Binding SelectedItem.Currency}" />
+                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" AcceptsReturn="True" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" />
+                        <CheckBox IsChecked="{Binding SelectedItem.Bookmarked}">Bookmarked</CheckBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</UserControl>
