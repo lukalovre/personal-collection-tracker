@@ -3,7 +3,7 @@
         <TabControl>
             <TabItem Header="★">
                 <DockPanel>
-                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedItem}">
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding Done}" Header="Done" Width="40" />
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
@@ -14,7 +14,7 @@
             </TabItem>
             <TabItem Header="All">
                 <DockPanel>
-                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedItem}">
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
                             <DataGridTextColumn Binding="{Binding LastDate, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm}}" Header="Last Date" Width="200" />
@@ -30,9 +30,56 @@
                         <Button Content ="{Binding GridCountItemsBookmarked}"></Button>
                         <StackPanel Orientation="Horizontal">
                             <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
-                            <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
                         </StackPanel>
                         <TextBlock Text="{Binding SelectedItem.Title}" FontSize="20" FontWeight="Bold" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Collaborators: " />
+                            <TextBlock Text="{Binding SelectedItem.Collaborators}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Date: " />
+                            <TextBlock Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Public: " />
+                            <TextBlock Text="{Binding SelectedItem.Public}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Type: " />
+                            <TextBlock Text="{Binding SelectedItem.Type}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Location: " />
+                            <TextBlock Text="{Binding SelectedItem.Location}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Public location: " />
+                            <TextBlock Text="{Binding SelectedItem.PublicLocation}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Finished: " />
+                            <TextBlock Text="{Binding SelectedItem.Finished}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Main: " />
+                            <TextBlock Text="{Binding SelectedItem.Main}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="External ID: " />
+                            <TextBlock Text="{Binding SelectedItem.ExternalID}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Comment: " />
+                            <TextBlock Text="{Binding SelectedItem.Comment}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Price: " />
+                            <TextBlock Text="{Binding SelectedItem.Price}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Price in RSD: " />
+                            <TextBlock Text="{Binding SelectedItem.PriceInRSD}" />
+                        </StackPanel>
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
@@ -46,13 +93,42 @@
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox PlaceholderText="Artist" Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
+                            <TextBox PlaceholderText="Title" Text="{Binding NewItem.Title}" HorizontalAlignment="Stretch" />
                         </StackPanel>
+                        <TextBox PlaceholderText="Collaborators" Text="{Binding NewItem.Collaborators}" />
+                        <TextBox PlaceholderText="Date (yyyy-MM-dd HH:mm:ss)" Text="{Binding NewItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" />
+                        <CheckBox IsChecked="{Binding NewItem.Public}">Public</CheckBox>
+                        <TextBox PlaceholderText="Type" Text="{Binding NewItem.Type}" />
+                        <TextBox PlaceholderText="Location" Text="{Binding NewItem.Location}" />
+                        <TextBox PlaceholderText="Public location" Text="{Binding NewItem.PublicLocation}" />
+                        <CheckBox IsChecked="{Binding NewItem.Finished}">Finished</CheckBox>
+                        <TextBox PlaceholderText="Main (true/false)" Text="{Binding NewItem.Main}" />
+                        <TextBox PlaceholderText="External ID" Text="{Binding NewItem.ExternalID}" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding NewItem.Comment}" AcceptsReturn="True" />
+                        <TextBox PlaceholderText="Price" Text="{Binding NewItem.Price}" />
+                        <TextBox PlaceholderText="Price in RSD" Text="{Binding NewItem.PriceInRSD}" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Edit">
-                <TextBlock Text="Event" />
+                <ScrollViewer>
+                    <StackPanel>
+                        <Button Command="{Binding UpdateItemClick}" Margin="15">Update</Button>
+                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" />
+                        <TextBox PlaceholderText="Collaborators" Text="{Binding SelectedItem.Collaborators}" />
+                        <TextBox PlaceholderText="Date (yyyy-MM-dd HH:mm:ss)" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" />
+                        <CheckBox IsChecked="{Binding SelectedItem.Public}">Public</CheckBox>
+                        <TextBox PlaceholderText="Type" Text="{Binding SelectedItem.Type}" />
+                        <TextBox PlaceholderText="Location" Text="{Binding SelectedItem.Location}" />
+                        <TextBox PlaceholderText="Public location" Text="{Binding SelectedItem.PublicLocation}" />
+                        <CheckBox IsChecked="{Binding SelectedItem.Finished}">Finished</CheckBox>
+                        <TextBox PlaceholderText="Main (true/false)" Text="{Binding SelectedItem.Main}" />
+                        <TextBox PlaceholderText="External ID" Text="{Binding SelectedItem.ExternalID}" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" AcceptsReturn="True" />
+                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" />
+                        <TextBox PlaceholderText="Price in RSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </DockPanel>

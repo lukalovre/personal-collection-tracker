@@ -36,26 +36,26 @@
                         <Button Content ="{Binding GridCountItemsBookmarked}"></Button>
                         <StackPanel Orientation="Horizontal">
                             <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
-                            <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
                             <Button Command="{Binding OpenLink}">Open Link</Button>
                         </StackPanel>
-                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" HorizontalAlignment="Stretch" />
-                        <TextBox PlaceholderText="Developer" Text="{Binding SelectedItem.Developer}" HorizontalAlignment="Stretch" />
-                        <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" HorizontalAlignment="Stretch" />
-                        <TextBox PlaceholderText="Edition" Text="{Binding SelectedItem.Edition}" HorizontalAlignment="Stretch" />
-                        <TextBox PlaceholderText="Platform" Text="{Binding SelectedItem.Platform}" HorizontalAlignment="Stretch" />
-                        <TextBox PlaceholderText="Client" Text="{Binding SelectedItem.Client}" HorizontalAlignment="Stretch" />
-                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" HorizontalAlignment="Stretch" />
-                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" HorizontalAlignment="Stretch" />
-                        <TextBox PlaceholderText="HLTB" Text="{Binding SelectedItem.HLTB}" HorizontalAlignment="Stretch" />
-                        <TextBox PlaceholderText="Owner" Text="{Binding SelectedItem.Owner}" HorizontalAlignment="Stretch" />
-                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" HorizontalAlignment="Stretch" />
-                        <TextBox PlaceholderText="Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" HorizontalAlignment="Stretch" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Developer" Text="{Binding SelectedItem.Developer}" HorizontalAlignment="Stretch" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" HorizontalAlignment="Stretch" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Edition" Text="{Binding SelectedItem.Edition}" HorizontalAlignment="Stretch" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Platform" Text="{Binding SelectedItem.Platform}" HorizontalAlignment="Stretch" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Client" Text="{Binding SelectedItem.Client}" HorizontalAlignment="Stretch" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" HorizontalAlignment="Stretch" IsReadOnly="True" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" HorizontalAlignment="Stretch" IsReadOnly="True" />
+                        <TextBox PlaceholderText="HLTB" Text="{Binding SelectedItem.HLTB}" HorizontalAlignment="Stretch" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Owner" Text="{Binding SelectedItem.Owner}" HorizontalAlignment="Stretch" IsReadOnly="True" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" HorizontalAlignment="Stretch" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" HorizontalAlignment="Stretch" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" HorizontalAlignment="Stretch" IsReadOnly="True" />
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding SelectedItem.Expansion}">Expansion </CheckBox>
-                            <CheckBox IsChecked="{Binding SelectedItem.New}">New </CheckBox>
-                            <CheckBox IsChecked="{Binding SelectedItem.GotFree}">GotFree </CheckBox>
-                            <CheckBox IsChecked="{Binding SelectedItem.PhysicalCopy}">PhysicalCopy </CheckBox>
+                            <CheckBox IsChecked="{Binding SelectedItem.Expansion}" IsEnabled="False">Expansion </CheckBox>
+                            <CheckBox IsChecked="{Binding SelectedItem.New}" IsEnabled="False">New </CheckBox>
+                            <CheckBox IsChecked="{Binding SelectedItem.GotFree}" IsEnabled="False">GotFree </CheckBox>
+                            <CheckBox IsChecked="{Binding SelectedItem.PhysicalCopy}" IsEnabled="False">PhysicalCopy </CheckBox>
                         </StackPanel>
                         <Image Source="{Binding Image}" Width="300"/>
                     </StackPanel>
@@ -79,6 +79,8 @@
                         <TextBox PlaceholderText="HLTB" Text="{Binding NewItem.HLTB}" HorizontalAlignment="Stretch" />
                         <TextBox PlaceholderText="Owner" Text="{Binding NewItem.Owner}" HorizontalAlignment="Stretch" />
                         <TextBox PlaceholderText="ExternalID" Text="{Binding NewItem.ExternalID}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Date (yyyy-MM-dd HH:mm:ss)" Text="{Binding NewItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" HorizontalAlignment="Stretch" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding NewItem.Comment}" HorizontalAlignment="Stretch" AcceptsReturn="True" />
                         <StackPanel Orientation="Horizontal">
                             <CheckBox IsChecked="{Binding NewItem.Expansion}">Expansion </CheckBox>
                             <CheckBox IsChecked="{Binding NewItem.New}">New </CheckBox>
@@ -90,7 +92,30 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Edit">
-                <TextBlock Text="Event" />
+                <ScrollViewer>
+                    <StackPanel>
+                        <Button Command="{Binding UpdateItemClick}" Margin="15">Update</Button>
+                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" />
+                        <TextBox PlaceholderText="Developer" Text="{Binding SelectedItem.Developer}" />
+                        <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" />
+                        <TextBox PlaceholderText="Edition" Text="{Binding SelectedItem.Edition}" />
+                        <ComboBox ItemsSource="{Binding PlatformTypes}" SelectedItem="{Binding SelectedItem.Platform}" />
+                        <ComboBox ItemsSource="{Binding ClientTypes}" SelectedItem="{Binding SelectedItem.Client}" />
+                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox PlaceholderText="HLTB" Text="{Binding SelectedItem.HLTB}" />
+                        <TextBox PlaceholderText="Owner" Text="{Binding SelectedItem.Owner}" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" />
+                        <TextBox PlaceholderText="Date (yyyy-MM-dd HH:mm:ss)" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" AcceptsReturn="True" />
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding SelectedItem.Expansion}">Expansion</CheckBox>
+                            <CheckBox IsChecked="{Binding SelectedItem.New}">New</CheckBox>
+                            <CheckBox IsChecked="{Binding SelectedItem.GotFree}">GotFree</CheckBox>
+                            <CheckBox IsChecked="{Binding SelectedItem.PhysicalCopy}">PhysicalCopy</CheckBox>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </DockPanel>

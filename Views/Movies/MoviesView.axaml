@@ -38,19 +38,19 @@
                         <Button Content ="{Binding GridCountItemsBookmarked}"></Button>
                         <StackPanel Orientation="Horizontal">
                             <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
-                            <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
                         </StackPanel>
-                        <TextBox Text="{Binding SelectedItem.Owner}" />
-                        <TextBox Text="{Binding SelectedItem.Director}" />
-                        <TextBox Text="{Binding SelectedItem.Title}" />
-                        <TextBox Text="{Binding SelectedItem.Year}" />
-                        <TextBox Text="{Binding SelectedItem.Format}" />
-                        <TextBox Text="{Binding SelectedItem.Region}" />
-                        <TextBox Text="{Binding SelectedItem.Price}" />
-                        <TextBox Text="{Binding SelectedItem.PriceInRSD}" />
-                        <TextBox Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
-                        <TextBox Text="{Binding SelectedItem.ExternalID}" />
-                        <TextBox Text="{Binding SelectedItem.Comment}" />
+                        <TextBox PlaceholderText="Owner" Text="{Binding SelectedItem.Owner}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Director" Text="{Binding SelectedItem.Director}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Format" Text="{Binding SelectedItem.Format}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Region" Text="{Binding SelectedItem.Region}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" IsReadOnly="True" AcceptsReturn="True" />
+                        <TextBox PlaceholderText="Runtime" Text="{Binding SelectedItem.Runtime}" IsReadOnly="True" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
@@ -64,17 +64,18 @@
                             <Button Command="{Binding AddItemClick}" Margin="15">Add</Button>
                             <TextBox PlaceholderText="Paste url" Text="{Binding InputUrl}" Margin="15" />
                         </StackPanel>
-                        <TextBox Text="{Binding NewItem.Owner}" />
-                        <TextBox Text="{Binding NewItem.Director}" />
-                        <TextBox Text="{Binding NewItem.Title}" />
-                        <TextBox Text="{Binding NewItem.Year}" />
-                        <TextBox Text="{Binding NewItem.Format}" />
-                        <TextBox Text="{Binding NewItem.Region}" />
-                        <TextBox Text="{Binding NewItem.Price}" />
-                        <TextBox Text="{Binding NewItem.PriceInRSD}" />
-                        <TextBox Text="{Binding NewItem.Date}" />
-                        <TextBox Text="{Binding NewItem.ExternalID}" />
-                        <TextBox Text="{Binding NewItem.Comment}" />
+                        <TextBox PlaceholderText="Owner" Text="{Binding NewItem.Owner}" />
+                        <TextBox PlaceholderText="Director" Text="{Binding NewItem.Director}" />
+                        <TextBox PlaceholderText="Title" Text="{Binding NewItem.Title}" />
+                        <TextBox PlaceholderText="Year" Text="{Binding NewItem.Year}" />
+                        <TextBox PlaceholderText="Format" Text="{Binding NewItem.Format}" />
+                        <TextBox PlaceholderText="Region" Text="{Binding NewItem.Region}" />
+                        <TextBox PlaceholderText="Price" Text="{Binding NewItem.Price}" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
+                        <TextBox PlaceholderText="Date (yyyy-MM-dd HH:mm:ss)" Text="{Binding NewItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding NewItem.ExternalID}" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding NewItem.Comment}" AcceptsReturn="True" />
+                        <TextBox PlaceholderText="Runtime" Text="{Binding NewItem.Runtime}" />
                         <Button>
                             <Image Name="NewItemImage" Source="{Binding NewImage}" Width="430" Height="430" />
                         </Button>
@@ -82,7 +83,23 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Edit">
-                <TextBlock Text="Event" />
+                <ScrollViewer>
+                    <StackPanel>
+                        <Button Command="{Binding UpdateItemClick}" Margin="15">Update</Button>
+                        <TextBox PlaceholderText="Owner" Text="{Binding SelectedItem.Owner}" />
+                        <TextBox PlaceholderText="Director" Text="{Binding SelectedItem.Director}" />
+                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" />
+                        <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" />
+                        <TextBox PlaceholderText="Format" Text="{Binding SelectedItem.Format}" />
+                        <TextBox PlaceholderText="Region" Text="{Binding SelectedItem.Region}" />
+                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox PlaceholderText="Date (yyyy-MM-dd HH:mm:ss)" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" AcceptsReturn="True" />
+                        <TextBox PlaceholderText="Runtime" Text="{Binding SelectedItem.Runtime}" />
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </DockPanel>

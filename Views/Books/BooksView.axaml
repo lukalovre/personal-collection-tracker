@@ -40,20 +40,20 @@
                         <Button Content ="{Binding GridCountItemsBookmarked}"></Button>
                         <StackPanel Orientation="Horizontal">
                             <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
-                            <Button Command ="{Binding UpdateItemClick}" Margin="15">Update</Button>
                             <Button Command="{Binding OpenLink}">Open Link</Button>
                         </StackPanel>
-                        <TextBox PlaceholderText = "Title" Text="{Binding SelectedItem.Title}" />
-                        <TextBox PlaceholderText = "Author" Text="{Binding SelectedItem.Author}" />
-                        <TextBox PlaceholderText = "Year" Text="{Binding SelectedItem.Year}" />
-                        <TextBox PlaceholderText = "Pages" Text="{Binding SelectedItem.Pages}" />
-                        <TextBox PlaceholderText = "Type" Text="{Binding SelectedItem.Type}" />
-                        <TextBox PlaceholderText = "_1001" Text="{Binding SelectedItem._1001}" />
-                        <TextBox PlaceholderText = "EminaRating" Text="{Binding SelectedItem.EminaRating}" />
-                        <TextBox PlaceholderText = "ExternalID" Text="{Binding SelectedItem.ExternalID}" />
-                        <TextBox PlaceholderText = "Price" Text="{Binding SelectedItem.Price}" />
-                        <TextBox PlaceholderText = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
-                        <TextBox PlaceholderText = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" />
+                        <TextBox PlaceholderText = "Title" Text="{Binding SelectedItem.Title}" IsReadOnly="True" />
+                        <TextBox PlaceholderText = "Author" Text="{Binding SelectedItem.Author}" IsReadOnly="True" />
+                        <TextBox PlaceholderText = "Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
+                        <TextBox PlaceholderText = "Pages" Text="{Binding SelectedItem.Pages}" IsReadOnly="True" />
+                        <TextBox PlaceholderText = "Type" Text="{Binding SelectedItem.Type}" IsReadOnly="True" />
+                        <TextBox PlaceholderText = "_1001" Text="{Binding SelectedItem._1001}" IsReadOnly="True" />
+                        <TextBox PlaceholderText = "EminaRating" Text="{Binding SelectedItem.EminaRating}" IsReadOnly="True" />
+                        <TextBox PlaceholderText = "ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
+                        <TextBox PlaceholderText = "Price" Text="{Binding SelectedItem.Price}" IsReadOnly="True" />
+                        <TextBox PlaceholderText = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" IsReadOnly="True" />
+                        <TextBox PlaceholderText = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" IsReadOnly="True" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" IsReadOnly="True" AcceptsReturn="True" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
@@ -77,7 +77,8 @@
                         <TextBox PlaceholderText = "ExternalID" Text="{Binding NewItem.ExternalID}" />
                         <TextBox PlaceholderText = "Price" Text="{Binding NewItem.Price}" />
                         <TextBox PlaceholderText = "PriceInRSD" Text="{Binding NewItem.PriceInRSD}" />
-                        <TextBox PlaceholderText = "Date" Text="{Binding NewItem.Date}" />
+                        <TextBox PlaceholderText = "Date (yyyy-MM-dd HH:mm:ss)" Text="{Binding NewItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding NewItem.Comment}" AcceptsReturn="True" />
                         <Button>
                             <Image Name="NewItemImage" Source="{Binding NewImage}" Width="430" Height="430" />
                         </Button>
@@ -85,7 +86,23 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Edit">
-                <TextBlock Text="Event" />
+                <ScrollViewer>
+                    <StackPanel>
+                        <Button Command="{Binding UpdateItemClick}" Margin="15">Update</Button>
+                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" />
+                        <TextBox PlaceholderText="Author" Text="{Binding SelectedItem.Author}" />
+                        <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" />
+                        <TextBox PlaceholderText="Pages" Text="{Binding SelectedItem.Pages}" />
+                        <TextBox PlaceholderText="Type" Text="{Binding SelectedItem.Type}" />
+                        <TextBox PlaceholderText="_1001" Text="{Binding SelectedItem._1001}" />
+                        <TextBox PlaceholderText="EminaRating" Text="{Binding SelectedItem.EminaRating}" />
+                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" />
+                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" />
+                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" />
+                        <TextBox PlaceholderText="Date (yyyy-MM-dd HH:mm:ss)" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" />
+                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" AcceptsReturn="True" />
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="Stats">
                 <StackPanel>
