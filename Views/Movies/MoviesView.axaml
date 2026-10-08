@@ -3,10 +3,7 @@
         <TabControl>
             <TabItem Header="★">
                 <DockPanel>
-                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                        <TextBox Text="{Binding SearchText}" PlaceholderText="Filter" DockPanel.Dock="Top" Width="150" />
-                        <Button Command="{Binding Search}" HotKey="Enter">Search</Button>
-                    </StackPanel>
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding Done}" Header="Done" Width="40" />
@@ -20,6 +17,7 @@
             </TabItem>
             <TabItem Header="All">
                 <DockPanel>
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />

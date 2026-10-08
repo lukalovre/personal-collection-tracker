@@ -34,6 +34,8 @@ where TEventItem : IExternalItem
     private readonly IExternal<TItem> _external;
     private TGridItem _selectedGridItem = default!;
     protected List<TItem> _itemList = [];
+    private List<TGridItem> _allGridItems = [];
+    private List<TGridItem> _bookmarkedGridItems = [];
 
     public IEnumerable<string> DoneList { get; private set; } = [];
 
@@ -48,6 +50,7 @@ where TEventItem : IExternalItem
     private int _addAmount;
     private string _addAmountString = string.Empty;
     private string _inputUrl = string.Empty;
+    private string _searchText = string.Empty;
 
     public int AddAmount
     {
@@ -139,7 +142,15 @@ where TEventItem : IExternalItem
         }
     }
 
-    public string SearchText { get; set; } = string.Empty;
+    public string SearchText
+    {
+        get => _searchText;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _searchText, value);
+            ApplyGridSearch();
+        }
+    }
 
     public ObservableCollection<string> PlatformTypes { get; set; }
     public ObservableCollection<string> ClientTypes { get; set; }
@@ -222,20 +233,9 @@ where TEventItem : IExternalItem
         HtmlHelper.OpenLink(SelectedItem.ExternalID, OpenLinkAlternativeParameters());
     }
 
-    private async void SearchAction()
+    private void SearchAction()
     {
         SearchText = SearchText.Trim();
-
-        if (string.IsNullOrWhiteSpace(SearchText))
-        {
-            GridItemsTodo.Clear();
-            GridItemsTodo.AddRange(await LoadData());
-            return;
-        }
-
-        // var searchMovie = new Movie { Director = SearchText, Title = SearchText };
-
-        ReloadData(SearchText);
     }
 
     public async void InputUrlChanged()
@@ -313,10 +313,13 @@ where TEventItem : IExternalItem
         ClearNewItemControls();
     }
 
-    protected virtual async Task ReloadData(string searchText = null)
+    protected virtual async Task ReloadData()
     {
+        _allGridItems = await LoadData();
+        _bookmarkedGridItems = LoadDataBookmarked();
+
         GridItems.Clear();
-        GridItems.AddRange(await LoadData());
+        GridItems.AddRange(_allGridItems);
         GridCountItems = GridItems.Count;
 
         GridItemsTodo.Clear();
@@ -324,8 +327,10 @@ where TEventItem : IExternalItem
         GridCountItemsBookmarked = GridItemsTodo.Count;
 
         GridItemsBookmarked.Clear();
-        GridItemsBookmarked.AddRange(LoadDataBookmarked(searchText));
+        GridItemsBookmarked.AddRange(_bookmarkedGridItems);
         GridCountItemsBookmarked = GridItemsBookmarked.Count;
+
+        ApplyGridSearch();
     }
 
     private void ClearNewItemControls()
@@ -359,7 +364,7 @@ where TEventItem : IExternalItem
             .ToList();
     }
 
-    private List<TGridItem> LoadDataBookmarked(string searchText = null)
+    private List<TGridItem> LoadDataBookmarked()
     {
         _itemList = _datasource.GetList<TItem>();
         return _itemList
@@ -367,6 +372,29 @@ where TEventItem : IExternalItem
             .OrderByDescending(o => o.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();
+    }
+
+    private void ApplyGridSearch()
+    {
+        var searchText = SearchText.Trim();
+
+        GridItems.Clear();
+        GridItems.AddRange(_allGridItems.Where(item => MatchesSearch(item, searchText)));
+
+        GridItemsBookmarked.Clear();
+        GridItemsBookmarked.AddRange(_bookmarkedGridItems.Where(item => MatchesSearch(item, searchText)));
+
+        GridCountItems = GridItems.Count;
+        GridCountItemsBookmarked = GridItemsBookmarked.Count;
+    }
+
+    private static bool MatchesSearch(TGridItem item, string searchText)
+    {
+        return string.IsNullOrEmpty(searchText)
+            || typeof(TGridItem).GetProperties()
+                .Where(property => property.Name != nameof(IGridItem.ID) && property.Name != "Done")
+                .Select(property => property.GetValue(item)?.ToString())
+                .Any(value => value?.Contains(searchText, StringComparison.OrdinalIgnoreCase) == true);
     }
 
     protected bool GetDoneStatus(TItem item)
