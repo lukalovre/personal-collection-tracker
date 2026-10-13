@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,7 +12,7 @@ public partial class MusicViewModel : ItemViewModel<Music, MusicGridItem, MusicI
 {
     public ObservableCollection<MusicGridItem> DigitalGridItems { get; } = [];
     public ObservableCollection<MusicGridItem> CDGridItems { get; } = [];
-    public ObservableCollection<MusicGridItem> CasseteGridItems { get; } = [];
+    public ObservableCollection<MusicGridItem> CassetteGridItems { get; } = [];
     public ObservableCollection<MusicGridItem> VinylGridItems { get; } = [];
 
     public MusicViewModel(IDatasource datasource, IExternal<Music> external)
@@ -25,7 +26,7 @@ public partial class MusicViewModel : ItemViewModel<Music, MusicGridItem, MusicI
     {
         RefreshPlatformGridItems(DigitalGridItems, eMusicPlatformType.Digital);
         RefreshPlatformGridItems(CDGridItems, eMusicPlatformType.CD);
-        RefreshPlatformGridItems(CasseteGridItems, eMusicPlatformType.Cassete);
+        RefreshPlatformGridItems(CassetteGridItems, eMusicPlatformType.Cassette);
         RefreshPlatformGridItems(VinylGridItems, eMusicPlatformType.Vinyl);
     }
 
@@ -34,7 +35,7 @@ public partial class MusicViewModel : ItemViewModel<Music, MusicGridItem, MusicI
         eMusicPlatformType platform)
     {
         var platformItemIds = _itemList
-            .Where(item => item.Format == platform.ToString())
+            .Where(item => FormatMatchesPlatform(item.Format, platform))
             .Select(item => item.ID)
             .ToHashSet();
 
@@ -43,6 +44,13 @@ public partial class MusicViewModel : ItemViewModel<Music, MusicGridItem, MusicI
         {
             platformGridItems.Add(gridItem);
         }
+    }
+
+    private static bool FormatMatchesPlatform(string format, eMusicPlatformType platform)
+    {
+        return platform == eMusicPlatformType.Digital
+            ? format.StartsWith("Digital", StringComparison.Ordinal)
+            : format == platform.ToString();
     }
 
     public override List<string> OpenLinkAlternativeParameters()

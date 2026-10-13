@@ -2,6 +2,6 @@ public enum eMusicPlatformType
 {
     Digital = 1,
     CD = 2,
-    Cassete = 3,
+    Cassette = 3,
     Vinyl = 4
 }
