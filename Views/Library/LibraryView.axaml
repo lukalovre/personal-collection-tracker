@@ -3,6 +3,7 @@
         <TabControl>
             <TabItem Header="All">
                 <DockPanel>
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding LibraryGridItems.Count}" DockPanel.Dock="Top" />
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding LibraryGridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Person}" Header="Person" Width="*" />
@@ -45,10 +46,10 @@
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock Text="    " />
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBox Text="{Binding SearchText}" PlaceholderText="Filter" DockPanel.Dock="Top" Width="150" Margin="5" />
-                                    <Button Command="{Binding Search}" HotKey="Enter" Margin="5">Search</Button>
-                                </StackPanel>
+                                <DockPanel Width="300">
+                                    <Button Command="{Binding Search}" HotKey="Enter" Margin="5" DockPanel.Dock="Right">Search</Button>
+                                    <view:ItemGridSearchBox Text="{Binding SearchText}" />
+                                </DockPanel>
                                 <DataGrid Margin="1" Width="300" Height="500" ItemsSource="{Binding SearchItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedSearchGridItem}">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="70" />

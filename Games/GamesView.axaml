@@ -3,7 +3,7 @@
         <TabControl>
             <TabItem Header="★">
                 <DockPanel>
-                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding GridItemsBookmarked.Count}" DockPanel.Dock="Top" />
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding Done}" Header="Done" Width="40" />
@@ -18,7 +18,7 @@
             </TabItem>
             <TabItem Header="All">
                 <DockPanel>
-                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding GridItems.Count}" DockPanel.Dock="Top" />
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
@@ -32,7 +32,7 @@
             </TabItem>
             <TabItem Header="Physical">
                 <DockPanel>
-                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding PhysicalCopyGames.Count}" DockPanel.Dock="Top" />
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding PhysicalCopyGames}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
@@ -47,7 +47,7 @@
             <TabItem Header="Consoles">
                 <DockPanel>
                     <ComboBox ItemsSource="{Binding PlatformTypes}" SelectedItem="{Binding SelectedPlatform}" DockPanel.Dock="Top" Margin="5" />
-                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding PlatformGames.Count}" DockPanel.Dock="Top" />
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding PlatformGames}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
@@ -62,7 +62,7 @@
             <TabItem Header="Clients">
                 <DockPanel>
                     <ComboBox ItemsSource="{Binding ClientTypes}" SelectedItem="{Binding SelectedClient}" DockPanel.Dock="Top" Margin="5" />
-                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding ClientGames.Count}" DockPanel.Dock="Top" />
                     <DataGrid Margin="1" Width="570" ItemsSource="{Binding ClientGames}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />

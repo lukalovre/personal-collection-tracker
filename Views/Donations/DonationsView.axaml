@@ -3,7 +3,7 @@
         <TabControl Grid.Column="0">
             <TabItem Header="★">
                 <DockPanel>
-                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding GridItemsBookmarked.Count}" DockPanel.Dock="Top" />
                     <DataGrid Margin="1" ItemsSource="{Binding GridItemsBookmarked}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Link}" Header="Link" Width="*" />
@@ -20,7 +20,7 @@
             </TabItem>
             <TabItem Header="All">
                 <DockPanel>
-                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding GridItems.Count}" DockPanel.Dock="Top" />
                     <DataGrid Margin="1" ItemsSource="{Binding GridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Link}" Header="Link" Width="*" />

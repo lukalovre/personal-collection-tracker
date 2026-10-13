@@ -29,12 +29,18 @@ public partial class LibraryViewModel : ViewModelBase
 
     private void SearchAction()
     {
+        SearchText = SearchText.Trim();
+
         if (string.IsNullOrWhiteSpace(SearchText))
         {
-            return;
+            SearchItems.Clear();
+        }
+        else
+        {
+            ReloadSearchData();
         }
 
-        ReloadSearchData();
+        ApplyLibrarySearch();
     }
     public PeopleSelectionViewModel People { get; } = new PeopleSelectionViewModel();
 
@@ -132,6 +138,7 @@ public partial class LibraryViewModel : ViewModelBase
 
     private readonly IDatasource _datasource;
     private List<Library> _itemList = [];
+    private List<LibraryGridItem> _allLibraryGridItems = [];
     private LibraryGridItem _selectedGridItem = null!;
     private Bitmap? _itemImage;
     private Library _newItem = null!;
@@ -149,8 +156,8 @@ public partial class LibraryViewModel : ViewModelBase
         ItemList.AddRange(_datasource.GetList<Comic>().Select(o => new Tuple<string, IItem>(typeof(Comic).Name, o)));
         ItemList.AddRange(_datasource.GetList<Game>().Select(o => new Tuple<string, IItem>(typeof(Game).Name, o)));
 
-        LibraryGridItems.Clear();
-        LibraryGridItems.AddRange(await LoadData());
+        _allLibraryGridItems = await LoadData();
+        ApplyLibrarySearch();
     }
 
     private void ReloadSearchData()
@@ -174,6 +181,14 @@ public partial class LibraryViewModel : ViewModelBase
             var gridItem = new LibrarySearchGridItem(item.Item2.ID, item.Item1, title);
             SearchItems.Add(gridItem);
         }
+    }
+
+    private void ApplyLibrarySearch()
+    {
+        LibraryGridItems.Clear();
+        LibraryGridItems.AddRange(_allLibraryGridItems.Where(item =>
+            string.IsNullOrWhiteSpace(SearchText)
+            || JsonConvert.SerializeObject(item).Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)));
     }
 
     private async Task<List<LibraryGridItem>> LoadData()
