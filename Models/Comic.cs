@@ -20,4 +20,5 @@ public class Comic : IItem, ICollection
     public float? PriceInRSD { get; set; }
     public bool? Bookmarked { get; set; }
     public string Comment { get; set; } = string.Empty;
+    public string Format { get; set; } = string.Empty;
 }
