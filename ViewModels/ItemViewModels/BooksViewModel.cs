@@ -1,14 +1,50 @@
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using CollectionTracker.Repositories;
 using Repositories;
 
 namespace CollectionTracker.ViewModels;
 
-public partial class BooksViewModel(IDatasource datasource, IExternal<Book> external)
-: ItemViewModel<Book, BookGridItem, BookItem>(datasource, external)
+public partial class BooksViewModel : ItemViewModel<Book, BookGridItem, BookItem>
 {
+    public ObservableCollection<BookGridItem> BeletristikaGridItems { get; } = [];
+    public ObservableCollection<BookGridItem> DecijaGridItems { get; } = [];
+    public ObservableCollection<BookGridItem> OstaloGridItems { get; } = [];
+    public ObservableCollection<BookGridItem> StrucnaGridItems { get; } = [];
+
+    public BooksViewModel(IDatasource datasource, IExternal<Book> external)
+        : base(datasource, external)
+    {
+        GridItems.CollectionChanged += (_, _) => RefreshTypeGridItems();
+        RefreshTypeGridItems();
+    }
+
     public override float AmountToMinutesModifier => 2f;
+
+    private void RefreshTypeGridItems()
+    {
+        RefreshTypeGridItems(BeletristikaGridItems, "Beletristika");
+        RefreshTypeGridItems(DecijaGridItems, "Dečija");
+        RefreshTypeGridItems(OstaloGridItems, "Ostalo");
+        RefreshTypeGridItems(StrucnaGridItems, "Stručna");
+    }
+
+    private void RefreshTypeGridItems(
+        ObservableCollection<BookGridItem> typeGridItems,
+        string type)
+    {
+        var typeItemIds = _itemList
+            .Where(item => item.Type == type)
+            .Select(item => item.ID)
+            .ToHashSet();
+
+        typeGridItems.Clear();
+        foreach (var gridItem in GridItems.Where(item => typeItemIds.Contains(item.ID)))
+        {
+            typeGridItems.Add(gridItem);
+        }
+    }
 
     public BookTypes BookTypesCount => GetDoneStatus();
 
