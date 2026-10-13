@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using CollectionTracker.Repositories;
@@ -12,6 +11,7 @@ public partial class GamesViewModel : ItemViewModel<Game, GameGridItem, GameItem
 {
     public ObservableCollection<GameGridItem> PhysicalCopyGames { get; } = [];
     public ObservableCollection<GameGridItem> ClientGames { get; } = [];
+    public ObservableCollection<GameGridItem> PlatformGames { get; } = [];
 
     private string _selectedClient = nameof(eGameClientTypes.GOG);
     public string SelectedClient
@@ -21,6 +21,17 @@ public partial class GamesViewModel : ItemViewModel<Game, GameGridItem, GameItem
         {
             this.RaiseAndSetIfChanged(ref _selectedClient, value);
             RefreshClientGames();
+        }
+    }
+
+    private string _selectedPlatform = nameof(eGamePlatformTypes.PC);
+    public string SelectedPlatform
+    {
+        get => _selectedPlatform;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _selectedPlatform, value);
+            RefreshPlatformGames();
         }
     }
 
@@ -57,19 +68,29 @@ public partial class GamesViewModel : ItemViewModel<Game, GameGridItem, GameItem
         }
 
         RefreshClientGames();
+        RefreshPlatformGames();
     }
 
     private void RefreshClientGames()
     {
         ClientGames.Clear();
-        foreach (var game in GridItems.Where(game => string.Equals(NormalizeClient(game.Client), NormalizeClient(SelectedClient), StringComparison.OrdinalIgnoreCase)))
+        foreach (var game in GridItems.Where(game => string.Equals(NormalizeOption(game.Client), NormalizeOption(SelectedClient), StringComparison.OrdinalIgnoreCase)))
         {
             ClientGames.Add(game);
         }
     }
 
-    private static string NormalizeClient(string? client)
+    private void RefreshPlatformGames()
     {
-        return string.Concat((client ?? string.Empty).Where(char.IsLetterOrDigit));
+        PlatformGames.Clear();
+        foreach (var game in GridItems.Where(game => string.Equals(NormalizeOption(game.Platform), NormalizeOption(SelectedPlatform), StringComparison.OrdinalIgnoreCase)))
+        {
+            PlatformGames.Add(game);
+        }
+    }
+
+    private static string NormalizeOption(string? value)
+    {
+        return string.Concat((value ?? string.Empty).Where(char.IsLetterOrDigit));
     }
 }
