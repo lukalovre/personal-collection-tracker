@@ -26,6 +26,54 @@
                     </DataGrid>
                 </DockPanel>
             </TabItem>
+            <TabItem Header="Digital">
+                <DockPanel>
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding DigitalGridItems.Count}" DockPanel.Dock="Top" />
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding DigitalGridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Artist}" Header="Artist" Width="200" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="CD">
+                <DockPanel>
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding CDGridItems.Count}" DockPanel.Dock="Top" />
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding CDGridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Artist}" Header="Artist" Width="200" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Cassete">
+                <DockPanel>
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding CasseteGridItems.Count}" DockPanel.Dock="Top" />
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding CasseteGridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Artist}" Header="Artist" Width="200" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Vinyl">
+                <DockPanel>
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding VinylGridItems.Count}" DockPanel.Dock="Top" />
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding VinylGridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Artist}" Header="Artist" Width="200" />
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
         </TabControl>
         <TabControl Margin="5">
             <TabItem Header="Info">
