@@ -3,7 +3,7 @@ using CollectionTracker.Models;
 
 public record BookGridItem(int ID, bool Done, string Title, string Author, int Year, int? Rating, int Pages, DateTime? LastDate, string Type, bool? _1001) : IGridItem;
 public record ComicGridItem(int ID, bool Done, string Title, string Writer, int? Chapter, int Pages, int? Rating) : IGridItem;
-public record GameGridItem(int ID, bool Done, string Title, int Year, string Platform, int HLTB, DateTime? Purchased, bool PhysicalCopy) : IGridItem;
+public record GameGridItem(int ID, bool Done, string Title, int Year, string Platform, string Client, int HLTB, DateTime? Purchased, bool PhysicalCopy) : IGridItem;
 public record MovieGridItem(int ID, bool Done, string Title, string Director, int Year, int Rating) : IGridItem;
 public record MusicGridItem(int ID, bool Done, string Artist, string Title, int Year, int Minutes, bool Bookmarked, int Played) : IGridItem;
 public record SongGridItem(int ID, bool Done, string Artist, string Title, int Year, int Times, bool Bookmarked) : IGridItem;

@@ -38,6 +38,22 @@
                             <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
                             <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
                             <DataGridTextColumn Binding="{Binding Platform}" Header="Platform" Width="70" />
+                            <DataGridTextColumn Binding="{Binding HLTB}" Header="HLTB" Width="80" />
+                            <DataGridTextColumn Binding="{Binding Purchased, StringFormat='{}{0:yyyy-MM-dd}'}" Header="Purchased" Width="130" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Clients">
+                <DockPanel>
+                    <ComboBox ItemsSource="{Binding ClientTypes}" SelectedItem="{Binding SelectedClient}" DockPanel.Dock="Top" Margin="5" />
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" DockPanel.Dock="Top" />
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding ClientGames}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Platform}" Header="Platform" Width="70" />
+                            <DataGridTextColumn Binding="{Binding HLTB}" Header="HLTB" Width="80" />
                             <DataGridTextColumn Binding="{Binding Purchased, StringFormat='{}{0:yyyy-MM-dd}'}" Header="Purchased" Width="130" />
                         </DataGrid.Columns>
                     </DataGrid>
