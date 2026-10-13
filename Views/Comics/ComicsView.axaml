@@ -28,6 +28,19 @@
                     </DataGrid>
                 </DockPanel>
             </TabItem>
+            <TabItem Header="Digital">
+                <DockPanel>
+                    <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding DigitalGridItems.Count}" DockPanel.Dock="Top" />
+                    <DataGrid Margin="1" Width="570" ItemsSource="{Binding DigitalGridItems}" IsReadOnly="True" GridLinesVisibility="All" BorderThickness="2" BorderBrush="Tan" SelectedItem="{Binding SelectedGridItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Writer}" Header="Author" Width="150" />
+                            <DataGridTextColumn Binding="{Binding Chapter}" Header="Chapter" Width="70" />
+                            <DataGridTextColumn Binding="{Binding Pages}" Header="Pages" Width="70" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
         </TabControl>
         <TabControl Margin="5">
             <TabItem Header="Info">
@@ -47,6 +60,7 @@
                             <TextBox PlaceholderText = "Writer" Text="{Binding SelectedItem.Writer}" IsReadOnly="True" />
                             <TextBox PlaceholderText = "Illustrator" Text="{Binding SelectedItem.Illustrator}" IsReadOnly="True" />
                         </StackPanel>
+                        <TextBox PlaceholderText="Format" Text="{Binding SelectedItem.Format}" IsReadOnly="True" />
                         <StackPanel Orientation="Horizontal">
                             <TextBox PlaceholderText = "Owner" Text="{Binding SelectedItem.Owner}" Width="50" IsReadOnly="True"/>
                             <TextBox PlaceholderText = "Language" Text="{Binding SelectedItem.Language}" Width="50" IsReadOnly="True"/>
@@ -84,6 +98,7 @@
                             <TextBox PlaceholderText = "Writer" Text="{Binding NewItem.Writer}" />
                             <TextBox PlaceholderText = "Illustrator" Text="{Binding NewItem.Illustrator}" />
                         </StackPanel>
+                        <TextBox PlaceholderText="Format" Text="{Binding NewItem.Format}" />
                         <StackPanel Orientation="Horizontal">
                             <TextBox PlaceholderText = "Owner" Text="{Binding NewItem.Owner}" Width="50"/>
                             <TextBox PlaceholderText = "Language" Text="{Binding NewItem.Language}" Width="50"/>
@@ -110,6 +125,7 @@
                         <NumericUpDown Value="{Binding SelectedItem.Chapter}" FormatString="0" Minimum="1" Maximum="999" />
                         <TextBox PlaceholderText="Writer" Text="{Binding SelectedItem.Writer}" />
                         <TextBox PlaceholderText="Illustrator" Text="{Binding SelectedItem.Illustrator}" />
+                        <TextBox PlaceholderText="Format" Text="{Binding SelectedItem.Format}" />
                         <TextBox PlaceholderText="Owner" Text="{Binding SelectedItem.Owner}" />
                         <TextBox PlaceholderText="Language" Text="{Binding SelectedItem.Language}" />
                         <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" />
