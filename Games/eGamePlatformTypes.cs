@@ -1,8 +1,22 @@
 public enum eGamePlatformTypes
 {
+    Atari2600,
+    DS,
+    GameCube,
+    GB,
+    GBA,
+    N64,
+    NES,
     PC,
+    PS1,
     PS2,
     PS3,
     PS4,
+    PSP,
+    PSVR,
+    SegaMegaDrive,
+    SNES,
+    Wii,
+    Xbox,
     Xbox360,
 }
