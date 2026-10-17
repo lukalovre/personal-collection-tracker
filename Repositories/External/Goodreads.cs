@@ -22,7 +22,7 @@ public class Goodreads
         var year = GetYear(htmlDocument);
         var goodreadsID = GetGoogreadsID(url);
         var pages = GetPages(htmlDocument);
-        var imageUrl = GetImageUrl(htmlDocument);
+        var imageUrl = GetImageUrl(htmlDocument, url);
         string illustrator = GetIllustrator(htmlDocument);
 
         var destinationFile = Paths.GetTempPath<T>();
@@ -50,16 +50,37 @@ public class Goodreads
                     ?? string.Empty;
     }
 
-    private static string GetImageUrl(HtmlDocument htmlDocument)
+    private static string GetImageUrl(HtmlDocument htmlDocument, string pageUrl)
     {
-        return htmlDocument
-                        ?.DocumentNode
-                        ?.SelectNodes("//img[contains(@class, 'ResponsiveImage')]")
-                        ?.FirstOrDefault()
-                        ?.Attributes["src"]
-                        ?.Value
-                        ?? string.Empty;
+        var imageUrls = new[]
+        {
+            htmlDocument
+                ?.DocumentNode
+                ?.SelectNodes("//img[contains(@class, 'ResponsiveImage')]")
+                ?.FirstOrDefault()
+                ?.Attributes["src"]
+                ?.Value,
+            htmlDocument
+                ?.DocumentNode
+                ?.SelectSingleNode("//meta[@property='og:image']")
+                ?.Attributes["content"]
+                ?.Value
+        };
 
+        foreach (var imageUrl in imageUrls)
+        {
+            if (string.IsNullOrWhiteSpace(imageUrl)
+                || !Uri.TryCreate(pageUrl, UriKind.Absolute, out var pageUri)
+                || !Uri.TryCreate(pageUri, imageUrl, out var resolvedImageUri)
+                || (resolvedImageUri.Scheme != Uri.UriSchemeHttp && resolvedImageUri.Scheme != Uri.UriSchemeHttps))
+            {
+                continue;
+            }
+
+            return resolvedImageUri.AbsoluteUri;
+        }
+
+        return string.Empty;
     }
 
     private static string GetGoogreadsID(string url)

@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -15,6 +17,7 @@ namespace Repositories;
 public static class HtmlHelper
 {
     private static readonly ConditionalWeakTable<HtmlDocument, LocalHtmlSource> LocalHtmlSources = new();
+    private static readonly ConcurrentDictionary<string, byte> ForbiddenImageHosts = new(StringComparer.OrdinalIgnoreCase);
 
     internal static Func<Task<string?>>? LocalHtmlFilePicker { get; set; }
 
@@ -69,22 +72,48 @@ public static class HtmlHelper
             return;
         }
 
-        if (sourceDocument is not null && TryResolveLocalImage(webFile, sourceDocument, out var localImagePath))
+        if (sourceDocument is not null && LocalHtmlSources.TryGetValue(sourceDocument, out _))
         {
-            using var bitmap = new Bitmap(localImagePath);
-            using var destination = File.Create(destinationFile);
-            bitmap.Save(destination);
+            if (TryResolveLocalImage(webFile, sourceDocument, out var localImagePath))
+            {
+                using var bitmap = new Bitmap(localImagePath);
+                using var destination = File.Create(destinationFile);
+                bitmap.Save(destination);
+            }
+
             return;
         }
 
-        await DownloadFile(webFile, destinationFile);
+        if (!Uri.TryCreate(webFile, UriKind.Absolute, out var imageUri)
+            || (imageUri.Scheme != Uri.UriSchemeHttp && imageUri.Scheme != Uri.UriSchemeHttps))
+        {
+            return;
+        }
+
+        await DownloadFile(imageUri.AbsoluteUri, destinationFile);
     }
 
     private async static Task DownloadFile(string imageUrl, string imagePath)
     {
+        var imageUri = new Uri(imageUrl);
+        if (ForbiddenImageHosts.ContainsKey(imageUri.Host))
+        {
+            return;
+        }
+
         using var httpClient = new HttpClient();
-        using var response = await httpClient.GetAsync(imageUrl, HttpCompletionOption.ResponseHeadersRead);
-        response.EnsureSuccessStatusCode();
+        using var response = await httpClient.GetAsync(imageUri, HttpCompletionOption.ResponseHeadersRead);
+        if (response.StatusCode == HttpStatusCode.Forbidden)
+        {
+            ForbiddenImageHosts.TryAdd(imageUri.Host, 0);
+            return;
+        }
+
+        if (!response.IsSuccessStatusCode)
+        {
+            return;
+        }
+
         using var ms = await response.Content.ReadAsStreamAsync();
         using var fs = File.Create(imagePath);
         await ms.CopyToAsync(fs);
