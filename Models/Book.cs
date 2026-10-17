@@ -11,7 +11,7 @@ public class Book : IItem, ICollection
     public string Author { get; set; } = string.Empty;
     public int? Year { get; set; }
     public int? Pages { get; set; }
-    public string Type { get; set; } = string.Empty;
+    public string Type { get; set; } = "Beletristika";
     public bool? _1001 { get; set; }
     public int? EminaRating { get; set; }
     public string ExternalID { get; set; } = string.Empty;

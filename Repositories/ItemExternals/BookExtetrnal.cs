@@ -19,6 +19,7 @@ public class BookExternal : IExternal<Book>
                 Title = item.Title,
                 Author = item.Writer,
                 Year = item.Year,
+                Pages = item.Pages,
                 ExternalID = item.GoodreadsID.ToString()
             };
         }

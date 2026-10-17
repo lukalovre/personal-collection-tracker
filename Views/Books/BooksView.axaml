@@ -121,7 +121,7 @@
                         <TextBox PlaceholderText = "Author" Text="{Binding NewItem.Author}" />
                         <TextBox PlaceholderText = "Year" Text="{Binding NewItem.Year}" />
                         <TextBox PlaceholderText = "Pages" Text="{Binding NewItem.Pages}" />
-                        <TextBox PlaceholderText = "Type" Text="{Binding NewItem.Type}" />
+                        <ComboBox PlaceholderText="Type" ItemsSource="{Binding BookTypeOptions}" SelectedItem="{Binding NewItem.Type}" />
                         <TextBox PlaceholderText = "_1001" Text="{Binding NewItem._1001}" />
                         <TextBox PlaceholderText = "EminaRating" Text="{Binding NewItem.EminaRating}" />
                         <TextBox PlaceholderText = "ExternalID" Text="{Binding NewItem.ExternalID}" />

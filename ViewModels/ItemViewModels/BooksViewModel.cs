@@ -8,6 +8,7 @@ namespace CollectionTracker.ViewModels;
 
 public partial class BooksViewModel : ItemViewModel<Book, BookGridItem, BookItem>
 {
+    public ObservableCollection<string> BookTypeOptions { get; } = ["Beletristika", "Stručna", "Dečija", "Ostalo"];
     public ObservableCollection<BookGridItem> BeletristikaGridItems { get; } = [];
     public ObservableCollection<BookGridItem> DecijaGridItems { get; } = [];
     public ObservableCollection<BookGridItem> OstaloGridItems { get; } = [];
