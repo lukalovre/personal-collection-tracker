@@ -35,13 +35,13 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
+                            <Button Command="{Binding OpenLink}" ToolTip.Tip="{Binding SelectedItem.ExternalID}">Open ↗</Button>
                         </StackPanel>
                         <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Author" Text="{Binding SelectedItem.Author}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Runtime" Text="{Binding SelectedItem.Runtime}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
-                        <Button Command="{Binding OpenLink}">Open Link</Button>
+
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>

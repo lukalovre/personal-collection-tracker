@@ -49,7 +49,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                             <Button Command ="{Binding DuplicateClick}" Margin="15">Duplicate</Button>
-                            <Button Command="{Binding OpenLink}">Open Link</Button>
+                            <Button Command="{Binding OpenLink}" ToolTip.Tip="{Binding SelectedItem.ExternalID}">Open ↗</Button>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBox PlaceholderText = "Title" Text="{Binding SelectedItem.Title}" IsReadOnly="True" />
@@ -63,7 +63,6 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBox PlaceholderText = "Owner" Text="{Binding SelectedItem.Owner}" Width="50" IsReadOnly="True"/>
                             <TextBox PlaceholderText = "Language" Text="{Binding SelectedItem.Language}" Width="50" IsReadOnly="True"/>
-                            <TextBox PlaceholderText = "ExternalID" Text="{Binding SelectedItem.ExternalID}" Width="150" IsReadOnly="True"/>
                         </StackPanel>
                         <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
                         <Button>

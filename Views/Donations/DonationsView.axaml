@@ -43,12 +43,12 @@
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                             <Button Command="{Binding DuplicateClick}" Margin="15">Duplicate</Button>
+                            <Button Command="{Binding OpenLink}" ToolTip.Tip="{Binding SelectedItem.ExternalID}">Open ↗</Button>
                         </StackPanel>
                         <TextBox PlaceholderText="ID" Text="{Binding SelectedItem.ID}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Link" Text="{Binding SelectedItem.Link}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Currency" Text="{Binding SelectedItem.Currency}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
                         <CheckBox IsChecked="{Binding SelectedItem.Bookmarked}" IsEnabled="False">Bookmarked</CheckBox>
                         <Button>
                             <Image Source="{Binding Image}" Width="300" />

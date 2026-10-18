@@ -89,7 +89,7 @@
                     <StackPanel Spacing="4">
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <Button Command="{Binding IgnoreItemClick}">Ignore</Button>
-                            <Button Command="{Binding OpenLink}">Open Link</Button>
+                            <Button Command="{Binding OpenLink}" ToolTip.Tip="{Binding SelectedItem.ExternalID}">Open ↗</Button>
                         </StackPanel>
                         <Grid ColumnDefinitions="*,6*,*">
                             <Image Grid.Column="1" Source="{Binding Image}" Height="600" Stretch="Uniform" HorizontalAlignment="Stretch" />

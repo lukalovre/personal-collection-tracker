@@ -37,8 +37,7 @@ public static class HtmlHelper
     {
         if (string.IsNullOrWhiteSpace(link))
         {
-            // Make this a search engine choice in settings
-            link = $"https://duckduckgo.com/?q={string.Join("+", arguments)}";
+            link = $"https://duckduckgo.com/?q={Uri.EscapeDataString(string.Join(" ", arguments))}";
         }
 
         OpenLink(link);

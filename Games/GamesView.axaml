@@ -81,7 +81,7 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
-                            <Button Command="{Binding OpenLink}">Open Link</Button>
+                            <Button Command="{Binding OpenLink}" ToolTip.Tip="{Binding SelectedItem.ExternalID}">Open ↗</Button>
                         </StackPanel>
                         <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" HorizontalAlignment="Stretch" IsReadOnly="True" />
                         <TextBox PlaceholderText="Developer" Text="{Binding SelectedItem.Developer}" HorizontalAlignment="Stretch" IsReadOnly="True" />
@@ -93,7 +93,6 @@
                         <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" HorizontalAlignment="Stretch" IsReadOnly="True" />
                         <TextBox PlaceholderText="HLTB" Text="{Binding SelectedItem.HLTB}" HorizontalAlignment="Stretch" IsReadOnly="True" />
                         <TextBox PlaceholderText="Owner" Text="{Binding SelectedItem.Owner}" HorizontalAlignment="Stretch" IsReadOnly="True" />
-                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" HorizontalAlignment="Stretch" IsReadOnly="True" />
                         <TextBox PlaceholderText="Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" HorizontalAlignment="Stretch" IsReadOnly="True" />
                         <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" HorizontalAlignment="Stretch" IsReadOnly="True" />
                         <StackPanel Orientation="Horizontal">

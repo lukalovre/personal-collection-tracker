@@ -34,11 +34,11 @@
                         <StackPanel Orientation="Horizontal">
                             <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                             <Button Command ="{Binding DuplicateClick}" Margin="15">Duplicate</Button>
+                            <Button Command="{Binding OpenLink}" ToolTip.Tip="{Binding SelectedItem.ExternalID}">Open ↗</Button>
                         </StackPanel>
                         <TextBox PlaceholderText = "Title" Text="{Binding SelectedItem.Title}" IsReadOnly="True" />
                         <TextBox PlaceholderText = "Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
                         <TextBox PlaceholderText = "Issue" Text="{Binding SelectedItem.Issue}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>

@@ -40,6 +40,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                             <Button Command="{Binding DuplicateClick}" Margin="15">Duplicate</Button>
+                            <Button Command="{Binding OpenLink}" ToolTip.Tip="{Binding SelectedItem.ExternalID}">Open ↗</Button>
                         </StackPanel>
                         <TextBox PlaceholderText="ID" Text="{Binding SelectedItem.ID}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" IsReadOnly="True" />
@@ -49,7 +50,6 @@
                         <TextBox PlaceholderText="Generation" Text="{Binding SelectedItem.Generation}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Controllers" Text="{Binding SelectedItem.Controllers}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Games" Text="{Binding SelectedItem.Games}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
                         <Button>
                             <Image Source="{Binding Image}" Width="300" />
                         </Button>

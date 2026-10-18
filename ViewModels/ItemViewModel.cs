@@ -209,11 +209,44 @@ where TEventItem : IExternalItem
 
     public virtual List<string> OpenLinkAlternativeParameters()
     {
-        return [];
+        if (SelectedItem is null)
+        {
+            return [];
+        }
+
+        var searchParameters = new List<string>();
+        foreach (var property in typeof(TItem).GetProperties())
+        {
+            if (property.Name is nameof(IItem.ID) or nameof(IItem.ExternalID) or nameof(IItem.Bookmarked)
+                or "Comment" or "Date" or "Price" or "PriceInRSD" or "Link")
+            {
+                continue;
+            }
+
+            var value = property.GetValue(SelectedItem);
+            if (value is string text)
+            {
+                if (!string.IsNullOrWhiteSpace(text) && !Uri.TryCreate(text, UriKind.Absolute, out _))
+                {
+                    searchParameters.AddRange(text.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+                }
+            }
+            else if (value is not null && property.Name is ("Year" or "Season" or "Episode" or "Issue" or "Chapter"))
+            {
+                searchParameters.Add(value.ToString()!);
+            }
+        }
+
+        return searchParameters;
     }
 
     private void OpenLinkAction()
     {
+        if (SelectedItem is null)
+        {
+            return;
+        }
+
         HtmlHelper.OpenLink(SelectedItem.ExternalID, OpenLinkAlternativeParameters());
     }
 
