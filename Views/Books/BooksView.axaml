@@ -107,19 +107,23 @@
                                 <TextBlock Text="{Binding SelectedItem.Type}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
-                                <TextBlock Text="Price: " FontWeight="Bold" />
-                                <TextBlock Text="{Binding SelectedItem.Price}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
-                                <TextBlock Text="Price (RSD): " FontWeight="Bold" />
-                                <TextBlock Text="{Binding SelectedItem.PriceInRSD}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
                                 <TextBlock Text="Date: " FontWeight="Bold" />
                                 <TextBlock Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd}" />
                             </StackPanel>
                         </WrapPanel>
-                        <TextBlock Text="{Binding SelectedItem.Comment}" TextWrapping="Wrap" />
+                        <Border Background="Tan" Padding="8">
+                            <StackPanel Spacing="4">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Price: " FontWeight="Bold" />
+                                    <TextBlock Text="{Binding SelectedItem.Price}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Price (RSD): " FontWeight="Bold" />
+                                    <TextBlock Text="{Binding SelectedItem.PriceInRSD}" />
+                                </StackPanel>
+                                <TextBlock Text="{Binding SelectedItem.Comment}" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
