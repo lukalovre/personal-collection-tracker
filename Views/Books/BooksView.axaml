@@ -165,26 +165,6 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Stats">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Beletristika" />
-                        <TextBox Text="{Binding BookTypesCount.Beletristika}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Stručne" />
-                        <TextBox Text="{Binding BookTypesCount.Strucna}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Ostalo" />
-                        <TextBox Text="{Binding BookTypesCount.Ostalo}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Dečije" />
-                        <TextBox Text="{Binding BookTypesCount.Decija}" />
-                    </StackPanel>
-                </StackPanel>
-            </TabItem>
         </TabControl>
     </DockPanel>
 </UserControl>
