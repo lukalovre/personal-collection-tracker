@@ -66,11 +66,11 @@
                             <TextBox PlaceholderText = "Language" Text="{Binding SelectedItem.Language}" Width="50" IsReadOnly="True"/>
                             <TextBox PlaceholderText = "ExternalID" Text="{Binding SelectedItem.ExternalID}" Width="150" IsReadOnly="True"/>
                         </StackPanel>
-                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                         <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
                         <Button>
                             <Image Source="{Binding Image}" Width="500" Height="500" />
                         </Button>
+                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

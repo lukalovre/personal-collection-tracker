@@ -46,10 +46,10 @@
                         <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" IsReadOnly="True" AcceptsReturn="True" />
                         <TextBox PlaceholderText="Runtime" Text="{Binding SelectedItem.Runtime}" IsReadOnly="True" />
-                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
+                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

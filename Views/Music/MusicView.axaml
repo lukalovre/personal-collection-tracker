@@ -89,11 +89,11 @@
                         <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Format" Text="{Binding SelectedItem.Format}" IsReadOnly="True" />
                         <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
-                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                         <TextBox PlaceholderText="Runtime" Text="{Binding SelectedItem.Runtime}" IsReadOnly="True" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
+                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

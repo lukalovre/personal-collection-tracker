@@ -42,12 +42,12 @@
                         <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Runtime" Text="{Binding SelectedItem.Runtime}" IsReadOnly="True" />
                         <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
-                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                         <Button Command="{Binding OpenLink}">Open Link</Button>
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
                         <Button Command="{Binding AddEventClick}">Watch again</Button>
+                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

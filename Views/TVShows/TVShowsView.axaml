@@ -44,7 +44,6 @@
                         <TextBox PlaceholderText="Format" Text="{Binding SelectedItem.Format}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Region" Text="{Binding SelectedItem.Region}" IsReadOnly="True" />
                         <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
-                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                         <TextBox PlaceholderText="Runtime" Text="{Binding SelectedItem.Runtime}" IsReadOnly="True" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
@@ -54,6 +53,7 @@
                             <TextBox Text="{Binding AddAmount}" PlaceholderText="Pages" />
                             <TextBlock Text="{Binding AddAmountString}" />
                         </StackPanel>
+                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

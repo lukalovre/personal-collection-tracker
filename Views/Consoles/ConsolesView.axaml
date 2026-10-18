@@ -50,11 +50,11 @@
                         <TextBox PlaceholderText="Generation" Text="{Binding SelectedItem.Generation}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Controllers" Text="{Binding SelectedItem.Controllers}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Games" Text="{Binding SelectedItem.Games}" IsReadOnly="True" />
-                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                         <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
                         <Button>
                             <Image Source="{Binding Image}" Width="300" />
                         </Button>
+                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

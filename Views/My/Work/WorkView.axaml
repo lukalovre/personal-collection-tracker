@@ -38,7 +38,6 @@
                             <TextBlock Text="Collaborators: " />
                             <TextBlock Text="{Binding SelectedItem.Collaborators}" />
                         </StackPanel>
-                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Public: " />
                             <TextBlock Text="{Binding SelectedItem.Public}" />
@@ -70,6 +69,7 @@
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>
+                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
