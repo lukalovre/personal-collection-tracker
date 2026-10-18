@@ -206,7 +206,7 @@ where TEventItem : IExternalItem
     {
         NewItem = SelectedItem;
         var selectedItemID = SelectedItem.ID;
-        NewItem.Date = null;
+        (NewItem as ICollection).Date = null;
         NewItem.ID = 0;
 
         if (!FileRepository.ImageExists<TItem>(selectedItemID))
@@ -284,7 +284,7 @@ where TEventItem : IExternalItem
 
     private void AddItemClickAction()
     {
-        NewItem.Date = NewItem.Date ?? DateTime.Now;
+        (NewItem as ICollection).Date = (NewItem as ICollection).Date ?? DateTime.Now;
         NewItem.Bookmarked = true;
 
         _datasource.Add(NewItem);
@@ -348,7 +348,7 @@ where TEventItem : IExternalItem
         _itemList = _datasource.GetList<TItem>();
 
         return _itemList
-            .OrderByDescending(o => o.Date)
+            .OrderByDescending(o => (o as ICollection)?.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();
     }
@@ -359,7 +359,7 @@ where TEventItem : IExternalItem
 
         return _itemList
         .Where(o => !DoneList.Contains(o.ExternalID))
-            .OrderByDescending(o => o.Date)
+            .OrderByDescending(o => (o as ICollection)?.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();
     }
@@ -369,7 +369,7 @@ where TEventItem : IExternalItem
         _itemList = _datasource.GetList<TItem>();
         return _itemList
             .Where(o => o.Bookmarked ?? false)
-            .OrderByDescending(o => o.Date)
+            .OrderByDescending(o => (o as ICollection)?.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();
     }

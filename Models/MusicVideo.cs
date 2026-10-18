@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CollectionTracker.Models;
 
 [Table("MusicVideos")]
-public record MusicVideo : IItem
+public record MusicVideo : IItem, ICollection
 {
     [Key]
     public int ID { get; set; }
@@ -17,4 +17,6 @@ public record MusicVideo : IItem
     public DateTime? Date { get; set; }
     public bool? Bookmarked { get; set; }
     public string Comment { get; set; } = string.Empty;
+    public float? Price { get; set; }
+    public float? PriceInRSD { get; set; }
 }
