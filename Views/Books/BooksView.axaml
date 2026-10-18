@@ -85,28 +85,39 @@
         </TabControl>
         <TabControl Margin="5">
             <TabItem Header="Info">
-                <ScrollViewer>
-                    <StackPanel>
-                        <Button Content ="{Binding GridCountItemsBookmarked}"></Button>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
+                <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Spacing="4">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Button Command="{Binding IgnoreItemClick}">Ignore</Button>
                             <Button Command="{Binding OpenLink}">Open Link</Button>
                         </StackPanel>
-                        <TextBox PlaceholderText = "Title" Text="{Binding SelectedItem.Title}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "Author" Text="{Binding SelectedItem.Author}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "Pages" Text="{Binding SelectedItem.Pages}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "Type" Text="{Binding SelectedItem.Type}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "_1001" Text="{Binding SelectedItem._1001}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "EminaRating" Text="{Binding SelectedItem.EminaRating}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "Price" Text="{Binding SelectedItem.Price}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" IsReadOnly="True" AcceptsReturn="True" />
-                        <Button>
-                            <Image Source="{Binding Image}" Width="430" Height="430" />
-                        </Button>
+                        <Image Source="{Binding Image}" Width="220" Height="220" Stretch="Uniform" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding SelectedItem.Title}" FontSize="18" FontWeight="Bold" TextWrapping="Wrap" />
+                        <TextBlock Text="{Binding SelectedItem.Author}" FontSize="14" TextWrapping="Wrap" />
+                        <TextBlock Text="{Binding SelectedItem.Year, StringFormat='Year: {0}'}" />
+                        <WrapPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Pages: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Pages}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Type: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Type}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Price: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Price}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Price (RSD): " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.PriceInRSD}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Date: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd}" />
+                            </StackPanel>
+                        </WrapPanel>
+                        <TextBlock Text="{Binding SelectedItem.Comment}" TextWrapping="Wrap" />
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
