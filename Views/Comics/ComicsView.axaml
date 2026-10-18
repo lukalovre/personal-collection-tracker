@@ -51,23 +51,40 @@
                             <Button Command ="{Binding DuplicateClick}" Margin="15">Duplicate</Button>
                             <Button Command="{Binding OpenLink}" ToolTip.Tip="{Binding SelectedItem.ExternalID}">Open ↗</Button>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox PlaceholderText = "Title" Text="{Binding SelectedItem.Title}" IsReadOnly="True" />
-                            <NumericUpDown Value="{Binding SelectedItem.Chapter}" FormatString="0" Minimum="1" Maximum="999" IsEnabled="False"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox PlaceholderText = "Writer" Text="{Binding SelectedItem.Writer}" IsReadOnly="True" />
-                            <TextBox PlaceholderText = "Illustrator" Text="{Binding SelectedItem.Illustrator}" IsReadOnly="True" />
-                        </StackPanel>
-                        <TextBox PlaceholderText="Format" Text="{Binding SelectedItem.Format}" IsReadOnly="True" />
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox PlaceholderText = "Owner" Text="{Binding SelectedItem.Owner}" Width="50" IsReadOnly="True"/>
-                            <TextBox PlaceholderText = "Language" Text="{Binding SelectedItem.Language}" Width="50" IsReadOnly="True"/>
-                        </StackPanel>
-                        <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
-                        <Button>
-                            <Image Source="{Binding Image}" Width="500" Height="500" />
-                        </Button>
+                        <Grid ColumnDefinitions="*,6*,*">
+                            <Image Grid.Column="1" Source="{Binding Image}" Height="600" Stretch="Uniform" HorizontalAlignment="Stretch" />
+                        </Grid>
+                        <TextBlock Text="{Binding SelectedItem.Title}" FontSize="18" FontWeight="Bold" TextWrapping="Wrap" />
+                        <WrapPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Chapter: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Chapter}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Writer: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Writer}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Illustrator: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Illustrator}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Format: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Format}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Owner: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Owner}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Language: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Language}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Year: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Year}" />
+                            </StackPanel>
+                        </WrapPanel>
                         <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                     </StackPanel>
                 </ScrollViewer>

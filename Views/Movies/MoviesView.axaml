@@ -37,17 +37,36 @@
                             <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                             <Button Command="{Binding OpenLink}" ToolTip.Tip="{Binding SelectedItem.ExternalID}">Open ↗</Button>
                         </StackPanel>
-                        <TextBox PlaceholderText="Owner" Text="{Binding SelectedItem.Owner}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Director" Text="{Binding SelectedItem.Director}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Format" Text="{Binding SelectedItem.Format}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Region" Text="{Binding SelectedItem.Region}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" IsReadOnly="True" AcceptsReturn="True" />
-                        <TextBox PlaceholderText="Runtime" Text="{Binding SelectedItem.Runtime}" IsReadOnly="True" />
-                        <Button>
-                            <Image Source="{Binding Image}" Width="430" Height="430" />
-                        </Button>
+                        <Grid ColumnDefinitions="*,6*,*">
+                            <Image Grid.Column="1" Source="{Binding Image}" Height="600" Stretch="Uniform" HorizontalAlignment="Stretch" />
+                        </Grid>
+                        <TextBlock Text="{Binding SelectedItem.Title}" FontSize="18" FontWeight="Bold" TextWrapping="Wrap" />
+                        <WrapPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Owner: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Owner}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Director: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Director}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Year: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Year}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Format: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Format}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Region: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Region}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Runtime: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Runtime}" />
+                            </StackPanel>
+                        </WrapPanel>
                         <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                     </StackPanel>
                 </ScrollViewer>

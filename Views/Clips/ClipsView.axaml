@@ -37,14 +37,24 @@
                             <Button Command="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                             <Button Command="{Binding OpenLink}" ToolTip.Tip="{Binding SelectedItem.ExternalID}">Open ↗</Button>
                         </StackPanel>
-                        <TextBox PlaceholderText="Title" Text="{Binding SelectedItem.Title}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Author" Text="{Binding SelectedItem.Author}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Runtime" Text="{Binding SelectedItem.Runtime}" IsReadOnly="True" />
-
-                        <Button>
-                            <Image Source="{Binding Image}" Width="430" Height="430" />
-                        </Button>
+                        <Grid ColumnDefinitions="*,6*,*">
+                            <Image Grid.Column="1" Source="{Binding Image}" Height="600" Stretch="Uniform" HorizontalAlignment="Stretch" />
+                        </Grid>
+                        <TextBlock Text="{Binding SelectedItem.Title}" FontSize="18" FontWeight="Bold" TextWrapping="Wrap" />
+                        <WrapPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Author: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Author}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Year: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Year}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
+                                <TextBlock Text="Runtime: " FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedItem.Runtime}" />
+                            </StackPanel>
+                        </WrapPanel>
                         <Button Command="{Binding AddEventClick}">Watch again</Button>
                         <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                     </StackPanel>
