@@ -106,13 +106,13 @@
                                 <TextBlock Text="Type: " FontWeight="Bold" />
                                 <TextBlock Text="{Binding SelectedItem.Type}" />
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,10,2">
-                                <TextBlock Text="Date: " FontWeight="Bold" />
-                                <TextBlock Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd}" />
-                            </StackPanel>
                         </WrapPanel>
                         <Border Background="Tan" Padding="8">
                             <StackPanel Spacing="4">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Date: " FontWeight="Bold" />
+                                    <TextBlock Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd}" />
+                                </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Price: " FontWeight="Bold" />
                                     <TextBlock Text="{Binding SelectedItem.Price}" />
