@@ -91,7 +91,7 @@
                             <Button Command="{Binding IgnoreItemClick}">Ignore</Button>
                             <Button Command="{Binding OpenLink}">Open Link</Button>
                         </StackPanel>
-                        <Image Source="{Binding Image}" Width="220" Height="220" Stretch="Uniform" HorizontalAlignment="Center" />
+                        <Image Source="{Binding Image}" Stretch="Uniform" HorizontalAlignment="Stretch" />
                         <TextBlock Text="{Binding SelectedItem.Title}" FontSize="18" FontWeight="Bold" TextWrapping="Wrap" />
                         <TextBlock Text="{Binding SelectedItem.Author}" FontSize="14" TextWrapping="Wrap" />
                         <TextBlock Text="{Binding SelectedItem.Year, StringFormat='Year: {0}'}" />
