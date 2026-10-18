@@ -315,6 +315,9 @@ where TEventItem : IExternalItem
 
     protected virtual async Task ReloadData()
     {
+        DoneList = UsesDoneList
+            ? _datasource.GetDoneList<TEventItem>().Select(o => o.ExternalID)
+            : [];
         _allGridItems = await LoadData();
         _bookmarkedGridItems = LoadDataBookmarked();
 
@@ -353,9 +356,6 @@ where TEventItem : IExternalItem
     private List<TGridItem> LoadDataTodo(int? yearsAgo = null)
     {
         _itemList = _datasource.GetList<TItem>();
-        DoneList = UsesDoneList
-            ? _datasource.GetDoneList<TEventItem>().Select(o => o.ExternalID)
-            : [];
 
         return _itemList
         .Where(o => !DoneList.Contains(o.ExternalID))
