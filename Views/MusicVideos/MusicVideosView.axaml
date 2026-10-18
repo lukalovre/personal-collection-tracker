@@ -42,8 +42,7 @@
                         <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Runtime" Text="{Binding SelectedItem.Runtime}" IsReadOnly="True" />
                         <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" IsReadOnly="True" AcceptsReturn="True" />
-                        <TextBox PlaceholderText="Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True" />
+                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                         <Button Command="{Binding OpenLink}">Open Link</Button>
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />

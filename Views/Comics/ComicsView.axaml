@@ -66,15 +66,8 @@
                             <TextBox PlaceholderText = "Language" Text="{Binding SelectedItem.Language}" Width="50" IsReadOnly="True"/>
                             <TextBox PlaceholderText = "ExternalID" Text="{Binding SelectedItem.ExternalID}" Width="150" IsReadOnly="True"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox PlaceholderText = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" Width="175" IsReadOnly="True"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox PlaceholderText = "Price" Text="{Binding SelectedItem.Price}" IsReadOnly="True" />
-                            <TextBox PlaceholderText = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" IsReadOnly="True" />
-                        </StackPanel>
+                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                         <TextBox PlaceholderText="Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" IsReadOnly="True" AcceptsReturn="True" />
                         <Button>
                             <Image Source="{Binding Image}" Width="500" Height="500" />
                         </Button>

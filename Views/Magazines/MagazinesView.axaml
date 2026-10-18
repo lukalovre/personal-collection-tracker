@@ -40,10 +40,7 @@
                         <TextBox PlaceholderText = "Year" Text="{Binding SelectedItem.Year}" IsReadOnly="True" />
                         <TextBox PlaceholderText = "Issue" Text="{Binding SelectedItem.Issue}" IsReadOnly="True" />
                         <TextBox PlaceholderText = "ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "Price" Text="{Binding SelectedItem.Price}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" IsReadOnly="True" />
-                        <TextBox PlaceholderText = "Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" IsReadOnly="True" AcceptsReturn="True" />
+                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                         <Button>
                             <Image Source="{Binding Image}" Width="430" Height="430" />
                         </Button>

@@ -50,11 +50,8 @@
                         <TextBox PlaceholderText="Generation" Text="{Binding SelectedItem.Generation}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Controllers" Text="{Binding SelectedItem.Controllers}" IsReadOnly="True" />
                         <TextBox PlaceholderText="Games" Text="{Binding SelectedItem.Games}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Date" Text="{Binding SelectedItem.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=yyyy-MM-dd HH:mm:ss}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Price" Text="{Binding SelectedItem.Price}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="PriceInRSD" Text="{Binding SelectedItem.PriceInRSD}" IsReadOnly="True" />
+                        <view:CollectionPropertiesControl DataContext="{Binding SelectedItem}" />
                         <TextBox PlaceholderText="ExternalID" Text="{Binding SelectedItem.ExternalID}" IsReadOnly="True" />
-                        <TextBox PlaceholderText="Comment" Text="{Binding SelectedItem.Comment}" IsReadOnly="True" AcceptsReturn="True" />
                         <Button>
                             <Image Source="{Binding Image}" Width="300" />
                         </Button>
