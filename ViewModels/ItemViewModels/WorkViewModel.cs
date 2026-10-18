@@ -16,7 +16,7 @@ public partial class WorkViewModel(IDatasource datasource)
             i.Title,
             i.Type,
             0,
-            DateTime.MinValue
+            i.Date
         );
     }
 

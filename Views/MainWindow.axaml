@@ -47,11 +47,7 @@
                     <TabItem Header="Donations">
                         <v:DonationsView DataContext="{Binding DonationsViewModel}" />
                     </TabItem>
-                </TabControl>
-            </TabItem>
-            <TabItem Header="My Work">
-                <TabControl TabStripPlacement="Left">
-                    <TabItem Header="Work" Width="150">
+                    <TabItem Header="Work">
                         <v:WorkView DataContext="{Binding WorkViewModel}" />
                     </TabItem>
                 </TabControl>
