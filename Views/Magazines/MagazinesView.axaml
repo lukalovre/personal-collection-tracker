@@ -32,7 +32,6 @@
                 <ScrollViewer>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button Content ="{Binding GridCountItemsBookmarked}" Margin="15"></Button>
                             <Button Command ="{Binding IgnoreItemClick}" Margin="15">Ignore</Button>
                             <Button Command ="{Binding DuplicateClick}" Margin="15">Duplicate</Button>
                         </StackPanel>

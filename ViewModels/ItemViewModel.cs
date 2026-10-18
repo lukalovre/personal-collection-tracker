@@ -44,9 +44,6 @@ where TEventItem : IExternalItem
     private Bitmap? _newItemImage;
 
     private TItem _selectedItem = default!;
-    private int _gridCountItems;
-
-    private int _gridCountItemsBookmarked;
     private int _addAmount;
     private string _addAmountString = string.Empty;
     private string _inputUrl = string.Empty;
@@ -86,7 +83,6 @@ where TEventItem : IExternalItem
     public PersonComboBoxItem SelectedPerson { get; set; } = null!;
 
     public ObservableCollection<TGridItem> GridItems { get; set; }
-    public ObservableCollection<TGridItem> GridItemsTodo { get; set; }
     public ObservableCollection<TGridItem> GridItemsBookmarked { get; set; }
 
     public TItem SelectedItem
@@ -121,17 +117,6 @@ where TEventItem : IExternalItem
         private set => this.RaiseAndSetIfChanged(ref _newItemImage, value);
     }
 
-    public int GridCountItems
-    {
-        get => _gridCountItems;
-        private set => this.RaiseAndSetIfChanged(ref _gridCountItems, value);
-    }
-
-    public int GridCountItemsBookmarked
-    {
-        get => _gridCountItemsBookmarked;
-        private set => this.RaiseAndSetIfChanged(ref _gridCountItemsBookmarked, value);
-    }
     public TGridItem SelectedGridItem
     {
         get => _selectedGridItem;
@@ -161,7 +146,6 @@ where TEventItem : IExternalItem
         _external = external;
 
         GridItems = [];
-        GridItemsTodo = [];
         GridItemsBookmarked = [];
         ReloadData();
 
@@ -323,15 +307,9 @@ where TEventItem : IExternalItem
 
         GridItems.Clear();
         GridItems.AddRange(_allGridItems);
-        GridCountItems = GridItems.Count;
-
-        GridItemsTodo.Clear();
-        GridItemsTodo.AddRange(LoadDataTodo());
-        GridCountItemsBookmarked = GridItemsTodo.Count;
 
         GridItemsBookmarked.Clear();
         GridItemsBookmarked.AddRange(_bookmarkedGridItems);
-        GridCountItemsBookmarked = GridItemsBookmarked.Count;
 
         ApplyGridSearch();
     }
@@ -348,17 +326,6 @@ where TEventItem : IExternalItem
         _itemList = _datasource.GetList<TItem>();
 
         return _itemList
-            .OrderByDescending(o => (o as ICollection)?.Date)
-            .Select((o, i) => Convert(i, o))
-            .ToList();
-    }
-
-    private List<TGridItem> LoadDataTodo(int? yearsAgo = null)
-    {
-        _itemList = _datasource.GetList<TItem>();
-
-        return _itemList
-        .Where(o => !DoneList.Contains(o.ExternalID))
             .OrderByDescending(o => (o as ICollection)?.Date)
             .Select((o, i) => Convert(i, o))
             .ToList();
@@ -384,8 +351,6 @@ where TEventItem : IExternalItem
         GridItemsBookmarked.Clear();
         GridItemsBookmarked.AddRange(_bookmarkedGridItems.Where(item => MatchesSearch(item, searchText)));
 
-        GridCountItems = GridItems.Count;
-        GridCountItemsBookmarked = GridItemsBookmarked.Count;
     }
 
     private static bool MatchesSearch(TGridItem item, string searchText)
