@@ -1,6 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:CollectionTracker.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:CollectionTracker.Views;assembly=CollectionTracker" mc:Ignorable="d" x:DataType="vm:BooksViewModel" x:Class="CollectionTracker.Views.BooksView" xmlns:view="using:CollectionTracker.Views">
     <DockPanel>
-        <TabControl>
+        <TabControl SelectedIndex="{Binding SelectedBookTabIndex}">
             <TabItem Header="★">
                 <DockPanel>
                     <view:ItemGridSearchBox Text="{Binding SearchText}" Count="{Binding GridItemsBookmarked.Count}" DockPanel.Dock="Top" />

@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using CollectionTracker.Repositories;
+using ReactiveUI;
 using Repositories;
 
 namespace CollectionTracker.ViewModels;
@@ -13,22 +14,43 @@ public partial class BooksViewModel : ItemViewModel<Book, BookGridItem, BookItem
     public ObservableCollection<BookGridItem> DecijaGridItems { get; } = [];
     public ObservableCollection<BookGridItem> OstaloGridItems { get; } = [];
     public ObservableCollection<BookGridItem> StrucnaGridItems { get; } = [];
+    private int _selectedBookTabIndex;
+
+    public int SelectedBookTabIndex
+    {
+        get => _selectedBookTabIndex;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _selectedBookTabIndex, value);
+            RefreshSelectedTypeGridItems();
+        }
+    }
 
     public BooksViewModel(IDatasource datasource, IExternal<Book> external)
         : base(datasource, external)
     {
-        GridItems.CollectionChanged += (_, _) => RefreshTypeGridItems();
-        RefreshTypeGridItems();
+        GridItems.CollectionChanged += (_, _) => RefreshSelectedTypeGridItems();
     }
 
     public override float AmountToMinutesModifier => 2f;
 
-    private void RefreshTypeGridItems()
+    private void RefreshSelectedTypeGridItems()
     {
-        RefreshTypeGridItems(BeletristikaGridItems, "Beletristika");
-        RefreshTypeGridItems(DecijaGridItems, "Dečija");
-        RefreshTypeGridItems(OstaloGridItems, "Ostalo");
-        RefreshTypeGridItems(StrucnaGridItems, "Stručna");
+        switch (SelectedBookTabIndex)
+        {
+            case 2:
+                RefreshTypeGridItems(BeletristikaGridItems, "Beletristika");
+                break;
+            case 3:
+                RefreshTypeGridItems(DecijaGridItems, "Dečija");
+                break;
+            case 4:
+                RefreshTypeGridItems(OstaloGridItems, "Ostalo");
+                break;
+            case 5:
+                RefreshTypeGridItems(StrucnaGridItems, "Stručna");
+                break;
+        }
     }
 
     private void RefreshTypeGridItems(
